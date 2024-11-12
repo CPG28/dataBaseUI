@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-public class SQLServerDemo {
+public class SQLServer {
 
     // Connect to your database.
     // Replace server name, username, and password with your credentials
