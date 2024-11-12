@@ -8,4 +8,4 @@ this is the ui for the database, and runs on a computer
 using bash shell, run "make" and then "make run"
 
 ## Other Info
-our code is really good
+our code is really good, I stole it from robs example
