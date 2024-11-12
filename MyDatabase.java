@@ -1,24 +1,28 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class MyDatabase {
     private Connection connection;
 
-	public MyDatabase() {
+	public MyDatabase(String url) {
 		try {
-			String url = "jdbc:sqlserver://uranium.cs.umanitoba.ca:1433;\"\r\n" + //
-                                "                + \"database=cs3380;\"\r\n" + //
-                                "                + \"user=\" + username + \";\"\r\n" + //
-                                "                + \"password=\"+ password +\";\"\r\n" + //
-                                "                + \"encrypt=false;\"\r\n" + //
-                                "                + \"trustServerCertificate=false;\"\r\n" + //
-                                "                + \"loginTimeout=30;";
 			// create a connection to the database
 			connection = DriverManager.getConnection(url);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = null;
+            String selectSql = "SELECT driverFirstName, driverLastName from drivers;";
+            resultSet = statement.executeQuery(selectSql);
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(1) + 
+                " " + resultSet.getString(2));
+            }
 		} catch (SQLException e) {
 			e.printStackTrace(System.out);
 		}
+
     }
 
     //bunch of functions or whatever here just like in A3Q3 for our searching of stuff
