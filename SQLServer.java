@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class SQLServer {
 
@@ -44,6 +45,37 @@ public class SQLServer {
                 + "trustServerCertificate=false;"
                 + "loginTimeout=30;";
 
-        MyDatabase myDatabase = new MyDatabase(connectionUrl);
+        MyUI myDatabase = new MyUI(connectionUrl);
+        runConsole(myDatabase);
+        //print command line stuffs
+    }
+
+    public static void runConsole(MyUI db){
+        Scanner console = new Scanner(System.in);
+		System.out.print("Welcome! Type h for help. ");
+		System.out.print("db > ");
+		String line = console.nextLine();
+		String[] parts;
+		String arg = "";
+        while (line != null && !line.equals("q")) {
+			parts = line.split("\\s+");
+			if (line.indexOf(" ") > 0)
+				arg = line.substring(line.indexOf(" ")).trim();
+
+			if (parts[0].equals("h"))
+				printHelp();
+
+
+			System.out.print("db > ");
+			line = console.nextLine();
+		}
+
+		console.close();
+    }
+
+    public static void printHelp(){
+        System.out.println("FORMULA ONE DATABASE");
+        System.out.println("-------------------------------------");
+        System.out.println("Commands:");
     }
 }
