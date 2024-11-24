@@ -11,14 +11,14 @@ public class MyUI {
 		try {
 			// create a connection to the database
 			connection = DriverManager.getConnection(url);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = null;
-            String selectSql = "SELECT driverFirstName, driverLastName from drivers;";
-            resultSet = statement.executeQuery(selectSql);
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString(1) + 
-                " " + resultSet.getString(2));
-            }
+            // Statement statement = connection.createStatement();
+            // ResultSet resultSet = null;
+            // String selectSql = "SELECT driverFirstName, driverLastName from drivers;";
+            // resultSet = statement.executeQuery(selectSql);
+            // while (resultSet.next()) {
+            //     System.out.println(resultSet.getString(1) + 
+            //     " " + resultSet.getString(2));
+            // }
 		} catch (SQLException e) {
 			e.printStackTrace(System.out);
 		}

@@ -10,9 +10,16 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class SQLServer {
+    public static final String RED = "\u001B[31m";
+    public static final String ORANGE = "\u001B[33m"; // Closest match (ANSI lacks true orange)
+    public static final String YELLOW = "\u001B[33m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String INDIGO = "\u001B[34m"; // Closest match (ANSI lacks indigo)
+    public static final String VIOLET = "\u001B[35m";
+    public static final String RESET = "\u001B[0m";
 
     // Connect to your database.
-    // Replace server name, username, and password with your credentials
     public static void main(String[] args) {
 
         Properties prop = new Properties();
@@ -52,30 +59,97 @@ public class SQLServer {
 
     public static void runConsole(MyUI db){
         Scanner console = new Scanner(System.in);
-		System.out.print("Welcome! Type h for help. ");
+        clearScreen();
+        //System.out.println("");//make background colour
+		System.out.println("Welcome to the FORMULA ONE DATABASE");
+        System.out.println();
+        System.out.println(RED + ".d888                                    888         d888   \r\n" + //
+                        "d88P\"                                     888        d8888   \r\n" + //
+                        "888                                       888          888   \r\n" + //
+                        "888888 .d88b. 888d88888888b.d88b. 888  888888 8888b.   888   \r\n" + //
+                        "888   d88\"\"88b888P\"  888 \"888 \"88b888  888888    \"88b  888   \r\n" + //
+                        "888   888  888888    888  888  888888  888888.d888888  888   \r\n" + //
+                        "888   Y88..88P888    888  888  888Y88b 888888888  888  888   \r\n" + //
+                        "888    \"Y88P\" 888    888  888  888 \"Y88888888\"Y8888888888888\u001B[0m");
+        System.out.println();
+        System.out.println("Type help for help\n");
 		System.out.print("db > ");
 		String line = console.nextLine();
 		String[] parts;
 		String arg = "";
-        while (line != null && !line.equals("q")) {
+        while (line != null && !line.equals("quit")) {
 			parts = line.split("\\s+");
 			if (line.indexOf(" ") > 0)
 				arg = line.substring(line.indexOf(" ")).trim();
 
-			if (parts[0].equals("h"))
+			if (parts[0].equals("help"))
 				printHelp();
-
-
+            if(parts[0].equals("clear")){
+                clearScreen();
+            }
 			System.out.print("db > ");
 			line = console.nextLine();
 		}
-
+        quitProgram();
 		console.close();
     }
 
+    public static void quitProgram(){
+        System.out.println();
+        System.out.println("+--+--+--+--+\r\n" + //
+                        "|  |##|  |##|\r\n" + //
+                        "|  |##|  |##|\r\n" + //
+                        "+--+--+--+--+\r\n" + //
+                        "|##|  |##|  |\r\n" + //
+                        "|##|  |##|  |\r\n" + //
+                        "+--+--+--+--+\r\n" + //
+                        "|  |##|  |##|\r\n" + //
+                        "|  |##|  |##|\r\n" + //
+                        "+--+--+--+--+\r\n" + //
+                        "|##|  |##|  |\r\n" + //
+                        "|##|  |##|  |\r\n" + //
+                        "+--+--+--+--+\n");
+        System.out.println("This program was created using data from: https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020");
+        System.out.println("Created by: Fraser Newbury, Elizabeth Stoughton, David Xavier");
+        System.out.println("Created for COMP3380, at the University of Manitoba in December 2024");
+        System.out.println("Thank You!");
+    }
+
+    public static void clearScreen(){
+        System.out.println("\u001B[2J" + "\u001B[H");
+    }
+
     public static void printHelp(){
-        System.out.println("FORMULA ONE DATABASE");
+        System.out.println();
+        System.out.println("FORMULA ONE DATABASE COMMANDS");
         System.out.println("-------------------------------------");
         System.out.println("Commands:");
+        //more commands here
+        System.out.println(RED + "d name number - Search for a driver by name, and see stats about them. Inputting no name returns all drivers sorted by points. You may also enter a number to limit results\u001B[0m");
+        System.out.println(ORANGE + "circuits n/s - see circuits in northern or southern hemishperes. Entering no hemisphere displays all circuits" + RESET);
+        System.out.println(YELLOW + "dChamp year - See the drivers championship results from a enetered year. Entering no year returns the latest season" + RESET);
+        System.out.println(GREEN + "cChamp year - See the constructors champsionship results from a entered year. Entering no year returngs the lates season" + RESET);
+        System.out.println(BLUE + "youngestWin number - See the youngest race winners. Enter a number to limit the amount of results" + RESET);
+        System.out.println(INDIGO + "wins dID year - List all wins that a driver has had over their entire career. Input a driver ID to see results. Enter a year to only see wins from that season" + RESET);
+        System.out.println(VIOLET + "circuitDriverWins circuitID - See all drivers who have won a race at a given circuit" + RESET);
+        System.out.println(RED + "circuitConsWins circuitID - See all constructors who have won a race at a given circuit" + RESET);
+        System.out.println(ORANGE + "posToWin position - Statistics regarding how often a race win occurs from a starting position" + RESET);
+        System.out.println(YELLOW + "curDrivers - See all current Drivers" + RESET);
+        System.out.println(GREEN + "curCons - See all current Constructors" + RESET);
+        System.out.println(BLUE + "dFrom nationality - See all drivers of a inputted nationality" + RESET);
+        System.out.println(INDIGO + "mostGained - See statistics for most positions gained in a race");
+        System.out.println(VIOLET + "driverCircuitWinRate numberDrivers numberCircuits - Out of all the circuits a driver has raced at, how many have they won at? number of drivers is for how many results, numberCircuits is for total circuits" + RESET);
+        System.out.println(RED + "drivers year - See all drivers from a particular year");
+        System.out.println(ORANGE + "cons year - See all constructors form a particular year");
+        System.out.println(YELLOW + "races year - See all races from a particular year");
+        System.out.println(GREEN + "dChampAfter raceID - See the drivers championship after a particular race");
+        System.out.println(BLUE + "conChampAfter raceID - See the constructors champsionship after a particular race");
+        System.out.println(INDIGO + "quali raceID - See the qualifying results for a particular race");
+        System.out.println(VIOLET + "gp raceID - See the race results for a particular race");
+        System.out.println(RED + "driversCon driverID - See all constructors a driver has raced for");
+        System.out.println(ORANGE + "consDrivers constructorID - See all drivers a constructor has had race for them");
+        System.out.println(YELLOW + "clear - Clears the screen and resets the cursor" + RESET);
+        System.out.println(INDIGO + "quit - Quit the program" + RESET);
+        System.out.println("");
     }
 }
