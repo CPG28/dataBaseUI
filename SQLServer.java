@@ -88,7 +88,7 @@ public class SQLServer {
                 clearScreen();
             }
             if(parts[0].equals("d")){
-                clearScreen();
+                db.driverSearch(arg);
             }
             if(parts[0].equals("circuits")){
                 clearScreen();
