@@ -495,7 +495,7 @@ public class MyDatabase {
         }
         ResultSet resultSet = statement.executeQuery();
         System.out.println("");
-        System.out.printf("%-10s| %-20s| %-20s| %15s| %10s| %10s| %10s%n", "driverID", "First Name", "Last Name", "Point Total", "Race Count", "Win Count", "Pole Count");
+        System.out.printf("%-10s| %-20s| %-20s| %-15s| %-10s| %-10s| %-10s%n", "driverID", "First Name", "Last Name", "Point Total", "Race Count", "Win Count", "Pole Count");
         System.out.println("-".repeat(110));
         while (resultSet.next()) {
             int id = resultSet.getInt("driverID");
