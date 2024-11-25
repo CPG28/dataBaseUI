@@ -52,12 +52,12 @@ public class SQLServer {
                 + "trustServerCertificate=false;"
                 + "loginTimeout=30;";
 
-        MyUI myDatabase = new MyUI(connectionUrl);
+        MyDatabase myDatabase = new MyDatabase(connectionUrl);
         runConsole(myDatabase);
         //print command line stuffs
     }
 
-    public static void runConsole(MyUI db){
+    public static void runConsole(MyDatabase db){
         Scanner console = new Scanner(System.in);
         clearScreen();
         //System.out.println("");//make background colour
@@ -86,6 +86,198 @@ public class SQLServer {
 				printHelp();
             if(parts[0].equals("clear")){
                 clearScreen();
+            }
+            if(parts[0].equals("d")){
+                clearScreen();
+            }
+            if(parts[0].equals("circuits")){
+                clearScreen();
+            }
+            if(parts[0].equals("dChamp")){
+                clearScreen();
+            }
+            if(parts[0].equals("cChamp")){
+                clearScreen();
+            }
+            if(parts[0].equals("youngestWin")){
+				try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (number of results)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("wins")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires atleast one argument (driverID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("circuitDriverWins")){
+				try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (circuitID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("circuitConsWins")){
+				try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (circuitID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("posToWin")){
+				try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (position)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("curDrivers")){
+                clearScreen();
+            }
+            if(parts[0].equals("curCons")){
+                clearScreen();
+            }
+            if(parts[0].equals("dFrom")){
+				try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (nationality)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be a string");
+				}
+            }
+            if(parts[0].equals("mostGained")){
+                clearScreen();
+            }
+            if(parts[0].equals("driverCircuitWinRate")){
+                clearScreen();
+            }
+            if(parts[0].equals("drivers")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (year)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("cons")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (year)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("dChampAfter")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (raceID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("conChampAfter")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (raceID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("quali")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (raceID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("gp")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (raceID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("driversCon")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (driverID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
+            }
+            if(parts[0].equals("consDrivers")){
+                try {
+					if (parts.length >= 2){
+					    //to do function
+                    }
+					else{
+						System.out.println("This command requires an argument (constructorID)");
+                    }
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
             }
 			System.out.print("db > ");
 			line = console.nextLine();

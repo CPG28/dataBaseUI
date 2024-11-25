@@ -4,10 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MyUI {
+public class MyDatabase {
     private Connection connection;
 
-	public MyUI(String url) {
+	public MyDatabase(String url) {
 		try {
 			// create a connection to the database
 			connection = DriverManager.getConnection(url);
