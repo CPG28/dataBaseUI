@@ -516,6 +516,15 @@ public class MyDatabase {
     }
     }
 
+    public void circuitsSearch(String args){
+        try{//todo
+            String sql = "Select first, last, id from people where first  LIKE ? or last LIKE ?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+        }
+        catch(SQLException e){
+            e.printStackTrace(System.out);
+        }
+    }
     //helper function
     private static boolean isNumeric(String str) {
         try {

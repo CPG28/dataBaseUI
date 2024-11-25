@@ -87,18 +87,23 @@ public class SQLServer {
             if(parts[0].equals("clear")){
                 clearScreen();
             }
+            
             if(parts[0].equals("d")){
                 db.driverSearch(arg);
             }
+            //TODO
             if(parts[0].equals("circuits")){
-                clearScreen();
+                db.circuitsSearch(arg);
             }
+            //TODO
             if(parts[0].equals("dChamp")){
                 clearScreen();
             }
+            //TODO
             if(parts[0].equals("cChamp")){
                 clearScreen();
             }
+            //TODO
             if(parts[0].equals("youngestWin")){
 				try {
 					if (parts.length >= 2){
@@ -111,6 +116,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("wins")){
                 try {
 					if (parts.length >= 2){
@@ -123,6 +129,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("circuitDriverWins")){
 				try {
 					if (parts.length >= 2){
@@ -135,6 +142,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("circuitConsWins")){
 				try {
 					if (parts.length >= 2){
@@ -147,6 +155,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("posToWin")){
 				try {
 					if (parts.length >= 2){
@@ -159,12 +168,15 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("curDrivers")){
                 clearScreen();
             }
+            //TODO
             if(parts[0].equals("curCons")){
                 clearScreen();
             }
+            //TODO
             if(parts[0].equals("dFrom")){
 				try {
 					if (parts.length >= 2){
@@ -177,12 +189,15 @@ public class SQLServer {
 					System.out.println("Argument must be a string");
 				}
             }
+            //TODO
             if(parts[0].equals("mostGained")){
                 clearScreen();
             }
+            //TODO
             if(parts[0].equals("driverCircuitWinRate")){
                 clearScreen();
             }
+            //TODO
             if(parts[0].equals("drivers")){
                 try {
 					if (parts.length >= 2){
@@ -195,6 +210,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("cons")){
                 try {
 					if (parts.length >= 2){
@@ -207,6 +223,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("dChampAfter")){
                 try {
 					if (parts.length >= 2){
@@ -219,6 +236,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("conChampAfter")){
                 try {
 					if (parts.length >= 2){
@@ -231,6 +249,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("quali")){
                 try {
 					if (parts.length >= 2){
@@ -243,6 +262,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("gp")){
                 try {
 					if (parts.length >= 2){
@@ -255,6 +275,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("driversCon")){
                 try {
 					if (parts.length >= 2){
@@ -267,6 +288,7 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
+            //TODO
             if(parts[0].equals("consDrivers")){
                 try {
 					if (parts.length >= 2){
