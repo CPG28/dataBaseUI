@@ -704,6 +704,38 @@ public class MyDatabase {
             e.printStackTrace(System.out);
         }
     }
+
+    public void consDrivers(String arg) {
+        String[] parts = arg.trim().split(" ");
+        String sql = "SELECT drivers.driverFirstName, drivers.driverLastName, drivers.driverID \r\n" + //
+                        "\r\n" + //
+                        "FROM constructors \r\n" + //
+                        "\r\n" + //
+                        "INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID  \r\n" + //
+                        "\r\n" + //
+                        "INNER JOIN drivers ON drivers.driverID = raceFor.driverID \r\n" + //
+                        "\r\n" + //
+                        "WHERE CONVERT(VARCHAR, constructors.constructorName) = ?;";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, parts[0]);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-10s| %-20s| %-20s\n", "Driver ID", "First Name", "Last Name");
+            System.out.println("-".repeat(54));
+            while (resultSet.next()) {
+                int id = resultSet.getInt("driverID");
+                String first = resultSet.getString("driverFirstName");
+                String last = resultSet.getString("driverLastName");
+                System.out.printf("%-10d| %-20s| %-20s\n", id, first, last);
+            }
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
     //helper function
     private static boolean isNumeric(String str) {
         try {

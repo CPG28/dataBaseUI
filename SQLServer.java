@@ -294,14 +294,13 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
             else if(parts[0].equals("consDrivers")){
                 try {
 					if (parts.length >= 2){
-					    //to do function
+                        db.consDrivers(arg);
                     }
 					else{
-						System.out.println("This command requires an argument (constructorID)");
+						System.out.println("This command requires an argument (constructorName)");
                     }
 				} catch (Exception e) {
 					System.out.println("Argument must be an integer");
