@@ -97,16 +97,14 @@ public class SQLServer {
             
             if(parts[0].equals("dChamp")){
                 try {
-                    System.out.println("here");
                     db.dChampSearch(arg);
 				} catch (Exception e) {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
+            
             if(parts[0].equals("cChamp")){
                 try {
-                    System.out.println("here");
                     db.cChampSearch(arg);
 				} catch (Exception e) {
 					System.out.println("Argument must be an integer");
@@ -115,8 +113,8 @@ public class SQLServer {
             //TODO
             if(parts[0].equals("youngestWin")){
 				try {
-					if (parts.length >= 2){
-					    //to do function
+					if (parts.length >= 1){
+					    db.youngestWin(arg);
                     }
 					else{
 						System.out.println("This command requires an argument (number of results)");

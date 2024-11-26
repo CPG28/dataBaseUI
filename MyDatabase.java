@@ -667,6 +667,43 @@ public class MyDatabase {
             e.printStackTrace(System.out);
         }
     }
+
+    public void youngestWin(String arg){
+        try{
+            String[] parts = arg.trim().split(" ");
+            String sql = "SELECT TOP " + Integer.parseInt(parts[0]) +  "d.driverID, d.driverFirstName, d.driverLastName, r.raceName, \r\n" + //
+                                "\r\n" + //
+                                "r.raceDate, DATEDIFF(YEAR, d.dob, r.raceDate) AS ageAtWin FROM drivers d \r\n" + //
+                                "\r\n" + //
+                                "JOIN results res ON d.driverID = res.driverID \r\n" + //
+                                "\r\n" + //
+                                "JOIN races r ON res.raceID = r.raceID \r\n" + //
+                                "\r\n" + //
+                                "WHERE res.finalPos = 1 \r\n" + //
+                                "\r\n" + //
+                                "ORDER BY ageAtWin, r.raceDate; ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-10s| %-20s| %-20s| %-25s| %-20s%n", "driverID", "First Name", "Last Name", "Race Name","Age at Win");
+            System.out.println("-".repeat(100));
+            int place = 0;
+            while(resultSet.next()){
+                int id = resultSet.getInt("driverID");
+                String first = resultSet.getString("driverFirstName");
+                String last = resultSet.getString("driverLastName");
+                String race = resultSet.getString("raceName");
+                int age = resultSet.getInt("ageAtWin");
+                System.out.printf("%-10d| %-20s| %-20s| %-25s| %-20s%n", id, first, last, race, age);
+            }
+            System.out.println("");
+            resultSet.close();
+            statement.close();
+        }
+        catch(SQLException e){
+            e.printStackTrace(System.out);
+        }
+    }
     //helper function
     private static boolean isNumeric(String str) {
         try {
