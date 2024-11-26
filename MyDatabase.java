@@ -26,7 +26,7 @@ public class MyDatabase {
 
     }
     
-    //d command, can take name (first and last) and a number of results. Could definitely use a refactor lol.
+    //d command, can take name (first and last) and a number of results. Could definetely use a refactor lol.
     public void driverSearch(String args){
         try{
         String[] parts = args.trim().split(" ");
@@ -695,6 +695,56 @@ public class MyDatabase {
                 String race = resultSet.getString("raceName");
                 int age = resultSet.getInt("ageAtWin");
                 System.out.printf("%-10d| %-20s| %-20s| %-25s| %-20s%n", id, first, last, race, age);
+            }
+            System.out.println("");
+            resultSet.close();
+            statement.close();
+        }
+        catch(SQLException e){
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void wins(String args){
+        try{
+            String[] parts = args.trim().split(" ");
+            String sql = "";
+            PreparedStatement statement = null;
+            if(parts.length == 1){
+                sql = "select races.raceName, races.raceDate, raceResults.raceType from results  \r\n" + //
+                                        "\r\n" + //
+                                        "join raceResults on results.resultID = raceResults.resultID  \r\n" + //
+                                        "\r\n" + //
+                                        "join races on results.raceID = races.raceID \r\n" + //
+                                        "\r\n" + //
+                                        "where driverID = ? and finalPos = 1 \r\n" + //
+                                        "\r\n" + //
+                                        "ORDER BY raceDate;";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(parts[0]));
+            }
+            else{
+                sql = "select races.raceName, races.raceDate, raceResults.raceType from results join raceResults on results.resultID = raceResults.resultID  \r\n" + //
+                                        "\r\n" + //
+                                        "join races on results.raceID = races.raceID \r\n" + //
+                                        "\r\n" + //
+                                        "where driverID = ? and finalPos = 1 and season = ? \r\n" + //
+                                        "\r\n" + //
+                                        "ORDER BY raceDate; ";
+                statement = connection.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(parts[0]));
+                statement.setInt(2, Integer.parseInt(parts[1]));
+            }
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-30s| %-15s| %-10s%n", "Race Name", "Race Date", "RaceType");
+            System.out.println("-".repeat(80));
+
+            while(resultSet.next()){
+                String raceName = resultSet.getString("raceName");
+                String raceDate = resultSet.getString("raceDate");
+                String raceType = resultSet.getString("raceType");
+                System.out.printf("%-30s| %-15s| %-10s%n", raceName, raceDate, raceType);
             }
             System.out.println("");
             resultSet.close();
