@@ -26,7 +26,7 @@ public class MyDatabase {
 
     }
     
-    //d command, can take name (first and last) and a number of results. Could definetely use a refactor lol.
+    //d command, can take name (first and last) and a number of results. Could definitely use a refactor lol.
     public void driverSearch(String args){
         try{
         String[] parts = args.trim().split(" ");

@@ -14,7 +14,7 @@ public class SQLServer {
     public static final String ORANGE = "\u001B[33m"; // Closest match (ANSI lacks true orange)
     public static final String YELLOW = "\u001B[33m";
     public static final String GREEN = "\u001B[32m";
-    public static final String BLUE = "\u001B[34m";
+    public static final String BLUE = "\u001B[36m";
     public static final String INDIGO = "\u001B[34m"; // Closest match (ANSI lacks indigo)
     public static final String VIOLET = "\u001B[35m";
     public static final String RESET = "\u001B[0m";
@@ -82,20 +82,20 @@ public class SQLServer {
 			if (line.indexOf(" ") > 0)
 				arg = line.substring(line.indexOf(" ")).trim();
 
-			if (parts[0].equals("help"))
+			else if (parts[0].equals("help"))
 				printHelp();
-            if(parts[0].equals("clear")){
+            else if(parts[0].equals("clear")){
                 clearScreen();
             }
             
-            if(parts[0].equals("d")){
+            else if(parts[0].equals("d")){
                 db.driverSearch(arg);
             }
-            if(parts[0].equals("circuits")){
+            else if(parts[0].equals("circuits")){
                 db.circuitsSearch(arg);
             }
             
-            if(parts[0].equals("dChamp")){
+            else if(parts[0].equals("dChamp")){
                 try {
                     db.dChampSearch(arg);
 				} catch (Exception e) {
@@ -103,15 +103,14 @@ public class SQLServer {
 				}
             }
             
-            if(parts[0].equals("cChamp")){
+            else if(parts[0].equals("cChamp")){
                 try {
                     db.cChampSearch(arg);
 				} catch (Exception e) {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
-            if(parts[0].equals("youngestWin")){
+            else if(parts[0].equals("youngestWin")){
 				try {
 					if (parts.length >= 1){
 					    db.youngestWin(arg);
@@ -124,7 +123,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("wins")){
+            else if(parts[0].equals("wins")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -137,7 +136,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("circuitDriverWins")){
+            else if(parts[0].equals("circuitDriverWins")){
 				try {
 					if (parts.length >= 2){
 					    //to do function
@@ -150,7 +149,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("circuitConsWins")){
+            else if(parts[0].equals("circuitConsWins")){
 				try {
 					if (parts.length >= 2){
 					    //to do function
@@ -163,7 +162,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("posToWin")){
+            else if(parts[0].equals("posToWin")){
 				try {
 					if (parts.length >= 2){
 					    //to do function
@@ -176,15 +175,15 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("curDrivers")){
+            else if(parts[0].equals("curDrivers")){
                 clearScreen();
             }
             //TODO
-            if(parts[0].equals("curCons")){
+            else if(parts[0].equals("curCons")){
                 clearScreen();
             }
             //TODO
-            if(parts[0].equals("dFrom")){
+            else if(parts[0].equals("dFrom")){
 				try {
 					if (parts.length >= 2){
 					    //to do function
@@ -197,15 +196,15 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("mostGained")){
+            else if(parts[0].equals("mostGained")){
                 clearScreen();
             }
             //TODO
-            if(parts[0].equals("driverCircuitWinRate")){
+            else if(parts[0].equals("driverCircuitWinRate")){
                 clearScreen();
             }
             //TODO
-            if(parts[0].equals("drivers")){
+            else if(parts[0].equals("drivers")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -218,7 +217,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("cons")){
+            else if(parts[0].equals("cons")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -231,7 +230,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("dChampAfter")){
+            else if(parts[0].equals("dChampAfter")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -244,7 +243,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("conChampAfter")){
+            else if(parts[0].equals("conChampAfter")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -257,7 +256,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("quali")){
+            else if(parts[0].equals("quali")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -270,7 +269,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("gp")){
+            else if(parts[0].equals("gp")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -283,7 +282,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("driversCon")){
+            else if(parts[0].equals("driversCon")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -296,7 +295,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("consDrivers")){
+            else if(parts[0].equals("consDrivers")){
                 try {
 					if (parts.length >= 2){
 					    //to do function
@@ -307,6 +306,9 @@ public class SQLServer {
 				} catch (Exception e) {
 					System.out.println("Argument must be an integer");
 				}
+            }
+            else {
+                System.out.println("Command does not exist. See 'help' for the list of valid commands.");
             }
 			System.out.print("db > ");
 			line = console.nextLine();
@@ -370,7 +372,7 @@ public class SQLServer {
         System.out.println(RED + "driversCon driverID - See all constructors a driver has raced for");
         System.out.println(ORANGE + "consDrivers constructorID - See all drivers a constructor has had race for them");
         System.out.println(YELLOW + "clear - Clears the screen and resets the cursor" + RESET);
-        System.out.println(INDIGO + "quit - Quit the program" + RESET);
+        System.out.println(GREEN + "quit - Quit the program" + RESET);
         System.out.println("");
     }
 }
