@@ -618,6 +618,56 @@ public class MyDatabase {
         }
     }
     //helper function
+    public void cChampSearch(String args){
+        try{
+            String[] parts = args.trim().split(" ");
+            String sql = "SELECT \r\n" + //
+                                "\r\n" + //
+                                "CAST(constructors.constructorName AS NVARCHAR(MAX)) AS teamName,  \r\n" + //
+                                "\r\n" + //
+                                "sum(numPoints) as totalPoints \r\n" + //
+                                "\r\n" + //
+                                "FROM results \r\n" + //
+                                "\r\n" + //
+                                "JOIN raceResults on raceResults.resultID = results.resultID \r\n" + //
+                                "\r\n" + //
+                                "JOIN races on results.raceID = races.raceID \r\n" + //
+                                "\r\n" + //
+                                "JOIN constructors on results.constructorID = constructors.constructorID \r\n" + //
+                                "\r\n" + //
+                                "WHERE races.season = ? \r\n" + //
+                                "\r\n" + //
+                                "GROUP BY CAST(constructors.constructorName AS NVARCHAR(MAX)) \r\n" + //
+                                "\r\n" + //
+                                "ORDER BY totalPoints DESC; \r\n" + //
+                                "\r\n" + //
+                                " ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            if(parts.length == 1 && !parts[0].equals("")){
+                statement.setInt(1, Integer.parseInt(parts[0]));
+            }
+            else{
+                statement.setInt(1, 2024);
+            }
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-5s| %-20s| %-10s%n", "Place", "Team Name","Points");
+            System.out.println("-".repeat(100));
+            int place = 0;
+            while(resultSet.next()){
+                String team = resultSet.getString("teamName");
+                int points = resultSet.getInt("totalPoints");
+                System.out.printf("%-5d| %-20s| %-10d%n", ++place, team, points);
+            }
+            System.out.println("");
+            resultSet.close();
+            statement.close();
+        }
+        catch(SQLException e){
+            e.printStackTrace(System.out);
+        }
+    }
+    //helper function
     private static boolean isNumeric(String str) {
         try {
             Integer.parseInt(str);

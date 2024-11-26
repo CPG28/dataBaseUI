@@ -94,7 +94,7 @@ public class SQLServer {
             if(parts[0].equals("circuits")){
                 db.circuitsSearch(arg);
             }
-            //TODO
+            
             if(parts[0].equals("dChamp")){
                 try {
                     System.out.println("here");
@@ -105,7 +105,12 @@ public class SQLServer {
             }
             //TODO
             if(parts[0].equals("cChamp")){
-                clearScreen();
+                try {
+                    System.out.println("here");
+                    db.cChampSearch(arg);
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
             }
             //TODO
             if(parts[0].equals("youngestWin")){
