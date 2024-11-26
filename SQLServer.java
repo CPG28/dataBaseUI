@@ -91,13 +91,17 @@ public class SQLServer {
             if(parts[0].equals("d")){
                 db.driverSearch(arg);
             }
-            //TODO
             if(parts[0].equals("circuits")){
                 db.circuitsSearch(arg);
             }
             //TODO
             if(parts[0].equals("dChamp")){
-                clearScreen();
+                try {
+                    System.out.println("here");
+                    db.dChampSearch(arg);
+				} catch (Exception e) {
+					System.out.println("Argument must be an integer");
+				}
             }
             //TODO
             if(parts[0].equals("cChamp")){

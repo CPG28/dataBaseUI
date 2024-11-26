@@ -26,7 +26,7 @@ public class MyDatabase {
 
     }
     
-    //d command, can take name (first and last) and a number of results
+    //d command, can take name (first and last) and a number of results. Could definetely use a refactor lol.
     public void driverSearch(String args){
         try{
         String[] parts = args.trim().split(" ");
@@ -516,6 +516,7 @@ public class MyDatabase {
     }
     }
 
+    //circuits command, takes s,n, or nothing. We may want to add ability to limit results here too
     public void circuitsSearch(String args){
         try{//todo
             String[] parts = args.trim().split(" ");
@@ -542,6 +543,71 @@ public class MyDatabase {
                 int latty = resultSet.getInt("circuitLatitude");
                 String country = resultSet.getString("circuitCountry");
                 System.out.printf("%-10d| %-40s| %-20s| %-20d| %-20d%n", id, name, country, longy, latty);
+            }
+            System.out.println("");
+            resultSet.close();
+            statement.close();
+        }
+        catch(SQLException e){
+            e.printStackTrace(System.out);
+        }
+    }
+    
+    //drivers championship query. takes a year or none. If no year it returns the current season.
+    public void dChampSearch(String args){
+        try{
+            String[] parts = args.trim().split(" ");
+            String sql = "SELECT \r\n" + //
+                                "\r\n" + //
+                                "CAST(drivers.driverFirstName AS NVARCHAR(MAX)) AS driverFirstName,  \r\n" + //
+                                "\r\n" + //
+                                "CAST(drivers.driverLastName AS NVARCHAR(MAX)) AS driverLastName,  \r\n" + //
+                                "\r\n" + //
+                                "CAST(constructors.constructorName AS NVARCHAR(MAX)) AS teamName,  \r\n" + //
+                                "\r\n" + //
+                                "sum(numPoints) AS totalPoints \r\n" + //
+                                "\r\n" + //
+                                "FROM drivers \r\n" + //
+                                "\r\n" + //
+                                "JOIN results on drivers.driverID = results.driverID \r\n" + //
+                                "\r\n" + //
+                                "JOIN raceResults on results.resultID = raceResults.resultID \r\n" + //
+                                "\r\n" + //
+                                "JOIN races on results.raceID = races.raceID \r\n" + //
+                                "\r\n" + //
+                                "JOIN constructors on results.constructorID = constructors.constructorID \r\n" + //
+                                "\r\n" + //
+                                "WHERE races.season = ? \r\n" + //
+                                "\r\n" + //
+                                "GROUP BY \r\n" + //
+                                "\r\n" + //
+                                "CAST(drivers.driverFirstName AS NVARCHAR(MAX)), \r\n" + //
+                                "\r\n" + //
+                                "CAST(drivers.driverLastName AS NVARCHAR(MAX)),   \r\n" + //
+                                "\r\n" + //
+                                "CAST(constructors.constructorName AS NVARCHAR(MAX)) \r\n" + //
+                                "\r\n" + //
+                                "order BY \r\n" + //
+                                "\r\n" + //
+                                "totalPoints DESC; ";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            if(parts.length == 1 && !parts[0].equals("")){
+                statement.setInt(1, Integer.parseInt(parts[0]));
+            }
+            else{
+                statement.setInt(1, 2024);
+            }
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-5s| %-20s| %-20s| %-20s| %-10s%n", "Place", "First Name", "Last Name", "Team Name", "Points");
+            System.out.println("-".repeat(100));
+            int place = 0;
+            while(resultSet.next()){
+                String first = resultSet.getString("driverFirstName");
+                String last = resultSet.getString("driverLastName");
+                String team = resultSet.getString("teamName");
+                int points = resultSet.getInt("totalPoints");
+                System.out.printf("%-5d| %-20s| %-20s| %-20s| %-10d%n", ++place, first, last, team, points);
             }
             System.out.println("");
             resultSet.close();
