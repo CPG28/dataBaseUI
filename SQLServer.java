@@ -433,25 +433,50 @@ public class SQLServer {
             
         }
         else if(help.equalsIgnoreCase("circuitDriverWins")){
-            
+            System.out.println("circuitDriverWins [circuitID]\n");
+            System.out.println("This command returns names of all the drivers that have won at a given circuit. This may be interesting for the user to see trends, or one track where one driver appears to be more dominant that at others.\n");
+            System.out.println("[circuitID] - A user must input a circuitID for this command. They may find circuitIDs from the circuits command.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("circuitConsWins")){
-            
+            System.out.println("circuitConWins [circuitID]\n");
+            System.out.println("This command returns names of all the teams that have won at a given circuit. This may be interesting for the user to see trends, or one track where one team appears to be more dominant that at others over the sports history.\n");
+            System.out.println("[circuitID] - A user must input a circuitID for this command. They may find circuitIDs from the circuits command.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("posToWin")){
-            
+            System.out.println("posToWin [startPos]\n");
+            System.out.println("This command returns statistics regarding the likelihood of finishing placements based on a user inputted start position. This is an interesting statistic, and may be used to demonstrate the importance of starting higher on the grid.\n");
+            System.out.println("[startPos] - A user must input a start position.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("curDrivers")){
-            
+            System.out.println("curDrivers\n");
+            System.out.println("This command returns names of all current drivers on the Formula One grid. It is useful for users to be able to get driverIDs of modern drivers, for use in other commands, and for users to be able to see who is currently on the grid.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("curCons")){
-            
+            System.out.println("curCons\n");
+            System.out.println("This command returns names of all current constructors on the Formula One grid. It is useful for users to be able to get driverIDs of modern drivers, for use in other commands, and for users to be able to see teams who arecurrently on the grid.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("dFrom")){
-            
+            System.out.println("dFrom [nationality]\n");
+            System.out.println("This command returns all drivers who are of a certain, user inputted nationality. This may be useful for users to be able to see drivers who are from their own or other nations, and helps to display the sports diversity.\n");
+            System.out.println("[nationality] - A user must input a nationality as a string. Note that nationalities must be properly spelt and capatilized in order for useful data to be returned.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("mostGained")){
-            
+            System.out.println("mostGained\n");
+            System.out.println("This command returns the 10 most positions gained in a race, this is useful for users to be able to see race cases of 'back to front' finishes, and may lead them to other interesting commands in the system\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("driverCircuitWinRate")){
             
