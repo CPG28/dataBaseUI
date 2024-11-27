@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 
 public class MyDatabase {
     private Connection connection;
@@ -755,17 +756,247 @@ public class MyDatabase {
         }
     }
 
+    public void drivers(String arg) {
+        String[] parts = arg.trim().split(" ");
+        String sql = "SELECT DISTINCT drivers.driverID, CAST(drivers.driverFirstName AS NVARCHAR(MAX)) as firstName, CAST(drivers.driverLastName AS NVARCHAR(MAX)) AS lastName, CAST(drivers.driverNationality AS NVARCHAR(MAX)) AS nationality FROM drivers INNER JOIN raceIn ON drivers.driverID = raceIn.driverID INNER JOIN races ON raceIn.raceID = races.raceID WHERE races.season = ?;";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(parts[0]));
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-10s| %-20s| %-20s| %20s\n", "Driver ID", "First Name", "Last Name", "Driver Nationality");
+            System.out.println("-".repeat(76));
+            
+            // To determine if an error message should be printed
+            boolean returned = false;
+            while (resultSet.next()) {
+                int driverID = resultSet.getInt("driverID");
+                String first = resultSet.getString("firstName");
+                String last = resultSet.getString("lastName");
+                String nationality = resultSet.getString("nationality");
+                System.out.printf("%-10d| %-20s| %-20s| %20s\n", driverID, first, last, nationality);
+                returned = true;
+            }
+            if (!returned) {
+                System.out.println("Please enter a valid year.");
+            }
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+    
+    public void cons(String arg) {
+        String[] parts = arg.trim().split(" ");
+        String sql = "SELECT DISTINCT constructors.constructorID, CAST(constructors.constructorName AS NVARCHAR(MAX)) AS name, CAST(constructors.constructorNationality AS NVARCHAR(MAX)) AS nationality FROM constructors INNER JOIN partakeIn ON constructors.constructorID = partakeIn.constructorID INNER JOIN races ON partakeIn.raceID = races.raceID WHERE races.season = ?; ";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(parts[0]));
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-15s| %-20s| %-25s\n", "Constructor ID", "Constructor Name", "Constructor Nationality");
+            System.out.println("-".repeat(62));
+            
+            // To determine if an error message should be printed
+            boolean returned = false;
+            while (resultSet.next()) {
+                int constructorID = resultSet.getInt("constructorID");
+                String constructorName = resultSet.getString("name");
+                String constructorNationality = resultSet.getString("nationality");
+                System.out.printf("%-15d| %-20s| %-25s\n", constructorID, constructorName, constructorNationality);
+                returned = true;
+            }
+            if (!returned) {
+                System.out.println("Please enter a valid year.");
+            }
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void dChampAfter(String arg) {
+        String[] parts = arg.trim().split(" ");
+        String sql = "SELECT driverStandings.driverID, drivers.driverFirstName, drivers.driverLastName, driverStandings.totalPoints, driverStandings.wins FROM driverStandings INNER JOIN drivers on driverStandings.driverID = drivers.driverID WHERE driverStandings.raceID = ? ORDER BY driverStandings.totalPoints DESC;";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(parts[0]));
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-10s| %-20s| %-20s| %-15s| %-10s\n", "Driver ID", "First Name", "Last Name", "Total Points", "Num Wins");
+            System.out.println("-".repeat(81));
+            
+            // To determine if an error message should be printed
+            boolean returned = false;
+            while (resultSet.next()) {
+                int driverID = resultSet.getInt("driverID");
+                String first = resultSet.getString("driverFirstName");
+                String last = resultSet.getString("driverLastName");
+                int totalPoints = resultSet.getInt("totalPoints");
+                int numWins = resultSet.getInt("wins");
+                System.out.printf("%-10d| %-20s| %-20s| %-15d| %-10d\n", driverID, first, last, totalPoints, numWins);
+                returned = true;
+            }
+            if (!returned) {
+                System.out.println("No standings for that race ID or invalid race ID.");
+            }
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void conChampAfter(String arg) {
+        String[] parts = arg.trim().split(" ");
+        String sql = "SELECT constructorStandings.constructorID, constructors.constructorName, constructorStandings.totalPoints, constructorStandings.wins FROM constructorStandings INNER JOIN constructors ON constructorStandings.constructorID = constructors.constructorID WHERE constructorStandings.raceID = ? ORDER BY constructorStandings.totalPoints DESC;";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(parts[0]));
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-15s| %-20s| %-15s| %-10s\n", "Constructor ID", "Constructor Name", "Total Points", "Num Wins");
+            System.out.println("-".repeat(64));
+            
+            // To determine if an error message should be printed
+            boolean returned = false;
+            while (resultSet.next()) {
+                int constructorID = resultSet.getInt("constructorID");
+                String constructorName = resultSet.getString("constructorName");
+                int totalPoints = resultSet.getInt("totalPoints");
+                int numWins = resultSet.getInt("wins");
+                System.out.printf("%-15d| %-20s| %-15d| %-10d\n", constructorID, constructorName, totalPoints, numWins);
+                returned = true;
+            }
+            if (!returned) {
+                System.out.println("No standings for that race ID or invalid race ID.");
+            }
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    // need to account for nulls?
+    public void quali(String arg) {
+        String[] parts = arg.trim().split(" ");
+        String sql = "SELECT drivers.driverID, drivers.driverFirstName, drivers.driverLastName, constructors.constructorID, constructors.constructorName, results.finalPos, results.carNum, qualifyingResults.q1Time, qualifyingResults.q2Time, qualifyingResults.q3Time FROM qualifyingResults INNER JOIN results ON qualifyingResults.resultID = results.resultID INNER JOIN drivers ON results.driverID = drivers.driverID INNER JOIN constructors ON results.constructorID = constructors.constructorID WHERE results.raceID = ?;";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(parts[0]));
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-10s| %-20s| %-20s| %-15s| %-20s| %-10s| %-10s| %-10s| %-10s| %-10s\n", "Driver ID", "First Name", "Last Name", "Constructor ID", "Constructor Name", "Final Pos", "Q1 Time", "Q2 Time", "Q3 Time", "Car Num");
+            System.out.println("-".repeat(150));
+            
+            // To determine if an error message should be printed
+            boolean returned = false;
+            while (resultSet.next()) {
+                int driverID = resultSet.getInt("driverID");
+                String driverFirst = resultSet.getString("driverFirstName");
+                String driverLast = resultSet.getString("driverLastName");
+                int constructorID = resultSet.getInt("constructorID");
+                String constructorName = resultSet.getString("constructorName");
+                int finalPos = resultSet.getInt("finalPos");
+                Time q1 = resultSet.getTime("q1Time");
+                Time q2 = resultSet.getTime("q2Time");
+                Time q3 = resultSet.getTime("q3Time");
+                int carNum = resultSet.getInt("carNum");
+                System.out.printf("%-10s| %-20s| %-20s| %-15s| %-20s| %-10s| %-10s| %-10s| %-10s| %-10d\n", driverID, driverFirst, driverLast, constructorID, constructorName, finalPos, q1, q2, q3, carNum);
+                returned = true;
+            }
+            if (!returned) {
+                System.out.println("No qualifying results for that race ID and race type.");
+            }
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    // need to account for nulls?
+    public void results(String arg) {
+        String[] parts = arg.trim().split(" ");
+        String sql = "SELECT drivers.driverID, drivers.driverFirstName, drivers.driverLastName, constructors.constructorID, constructors.constructorName, results.finalPos, results.carNum, raceResults.startPos, raceResults.numPoints FROM raceResults INNER JOIN results ON raceResults.resultID = results.resultID INNER JOIN drivers ON results.driverID = drivers.driverID INNER JOIN constructors ON results.constructorID = constructors.constructorID WHERE results.raceID = ? AND CONVERT(VARCHAR, raceResults.raceType) = ?;";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(parts[0]));
+            statement.setString(2, parts[1]);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-10s| %-20s| %-20s| %-15s| %-20s| %-10s| %-10s| %-11s| %-10s\n", "Driver ID", "First Name", "Last Name", "Constructor ID", "Constructor Name", "Start Pos", "Final Pos", "Num Points", "Car Num");
+            System.out.println("-".repeat(139));
+            
+            // To determine if an error message should be printed
+            boolean returned = false;
+            while (resultSet.next()) {
+                int driverID = resultSet.getInt("driverID");
+                String driverFirst = resultSet.getString("driverFirstName");
+                String driverLast = resultSet.getString("driverLastName");
+                int constructorID = resultSet.getInt("constructorID");
+                String constructorName = resultSet.getString("constructorName");
+                int startPos = resultSet.getInt("startPos");
+                int finalPos = resultSet.getInt("finalPos");
+                int numPoints = resultSet.getInt("numPoints");
+                int carNum = resultSet.getInt("carNum");
+                System.out.printf("%-10d| %-20s| %-20s| %-15d| %-20s| %-10d| %-10d| %-11d| %-10d\n", driverID, driverFirst, driverLast, constructorID, constructorName, startPos, finalPos, numPoints, carNum);
+                returned = true;
+            }
+            if (!returned) {
+                System.out.println("No results for that race ID and race type.");
+            }
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void driversCon(String arg) {
+        String[] parts = arg.trim().split(" ");
+        String sql = "SELECT constructors.constructorName, constructors.constructorID FROM constructors INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID INNER JOIN drivers ON drivers.driverID = raceFor.driverID WHERE CONVERT(VARCHAR, drivers.driverFirstName) = ? AND CONVERT(VARCHAR, drivers.driverLastName) = ?; ";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, parts[0]);
+            statement.setString(2, parts[1]);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println();
+            System.out.printf("%-15s| %-20s\n", "Constructor ID", "Constructor Name");
+            System.out.println("-".repeat(32));
+            
+            // To determine if an error message should be printed
+            boolean returned = false;
+            while (resultSet.next()) {
+                int id = resultSet.getInt("constructorID");
+                String name = resultSet.getString("constructorName");
+                System.out.printf("%-10d| %-20s\n", id, name);
+                returned = true;
+            }
+            if (!returned) {
+                System.out.println("No drivers match that name.");
+            }
+
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+    
     public void consDrivers(String arg) {
         String[] parts = arg.trim().split(" ");
-        String sql = "SELECT drivers.driverFirstName, drivers.driverLastName, drivers.driverID \r\n" + //
-                        "\r\n" + //
-                        "FROM constructors \r\n" + //
-                        "\r\n" + //
-                        "INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID  \r\n" + //
-                        "\r\n" + //
-                        "INNER JOIN drivers ON drivers.driverID = raceFor.driverID \r\n" + //
-                        "\r\n" + //
-                        "WHERE CONVERT(VARCHAR, constructors.constructorName) = ?;";
+        String sql = "SELECT drivers.driverFirstName, drivers.driverLastName, drivers.driverID FROM constructors INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID INNER JOIN drivers ON drivers.driverID = raceFor.driverID WHERE CONVERT(VARCHAR, constructors.constructorName) = ?;";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, parts[0]);
@@ -773,12 +1004,20 @@ public class MyDatabase {
             System.out.println();
             System.out.printf("%-10s| %-20s| %-20s\n", "Driver ID", "First Name", "Last Name");
             System.out.println("-".repeat(54));
+            
+            // To determine if an error message should be printed
+            boolean returned = false;
             while (resultSet.next()) {
                 int id = resultSet.getInt("driverID");
                 String first = resultSet.getString("driverFirstName");
                 String last = resultSet.getString("driverLastName");
                 System.out.printf("%-10d| %-20s| %-20s\n", id, first, last);
+                returned = true;
             }
+            if (!returned) {
+                System.out.println("No constructors match that name.");
+            }
+
             System.out.println();
             resultSet.close();
             statement.close();
