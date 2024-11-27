@@ -479,28 +479,68 @@ public class SQLServer {
             //TODO
         }
         else if(help.equalsIgnoreCase("driverCircuitWinRate")){
-            
+            System.out.println("driverCircuitWinRate [numberOfDrivers] [numberOfCircuits]");
+            System.out.println("This command returns statistics about driver win rates in their career. Specifically, this statistic is explained by 'out of all the circuits a driver has raced at, how many have they won?'. Therefore, if a driver has raced at a circuit 10 times, but won their once, since they have succesfully won at that circuit, this would be 100% for this statistic. Since there are some drivers in the database who have raced at very few circuits, users can enter an argumet for a minimum amount of circuits raced at in their results.\n");
+            System.out.println("[numberOfDrivers] - Use this argument to limit the amount of results that you would like to see outputted.");
+            System.out.println("[numberOfCircuits] - Use this argument to impose a minimum amount of circuits that a driver has to have raced at in order to be included in results.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("drivers")){
-            
+            System.out.println("drivers [year]\n");
+            System.out.println("This command returns all of the drivers who participated in the championship from a user entered year. This may be useful to gather driverID's for use in other queries.\n");
+            System.out.println("[year] - A user may input a year in order to see information about drivers who participated in the championship from that year\n");
+            System.out.println("Example:");
+            //TODO
+        }
+        else if(help.equalsIgnoreCase("cons")){
+            System.out.println("cons [year]\n");
+            System.out.println("This command returns all of the teams who participated in the championship from a user entered year. This may be useful to gather constructorIDs for use in other queries.\n");
+            System.out.println("[year] - A user may input a year in order to see information about constructors who participated in the championship from that year\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("dChampAfter")){
-            
+            System.out.println("dChampAfter [raceID]\n");
+            System.out.println("This command returns the championship standings after a particular race, based on a user inputted raceID. This can be used to see trends where drivers lead the championship for a few races at a time..\n");
+            System.out.println("[raceID] - A user must input a raceID to see the championship standings after that particular race.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("conChampAfter")){
-            
+            System.out.println("conChampAfter [raceID]\n");
+            System.out.println("This command returns the constructor's championship standings after a particular race, based on a user inputted raceID. This can be used to see trends where teams lead the championship for a few races at a time.\n");
+            System.out.println("[raceID] - A user must input a raceID to see the championship standings after that particular race.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("quali")){
-            
+            System.out.println("quali [raceID]\n");
+            System.out.println("This command returns the qualifying results from a particular race, based on a user entereed raceID. Be aware that qualification data may have not be tracked accurately, or at all for older races. Also be aware that many format changes have occured, so data may not be what you expect.\n");
+            System.out.println("[raceID] - A user must input a raceID to see the qualifcation standings for that particular race.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("gp")){
-            
+            System.out.println("gp [raceID]\n");
+            System.out.println("This command returns the race (or grand prix) results from a particular race, based on a user entereed raceID. This may be used to see exact placements after a race has occured, and is useful for information for other commands.\n");
+            System.out.println("[raceID] - A user must input a raceID to see the race results for that particular race.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("driversCon")){
-            
+            System.out.println("driversCon [driverID]\n");
+            System.out.println("This command can be used to see a list of every constructor that a driver has driven for over their entire career. This is useful to see to gather data for other commands, and to see how a drivers career lead them to different teams\n");
+            System.out.println("[driverID] - A user must input a driverID to see the teams that a driver has raced for.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else if(help.equalsIgnoreCase("consDrivers")){
-            
+            System.out.println("consDrivers [constructorID]\n");
+            System.out.println("This command can be used to see a list of every driver that a constructor has had drive for them over their entire entire history. This is useful to see to gather data for other commands, and to get a sense for what teams have been in the sport the longest.\n");
+            System.out.println("[constructorID] - A user must input a constructorID to see the drvers that a team has had race for them.\n");
+            System.out.println("Example:");
+            //TODO
         }
         else{
             System.out.println("That is not a valid command");
