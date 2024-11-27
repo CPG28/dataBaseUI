@@ -1,5 +1,6 @@
 # Ignore all compiled Java class files
-*.class
+MyDatabase.class
+SQLServer.class
 
 # Ignore IDE files (e.g., IntelliJ, Eclipse)
 .idea/
