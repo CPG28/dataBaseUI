@@ -82,18 +82,17 @@ public class SQLServer {
 			if (line.indexOf(" ") > 0)
 				arg = line.substring(line.indexOf(" ")).trim();
 
-			if (parts[0].equals("help"))
-                if(parts.length > 1){
+            if (parts[0].equals("help") && (parts.length == 1 || parts.length == 2))
+                if (parts.length == 2) {
                     printDetailedHelp(parts[1]);
-                }
-                else{
+                } else {
 				    printHelp();
                 }
-            if(parts[0].equals("clear")){
+            else if (parts[0].equals("clear") && parts.length == 1) {
                 clearScreen();
             }
             
-            if(parts[0].equals("d")){
+            else if (parts[0].equals("d") && parts.length >= 1 && parts.length <= 3) {
                 db.driverSearch(arg);
             }
             if(parts[0].equals("circuits")){
