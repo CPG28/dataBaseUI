@@ -82,7 +82,7 @@ public class SQLServer {
 			if (line.indexOf(" ") > 0) {
 				arg = line.substring(line.indexOf(" ")).trim();
             }
-			else if (parts[0].equals("help")) {
+			if (parts[0].equals("help")) {
                 if(parts.length > 1){
                     printDetailedHelp(parts[1]);
                 } else {
@@ -143,11 +143,11 @@ public class SQLServer {
             //TODO
             else if(parts[0].equals("circuitDriverWins")){
 				try {
-					if (parts.length >= 2){
+                    if (parts.length == 2) {
                         db.circuitDriverWins(arg);
                     }
 					else{
-						System.out.println("This command requires an argument (circuitID)");
+						System.out.println("Incorrect number of arguments");
                     }
 				} catch (Exception e) {
 					System.out.println("Argument must be an integer");
@@ -305,7 +305,7 @@ public class SQLServer {
 				}
             }
             else {
-                System.out.println("Invalid command, type help to view commands");
+                System.out.println("Invalid command, type 'help' to view commands");
             }
 			System.out.print("db > ");
 			line = console.nextLine();
