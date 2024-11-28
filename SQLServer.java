@@ -75,8 +75,9 @@ public class SQLServer {
         System.out.print("db > ");
         String line = console.nextLine();
         String[] parts;
-        String arg = "";
+        String arg;
         while (line != null && !line.equals("quit")) {
+            arg = "";
             parts = line.split("\\s+");
             if (line.indexOf(" ") > 0) {
                 arg = line.substring(line.indexOf(" ")).trim();
@@ -101,7 +102,7 @@ public class SQLServer {
                 try {
                     db.dChampSearch(arg);
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
                 }
             }
 
@@ -109,7 +110,7 @@ public class SQLServer {
                 try {
                     db.cChampSearch(arg);
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
                 }
             } else if (parts[0].equals("youngestWin")) {
                 try {
@@ -119,7 +120,7 @@ public class SQLServer {
                         System.out.println("This command requires an argument (number of results)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
                 }
             }
             // TODO
@@ -131,7 +132,7 @@ public class SQLServer {
                         System.out.println("This command requires atleast one argument (driverID)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
                 }
             }
 
@@ -139,7 +140,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.circuitDriverWins(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments");
+                    System.out.println("Incorrect number of arguments. Arguments: [circuitID]");
                 }
             }
 
@@ -147,7 +148,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.circuitConsWins(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments");
+                    System.out.println("Incorrect number of arguments. Arguments: [circuitID]");
                 }
             }
 
@@ -174,25 +175,30 @@ public class SQLServer {
                     System.out.println("This command requires no arguments");
                 }
             }
-            // TODO
+
             else if (parts[0].equals("dFrom")) {
-                try {
-                    if (parts.length >= 2) {
-                        // to do function
-                    } else {
-                        System.out.println("This command requires an argument (nationality)");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be a string");
+                if (parts.length == 2) {
+                    db.dFrom(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Arguments: [nationality]");
+                }
+            }
+
+            else if (parts[0].equals("mostGained")) {
+                if (parts.length == 1 | parts.length == 2) {
+                    db.mostGained(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Arguments: [top]");
                 }
             }
             // TODO
-            else if (parts[0].equals("mostGained")) {
-                clearScreen();
-            }
-            // TODO
             else if (parts[0].equals("driverCircuitWinRate")) {
-                clearScreen();
+                if (parts.length == 3) {
+                    db.driverCircuitWinRate(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Arguments: [numberDrivers] [numberCircuits]");
+                }
+
             } else if (parts[0].equals("drivers")) {
                 try {
                     if (parts.length >= 2) {
@@ -201,7 +207,7 @@ public class SQLServer {
                         System.out.println("This command requires an argument (year)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
                 }
             } else if (parts[0].equals("cons")) {
                 try {
@@ -211,7 +217,13 @@ public class SQLServer {
                         System.out.println("This command requires an argument (year)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
+                }
+            } else if (parts[0].equals("races")) {
+                if (parts.length == 2) {
+                    db.races(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Arguments: [year]");
                 }
             } else if (parts[0].equals("dChampAfter")) {
                 try {
@@ -221,7 +233,7 @@ public class SQLServer {
                         System.out.println("This command requires an argument (raceID)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
                 }
             } else if (parts[0].equals("conChampAfter")) {
                 try {
@@ -231,7 +243,7 @@ public class SQLServer {
                         System.out.println("This command requires an argument (raceID)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
                 }
             } else if (parts[0].equals("quali")) {
                 try {
@@ -241,7 +253,7 @@ public class SQLServer {
                         System.out.println("This command requires an argument (raceID)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be positive integer");
                 }
             } else if (parts[0].equals("results")) {
                 try {
@@ -251,7 +263,7 @@ public class SQLServer {
                         System.out.println("This command requires an argument (raceID) (raceType, gp or sr)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be a positive integer");
                 }
             } else if (parts[0].equals("driversCon")) {
                 try {
@@ -274,7 +286,7 @@ public class SQLServer {
                     System.out.println("Argument must be a name");
                 }
             } else {
-                System.out.println("Invalid command, type 'help' to view commands");
+                System.out.println("'" + line + "'is an invalid command. Type 'help' to view all available commands.");
             }
             System.out.print("db > ");
             line = console.nextLine();
@@ -472,9 +484,9 @@ public class SQLServer {
             System.out.println("Example:");
             // TODO
         } else if (help.equalsIgnoreCase("mostGained")) {
-            System.out.println("mostGained\n");
+            System.out.println("mostGained [topNum]\n");
             System.out.println(
-                    "This command returns the 10 most positions gained in a race, this is useful for users to be able to see race cases of 'back to front' finishes, and may lead them to other interesting commands in the system\n");
+                    "This command returns the most positions gained in a race, this is useful for users to be able to see race cases of 'back to front' finishes, and may lead them to other interesting commands in the system\n");
             System.out.println("Example:");
             // TODO
         } else if (help.equalsIgnoreCase("driverCircuitWinRate")) {
@@ -619,7 +631,7 @@ public class SQLServer {
         System.out.println(YELLOW + "currDrivers - See all current Drivers" + RESET);
         System.out.println(GREEN + "currCons - See all current Constructors" + RESET);
         System.out.println(BLUE + "dFrom [nationality] - See all drivers of a inputted nationality" + RESET);
-        System.out.println(INDIGO + "mostGained - See statistics for most positions gained in a race");
+        System.out.println(INDIGO + "mostGained [topNum] - See statistics for the most positions gained in a race. topNum indicates the number of results to output. Default is the top 10.");
         System.out.println(VIOLET
                 + "driverCircuitWinRate [numberDrivers] [numberCircuits] - Out of all the circuits a driver has raced at, how many have they won at? number of drivers: num rows to output, numberCircuits: min number of circuits drivers output must hav raced at"
                 + RESET);
