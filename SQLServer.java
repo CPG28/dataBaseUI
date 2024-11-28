@@ -79,28 +79,29 @@ public class SQLServer {
 		String arg = "";
         while (line != null && !line.equals("quit")) {
 			parts = line.split("\\s+");
-			if (line.indexOf(" ") > 0)
+			if (line.indexOf(" ") > 0) {
 				arg = line.substring(line.indexOf(" ")).trim();
-
-			if (parts[0].equals("help"))
+            }
+			else if (parts[0].equals("help")) {
                 if(parts.length > 1){
                     printDetailedHelp(parts[1]);
                 }
                 else{
 				    printHelp();
                 }
-            if(parts[0].equals("clear")){
+            }
+            else if(parts[0].equals("clear")){
                 clearScreen();
             }
             
-            if(parts[0].equals("d")){
+            else if(parts[0].equals("d")){
                 db.driverSearch(arg);
             }
-            if(parts[0].equals("circuits")){
+            else if(parts[0].equals("circuits")){
                 db.circuitsSearch(arg);
             }
             
-            if(parts[0].equals("dChamp")){
+            else if(parts[0].equals("dChamp")){
                 try {
                     db.dChampSearch(arg);
 				} catch (Exception e) {
@@ -108,14 +109,14 @@ public class SQLServer {
 				}
             }
             
-            if(parts[0].equals("cChamp")){
+            else if(parts[0].equals("cChamp")){
                 try {
                     db.cChampSearch(arg);
 				} catch (Exception e) {
 					System.out.println("Argument must be an integer");
 				}
             }
-            if(parts[0].equals("youngestWin")){
+            else if(parts[0].equals("youngestWin")){
 				try {
 					if (parts.length >= 1){
 					    db.youngestWin(arg);
@@ -128,7 +129,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("wins")){
+            else if(parts[0].equals("wins")){
                 try {
 					if (parts.length >= 1){
 					    db.wins(arg);
@@ -141,7 +142,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("circuitDriverWins")){
+            else if(parts[0].equals("circuitDriverWins")){
 				try {
 					if (parts.length >= 2){
                         db.circuitDriverWins(arg);
@@ -154,7 +155,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("circuitConsWins")){
+            else if(parts[0].equals("circuitConsWins")){
 				try {
 					if (parts.length >= 2){
 					    //to do function
@@ -167,7 +168,7 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("posToWin")){
+            else if(parts[0].equals("posToWin")){
 				try {
 					if (parts.length >= 2){
 					    //to do function
@@ -180,15 +181,15 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("curDrivers")){
+            else if(parts[0].equals("curDrivers")){
                 clearScreen();
             }
             //TODO
-            if(parts[0].equals("curCons")){
+            else if(parts[0].equals("curCons")){
                 clearScreen();
             }
             //TODO
-            if(parts[0].equals("dFrom")){
+            else if(parts[0].equals("dFrom")){
 				try {
 					if (parts.length >= 2){
 					    //to do function
@@ -201,18 +202,17 @@ public class SQLServer {
 				}
             }
             //TODO
-            if(parts[0].equals("mostGained")){
+            else if(parts[0].equals("mostGained")){
                 clearScreen();
             }
             //TODO
-            if(parts[0].equals("driverCircuitWinRate")){
+            else if(parts[0].equals("driverCircuitWinRate")){
                 clearScreen();
             }
-            //TODO
-            if(parts[0].equals("drivers")){
+            else if(parts[0].equals("drivers")){
                 try {
 					if (parts.length >= 2){
-					    //to do function
+					    db.drivers(arg);
                     }
 					else{
 						System.out.println("This command requires an argument (year)");
@@ -221,11 +221,10 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
-            if(parts[0].equals("cons")){
+            else if(parts[0].equals("cons")){
                 try {
 					if (parts.length >= 2){
-					    //to do function
+					    db.cons(arg);
                     }
 					else{
 						System.out.println("This command requires an argument (year)");
@@ -234,11 +233,10 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
-            if(parts[0].equals("dChampAfter")){
+            else if(parts[0].equals("dChampAfter")){
                 try {
 					if (parts.length >= 2){
-					    //to do function
+					    db.dChampAfter(arg);
                     }
 					else{
 						System.out.println("This command requires an argument (raceID)");
@@ -247,11 +245,10 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
-            if(parts[0].equals("conChampAfter")){
+            else if(parts[0].equals("conChampAfter")){
                 try {
 					if (parts.length >= 2){
-					    //to do function
+					    db.conChampAfter(arg);
                     }
 					else{
 						System.out.println("This command requires an argument (raceID)");
@@ -260,11 +257,10 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
-            if(parts[0].equals("quali")){
+            else if(parts[0].equals("quali")){
                 try {
 					if (parts.length >= 2){
-					    //to do function
+					    db.quali(arg);
                     }
 					else{
 						System.out.println("This command requires an argument (raceID)");
@@ -273,44 +269,44 @@ public class SQLServer {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
-            if(parts[0].equals("gp")){
+            else if(parts[0].equals("results")){
                 try {
-					if (parts.length >= 2){
-					    //to do function
+					if (parts.length >= 3){
+					    db.results(arg);
                     }
 					else{
-						System.out.println("This command requires an argument (raceID)");
+						System.out.println("This command requires an argument (raceID) (raceType, gp or sr)");
                     }
 				} catch (Exception e) {
 					System.out.println("Argument must be an integer");
 				}
             }
-            //TODO
-            if(parts[0].equals("driversCon")){
+            else if(parts[0].equals("driversCon")){
                 try {
 					if (parts.length >= 2){
-					    //to do function
+					    db.driversCon(arg);
                     }
 					else{
-						System.out.println("This command requires an argument (driverID)");
+						System.out.println("This command requires arguments (driverFirstName) (driverLastName)");
                     }
 				} catch (Exception e) {
-					System.out.println("Argument must be an integer");
+					System.out.println("Argument must be names");
 				}
             }
-            //TODO
-            if(parts[0].equals("consDrivers")){
+            else if(parts[0].equals("consDrivers")){
                 try {
 					if (parts.length >= 2){
-					    //to do function
+                        db.consDrivers(arg);
                     }
 					else{
-						System.out.println("This command requires an argument (constructorID)");
+						System.out.println("This command requires an argument (constructorName)");
                     }
 				} catch (Exception e) {
-					System.out.println("Argument must be an integer");
+					System.out.println("Argument must be a name");
 				}
+            }
+            else {
+                System.out.println("Invalid command, type help to view commands");
             }
 			System.out.print("db > ");
 			line = console.nextLine();
