@@ -506,7 +506,8 @@ public class MyDatabase {
             int raceCount = resultSet.getInt("raceCount");
             int winCount = resultSet.getInt("winCount");
             int poleCount = resultSet.getInt("poleCount");
-            System.out.printf("%-10d| %-20s| %-20s| %-15s| %-10s| %-10s| %-10s %n", id, first, last, pointCount, raceCount, winCount, poleCount);
+            System.out.printf("%-10d| %-20s| %-20s| %-15s| %-10s| %-10s| %-10s %n", id, first, last, pointCount,
+                    raceCount, winCount, poleCount);
         }
         System.out.println("");
         resultSet.close();
@@ -531,7 +532,7 @@ public class MyDatabase {
                 }
             }
             else{
-                sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits order by circuitLatitude; ";
+                sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits order by circuitName; ";
             }
 			PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
@@ -688,7 +689,6 @@ public class MyDatabase {
             System.out.println();
             System.out.printf("%-10s| %-20s| %-20s| %-25s| %-20s%n", "driverID", "First Name", "Last Name", "Race Name","Age at Win");
             System.out.println("-".repeat(100));
-            int place = 0;
             while(resultSet.next()){
                 int id = resultSet.getInt("driverID");
                 String first = resultSet.getString("driverFirstName");
@@ -1025,6 +1025,293 @@ public class MyDatabase {
             e.printStackTrace(System.out);
         }
     }
+
+    public void circuitDriverWins(String arg) {
+        if (isNumeric(arg)) {
+            String sql = "WITH gpResults AS ( \n" + //
+                    "\n" + //
+                    "SELECT raceResults.resultID  \n" + //
+                    "\n" + //
+                    "FROM raceResults  \n" + //
+                    "\n" + //
+                    "WHERE CAST(raceType AS VARCHAR(255)) = 'GP' \n" + //
+                    "\n" + //
+                    "), \n" + //
+                    "\n" + //
+                    "gpRaces as ( \n" + //
+                    "\n" + //
+                    "select driverID, raceID, finalPos from results \n" + //
+                    "\n" + //
+                    "where resultID in (select resultID from gpResults) \n" + //
+                    "\n" + //
+                    "), \n" + //
+                    "\n" + //
+                    "driversWinsAtCircuit as ( \n" + //
+                    "\n" + //
+                    "select driverID, COUNT(CASE WHEN gpRaces.finalPos = 1 THEN 1 END) as numWins from gpRaces \n" + //
+                    "\n" + //
+                    "join races on gpRaces.raceID = races.raceID \n" + //
+                    "\n" + //
+                    "join circuits on races.circuitID = circuits.circuitID \n" + //
+                    "\n" + //
+                    "where circuits.circuitID = ? \n" + //
+                    "\n" + //
+                    "GROUP BY driverID \n" + //
+                    "\n" + //
+                    "having COUNT(CASE WHEN gpRaces.finalPos = 1 THEN 1 END) >= 1 \n" + //
+                    "\n" + //
+                    ") \n" + //
+                    "\n" + //
+                    "select drivers.driverID, driverFirstName, driverLastName, numWins from drivers \n" + //
+                    "\n" + //
+                    "join driversWinsAtCircuit on drivers.driverID = driversWinsAtCircuit.driverID \n" + //
+                    "\n" + //
+                    "order by numWins desc; ";
+
+            try {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, arg);
+                ResultSet resultSet = statement.executeQuery();
+
+                System.out.println();
+                System.out.printf("%-10s| %-20s| %-20s| %-10s\n", "driverID", "First Name", "Last Name", "Num Wins");
+                System.out.println("-".repeat(65));
+
+                // // To determine if an error message should be printed
+                boolean returned = false;
+                while (resultSet.next()) {
+                    String id = resultSet.getString("driverID");
+                    String first = resultSet.getString("driverFirstName");
+                    String last = resultSet.getString("driverLastName");
+                    String wins = resultSet.getString("numWins");
+                    System.out.printf("%-10s| %-20s| %-20s| %-10s\n", id, first, last, wins);
+                    returned = true;
+                }
+                if (!returned) {
+                    System.out.println("No circuitID's match the input ID.");
+                }
+
+                System.out.println();
+                resultSet.close();
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.out);
+            }
+        } else {
+            System.out.println("Argument must be a circuitID");
+        }
+    }
+
+    public void circuitConsWins(String arg) {
+        if (isNumeric(arg)) {
+            String sql = "WITH gpResults AS ( \n" + //
+                    "\n" + //
+                    "SELECT raceResults.resultID  \n" + //
+                    "\n" + //
+                    "FROM raceResults  \n" + //
+                    "\n" + //
+                    "WHERE CAST(raceType AS VARCHAR(255)) = 'GP' \n" + //
+                    "\n" + //
+                    "), \n" + //
+                    "\n" + //
+                    "gpRaces as ( \n" + //
+                    "\n" + //
+                    "select constructorID, raceID, finalPos from results \n" + //
+                    "\n" + //
+                    "where resultID in (select resultID from gpResults) \n" + //
+                    "\n" + //
+                    "), \n" + //
+                    "\n" + //
+                    "constructorsWinsAtCircuit as ( \n" + //
+                    "\n" + //
+                    "select constructorID, COUNT(CASE WHEN gpRaces.finalPos = 1 THEN 1 END) as numWins from gpRaces \n"
+                    + //
+                    "\n" + //
+                    "join races on gpRaces.raceID = races.raceID \n" + //
+                    "\n" + //
+                    "join circuits on races.circuitID = circuits.circuitID \n" + //
+                    "\n" + //
+                    "where circuits.circuitID = ? \n" + //
+                    "\n" + //
+                    "GROUP BY constructorID \n" + //
+                    "\n" + //
+                    "having COUNT(CASE WHEN gpRaces.finalPos = 1 THEN 1 END) >= 1 \n" + //
+                    "\n" + //
+                    ") \n" + //
+                    "\n" + //
+                    "select constructors.constructorID, constructorName, numWins from constructors \n" + //
+                    "\n" + //
+                    "join constructorsWinsAtCircuit on constructors.constructorID = constructorsWinsAtCircuit.constructorID \n"
+                    + //
+                    "\n" + //
+                    "order by numWins desc;";
+
+            try {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, arg);
+                ResultSet resultSet = statement.executeQuery();
+
+                System.out.println();
+                System.out.printf("%-15s| %-20s| %-10s\n", "constructorID", "Constructor", "Num Wins");
+                System.out.println("-".repeat(49));
+
+                // // To determine if an error message should be printed
+                boolean returned = false;
+                while (resultSet.next()) {
+                    String id = resultSet.getString("constructorID");
+                    String name = resultSet.getString("constructorName");
+                    String wins = resultSet.getString("numWins");
+                    System.out.printf("%-15s| %-20s| %-10s\n", id, name, wins);
+                    returned = true;
+                }
+                if (!returned) {
+                    System.out.println("No circuitID's match the input ID.");
+                }
+
+                System.out.println();
+                resultSet.close();
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.out);
+            }
+        } else {
+            System.out.println("Argument must be a circuitID");
+        }
+    }
+
+    public void posToWin() {
+        String sql = "WITH gpResults AS ( \n" + //
+                "\n" + //
+                "    SELECT raceResults.resultID  \n" + //
+                "\n" + //
+                "    FROM raceResults  \n" + //
+                "\n" + //
+                "    WHERE CAST(raceType AS VARCHAR(255)) = 'GP' \n" + //
+                "\n" + //
+                ") \n" + //
+                "\n" + //
+                "SELECT raceResults.startPos, \n" + //
+                "\n" + //
+                "(COUNT(CASE WHEN results.finalPos = 1 THEN 1 END) * 1.0 / COUNT(*)) * 100 AS avgConversionRate \n" + //
+                "\n" + //
+                "FROM results \n" + //
+                "\n" + //
+                "JOIN raceResults ON results.resultID = raceResults.resultID \n" + //
+                "\n" + //
+                "WHERE raceResults.resultID IN (SELECT resultID FROM gpResults) \n" + //
+                "\n" + //
+                "and startPos != 0 \n" + //
+                "\n" + //
+                "GROUP BY raceResults.startPos \n" + //
+                "\n" + //
+                "order by startPos; ";
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            System.out.println();
+            System.out.printf("%-18s| %-17s\n", "Starting Position", "Win Rate (%)");
+            System.out.println("-".repeat(33));
+
+            // // To determine if an error message should be printed
+            while (resultSet.next()) {
+                String start = resultSet.getString("startPos");
+                Float winRate = resultSet.getFloat("avgConversionRate");
+                System.out.printf("%-18s| %-17.2f\n", start, winRate);
+            }
+
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void currDrivers() {
+        String sql = "WITH currentDrivers AS ( \n" + //
+                        "\n" + //
+                        "    \tSELECT DISTINCT drivers.driverID FROM drivers  \n" + //
+                        "\n" + //
+                        "    \tINNER JOIN raceIn ON drivers.driverID = raceIn.driverID  \n" + //
+                        "\n" + //
+                        "    \tINNER JOIN races ON raceIn.raceID = races.raceID \n" + //
+                        "\n" + //
+                        "    \tWHERE races.season IN (SELECT MAX(races.season) FROM races) \n" + //
+                        "\n" + //
+                        ") \n" + //
+                        "\n" + //
+                        "SELECT drivers.driverID, drivers.driverFirstName, drivers.driverLastName \n" + //
+                        "\n" + //
+                        "FROM drivers  \n" + //
+                        "\n" + //
+                        "INNER JOIN currentDrivers ON drivers.driverID = currentDrivers.driverID order by CAST(driverLastName as NVARCHAR(MAX));";
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            System.out.println();
+            System.out.printf("%-10s| %-20s| %-20s\n", "driverID", "First Name", "Last Name");
+            System.out.println("-".repeat(55));
+
+            // // To determine if an error message should be printed
+            while (resultSet.next()) {
+                String id = resultSet.getString("driverID");
+                String first = resultSet.getString("driverFirstName");
+                String last = resultSet.getString("driverLastName");
+                System.out.printf("%-10s| %-20s| %-20s\n", id, first, last);
+            }
+
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void currCons() {
+        String sql = "WITH currentConstructors AS ( \n" + //
+                        "\n" + //
+                        "    \tSELECT DISTINCT constructors.constructorID FROM constructors INNER JOIN  \n" + //
+                        "\n" + //
+                        "partakeIn ON constructors.constructorID = partakeIn.constructorID  \n" + //
+                        "\n" + //
+                        "    \tINNER JOIN races ON partakeIn.raceID = races.raceID \n" + //
+                        "\n" + //
+                        "    \tWHERE races.season IN (SELECT MAX(races.season) FROM races) \n" + //
+                        "\n" + //
+                        ") \n" + //
+                        "\n" + //
+                        "SELECT constructors.constructorID, constructors.constructorName FROM constructors  \n" + //
+                        "\n" + //
+                        "INNER JOIN currentConstructors ON constructors.constructorID = currentConstructors.constructorID order by CAST(constructorName as NVARCHAR(MAX)); ";
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            System.out.println();
+            System.out.printf("%-14s| %-20s\n", "constructorID", "Constructor");
+            System.out.println("-".repeat(35));
+
+            // // To determine if an error message should be printed
+            while (resultSet.next()) {
+                String id = resultSet.getString("constructorID");
+                String name = resultSet.getString("constructorName");
+                System.out.printf("%-14s| %-20s\n", id, name);
+            }
+
+            System.out.println();
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
     //helper function
     private static boolean isNumeric(String str) {
         try {
