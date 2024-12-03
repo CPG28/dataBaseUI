@@ -176,7 +176,7 @@ public class SQLServer {
                 }
             }
 
-            else if (parts[0].equals("dFrom")) {
+            else if (parts[0].equals("dNationality")) {
                 if (parts.length == 2) {
                     db.dFrom(arg);
                 } else {
@@ -285,7 +285,7 @@ public class SQLServer {
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer");
                 }
-            } else if (parts[0].equals("delteData")) {
+            } else if (parts[0].equals("deleteData")) {
                 db.deleteData(arg);
             } else if (parts[0].equals("repopulate")) {
                 db.repopulate(arg);
@@ -300,6 +300,7 @@ public class SQLServer {
     }
 
     public static void printDetailedHelp(String help) {
+        System.out.println();
         System.out.println("HELP MENU FOR COMMAND " + help);
         System.out.println();
         if (help.equalsIgnoreCase("help")) {
@@ -311,12 +312,14 @@ public class SQLServer {
             System.out.println("db> help help");
             System.out.println("This command would result in the page you see before you");
             ;
+            System.out.println();
 
         } else if (help.equalsIgnoreCase("clear")) {
             System.out.println("clear");
             System.out.println();
             System.out.println(
                     "This command has the functionality of clearing the terminal screen of text. It may be useful to you after viewing a large lable, or to provide a clear screen to load a help menu or to take photographic documentation for a report. It was initially provided to allow for easier debugging of the program, but has been left here for your use.\n\n Happy clearing!");
+            System.out.println();
         } else if (help.equalsIgnoreCase("d")) {
             System.out.println("d [name] [number]\n");
             System.out.println(
@@ -326,7 +329,7 @@ public class SQLServer {
             System.out.println(
                     "[number] - This number will limit the number of outputted results that the user would see. If a user chooses to omit this, they will see every driver in the database that matches the entered name.\n");
             System.out.println("Example:");
-            System.out.println("db> d lew ham 5");
+            System.out.println("db > d lew ham 5");
             System.out.println(
                     "driverID  | First Name          | Last Name           | Point Total    | Race Count| Win Count | Pole Count\r\n"
                             + //
@@ -341,6 +344,7 @@ public class SQLServer {
                             "777       | Philip              | Fotheringham-Parker | 0              | 1         | 0         | 0\r\n"
                             + //
                             "101       | David               | Brabham             | 0              | 30        | 0         | 0");
+            System.out.println();
         } else if (help.equalsIgnoreCase("circuits")) {
             System.out.println("circuits [n/s]\n");
             System.out.println(
@@ -361,20 +365,16 @@ public class SQLServer {
                     + //
                     "56        | Prince George Circuit                   | South Africa        | 28                  | -33\r\n"
                     + //
-                    "30        | Kyalami                                 | South Africa        | 28                  | -26\r\n"
-                    + //
-                    "18        | Autódromo José Carlos Pace              | Brazil              | -47                 | -24\r\n"
-                    + //
-                    "36        | Autódromo Internacional Nelson Piquet   | Brazil              | -43                 | -23");
-
+                    "30        | Kyalami                                 | South Africa        | 28                  | -26");
+            System.out.println();
         } else if (help.equalsIgnoreCase("dChamp")) {
             System.out.println("dChamp [year]\n");
             System.out.println(
-                    "This command allows the user to view the drivers championship for a specified year. If the user chooses not to specify the year, the most recent season in the database is returned. This may also be useful for a user to view what drivers were succesful during what seasons, which may lead the user toward more interesting commands.\n");
+                    "This command allows the user to view the drivers championship for a specified year. If the user chooses not to specify the year, the most recent season in the database is returned. This may also be useful for a user to view what drivers were successful during what seasons, which may lead the user toward more interesting commands.\n");
             System.out.println(
                     "[year] - The user may choose to enter a year they would like to see the drivers championship from. Omit this argument to see the championship from the most recent season.\n");
             System.out.println("Example:");
-            System.out.println("db>dChamp 2002");
+            System.out.println("db > dChamp 2002");
             System.out.println("Place| First Name          | Last Name           | Team Name           | Points\r\n" + //
                     "----------------------------------------------------------------------------------------------------\r\n"
                     + //
@@ -382,6 +382,7 @@ public class SQLServer {
                     "2    | Rubens              | Barrichello         | Ferrari             | 77        \r\n" + //
                     "3    | Juan                | Pablo Montoya       | Williams            | 50        \r\n" + //
                     "4    | Ralf                | Schumacher          | Williams            | 42   ");
+            System.out.println();
         } else if (help.equalsIgnoreCase("cChamp")) {
             System.out.println("cChamp [year]\n");
             System.out.println(
@@ -389,7 +390,7 @@ public class SQLServer {
             System.out.println(
                     "[year] - The user may choose to enter a year they would like to see the constructors championship from. Omit this argument to see the championship from the most recent season.\n");
             System.out.println("Example:");
-            System.out.println("db>cChamp 2002");
+            System.out.println("db > cChamp 2002");
             System.out.println("Place| Team Name           | Points\r\n" + //
                     "----------------------------------------------------------------------------------------------------\r\n"
                     + //
@@ -398,6 +399,7 @@ public class SQLServer {
                     "3    | McLaren             | 65\r\n" + //
                     "4    | Renault             | 23        \r\n" + //
                     "5    | Sauber              | 11");
+            System.out.println();
         } else if (help.equalsIgnoreCase("youngestWin")) {
             System.out.println("youngestWin [number]\n");
             System.out.println(
@@ -405,7 +407,7 @@ public class SQLServer {
             System.out.println(
                     "[number] - Use this argument to limit the amount of results you would like to see. Beware, omitting this will return every race win in the sports history, in ascending order of age at win.\n");
             System.out.println("Example:");
-            System.out.println("db>youngestWin 5");
+            System.out.println("db > youngestWin 5");
             System.out.println(
                     "driverID  | First Name          | Last Name           | Race Name                | Age at Win\r\n"
                             + //
@@ -420,6 +422,7 @@ public class SQLServer {
                             "20        | Sebastian           | Vettel              | Italian Grand Prix       | 21\r\n"
                             + //
                             "20        | Sebastian           | Vettel              | Italian Grand Prix       | 21");
+            System.out.println();
         } else if (help.equalsIgnoreCase("wins")) {
             System.out.println("wins [dID] [year]\n");
             System.out.println(
@@ -429,7 +432,7 @@ public class SQLServer {
             System.out.println(
                     "[year] - A user may enter this to only see a drivers wins from a single season. Not entering a year argument will return wins from the drivers entire career\n");
             System.out.println("Example:");
-            System.out.println("db>wins 3 2016");
+            System.out.println("db > wins 3 2016");
             System.out.println("\r\n" + //
                     "\r\n" + //
                     "Race Name                     | Race Date      | RaceType\r\n" + //
@@ -438,11 +441,8 @@ public class SQLServer {
                     "Bahrain Grand Prix            | 2016-04-03     | GP        \r\n" + //
                     "Chinese Grand Prix            | 2016-04-17     | GP\r\n" + //
                     "Russian Grand Prix            | 2016-05-01     | GP\r\n" + //
-                    "European Grand Prix           | 2016-06-19     | GP        \r\n" + //
-                    "Belgian Grand Prix            | 2016-08-28     | GP\r\n" + //
-                    "Italian Grand Prix            | 2016-09-04     | GP\r\n" + //
-                    "Singapore Grand Prix          | 2016-09-18     | GP        \r\n" + //
-                    "Japanese Grand Prix           | 2016-10-09     | GP");
+                    "European Grand Prix           | 2016-06-19     | GP");
+            System.out.println();
 
         } else if (help.equalsIgnoreCase("circuitDriverWins")) {
             System.out.println("circuitDriverWins [circuitID]\n");
@@ -451,7 +451,15 @@ public class SQLServer {
             System.out.println(
                     "[circuitID] - A user must input a circuitID for this command. They may find circuitIDs from the circuits command.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > circuitDriverWins 9");
+            System.out.println("driverID  | First Name          | Last Name           | Num Wins  \n" + //
+                                "-----------------------------------------------------------------\n" + //
+                                "1         | Lewis               | Hamilton            | 9         \n" + //
+                                "117       | Alain               | Prost               | 5         \n" + //
+                                "373       | Jim                 | Clark               | 3         \n" + //
+                                "30        | Michael             | Schumacher          | 3         \n" + //
+                                "95        | Nigel               | Mansell             | 3 ");
+            System.out.println();
         } else if (help.equalsIgnoreCase("circuitConsWins")) {
             System.out.println("circuitConsWins [circuitID]\n");
             System.out.println(
@@ -459,50 +467,96 @@ public class SQLServer {
             System.out.println(
                     "[circuitID] - A user must input a circuitID for this command. They may find circuitIDs from the circuits command.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > circuitConsWins 4");
+            System.out.println("constructorID  | Constructor         | Num Wins  \n" + //
+                    "-------------------------------------------------\n" + //
+                    "6              | Ferrari             | 8         \n" + //
+                    "131            | Mercedes            | 7         \n" + //
+                    "3              | Williams            | 6         \n" + //
+                    "9              | Red Bull            | 6         \n" + //
+                    "1              | McLaren             | 4  ");
+            System.out.println();
         } else if (help.equalsIgnoreCase("posToWin")) {
             System.out.println("posToWin\n");
             System.out.println(
                     "This command returns statistics regarding the likelihood of finishing placements based on a user inputted start position. This is an interesting statistic, and may be used to demonstrate the importance of starting higher on the grid.\n");
-            System.out.println("[startPos] - A user must input a start position.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > posToWin");
+            System.out.println("Starting Position | Win Rate (%)     \n" + //
+                                "---------------------------------\n" + //
+                                "1                 | 42.35            \n" + //
+                                "2                 | 23.81            \n" + //
+                                "3                 | 12.16            \n" + //
+                                "4                 | 5.89             \n" + //
+                    "5                 | 4.38 ");
+            System.out.println();
         } else if (help.equalsIgnoreCase("currDrivers")) {
             System.out.println("currDrivers\n");
             System.out.println(
                     "This command returns names of all current drivers on the Formula One grid. It is useful for users to be able to get driverIDs of modern drivers, for use in other commands, and for users to be able to see who is currently on the grid.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > currDrivers");
+            System.out.println("driverID  | First Name          | Last Name           \n" + //
+                                "-------------------------------------------------------\n" + //
+                                "848       | Alexander           | Albon               \n" + //
+                                "4         | Fernando            | Alonso              \n" + //
+                                "860       | Oliver              | Bearman             \n" + //
+                                "822       | Valtteri            | Bottas              \n" + //
+                                "842       | Pierre              | Gasly ");
+            System.out.println();
         } else if (help.equalsIgnoreCase("currCons")) {
             System.out.println("currCons\n");
             System.out.println(
                     "This command returns names of all current constructors on the Formula One grid. It is useful for users to be able to get driverIDs of modern drivers, for use in other commands, and for users to be able to see teams who are currently on the grid.\n");
             System.out.println("Example:");
-            // TODO
-        } else if (help.equalsIgnoreCase("dFrom")) {
-            System.out.println("dFrom [nationality]\n");
+            System.out.println("db > currCons");
+            System.out.println("constructorID | Constructor         \n" + //
+                                "-----------------------------------\n" + //
+                                "214           | Alpine F1 Team      \n" + //
+                                "117           | Aston Martin        \n" + //
+                                "6             | Ferrari             \n" + //
+                                "210           | Haas F1 Team        \n" + //
+                                "1             | McLaren ");
+            System.out.println();
+        } else if (help.equalsIgnoreCase("dNationality")) {
+            System.out.println("dNationality [nationality]\n");
             System.out.println(
                     "This command returns all drivers who are of a certain, user inputted nationality. This may be useful for users to be able to see drivers who are from their own or other nations, and helps to display the sports diversity.\n");
             System.out.println(
-                    "[nationality] - A user must input a nationality as a string. Note that nationalities must be properly spelt and capatilized in order for useful data to be returned.\n");
+                    "[nationality] - A user must input a nationality as a string. Note that nationalities must be properly spelt and capitalized in order for useful data to be returned.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > dNationality japanese");
+            System.out.println("driverID  | First Name          | Last Name           \n" + //
+                                "-----------------------------------------------------\n" + //
+                                "299       | Hiroshi             | Fushida             \n" + //
+                                "287       | Masahiro            | Hasemi              \n" + //
+                                "144       | Naoki               | Hattori             \n" + //
+                                "273       | Kazuyoshi           | Hoshino             \n" + //
+                                "34        | Yuji                | Ide  ");
+            System.out.println();
         } else if (help.equalsIgnoreCase("mostGained")) {
             System.out.println("mostGained [topNum]\n");
             System.out.println(
                     "This command returns the most positions gained in a race, this is useful for users to be able to see race cases of 'back to front' finishes, and may lead them to other interesting commands in the system\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > mostGained 2");
+            System.out.println("Pos Gained | driverID | First Name         | Last Name          | Race                          | Season    \n" + //
+                                "----------------------------------------------------------------------------------------------------------\n" + //
+                                "30         | 509      | Jim                | Rathmann           | Indianapolis 500              | 1957      \n" + //
+                                "29         | 512      | Johnny             | Thomson            | Indianapolis 500              | 1955     ");
+            System.out.println();
         } else if (help.equalsIgnoreCase("driverCircuitWinRate")) {
             System.out.println("driverCircuitWinRate [numberOfDrivers] [numberOfCircuits]");
             System.out.println(
-                    "This command returns statistics about driver win rates in their career. Specifically, this statistic is explained by 'out of all the circuits a driver has raced at, how many have they won?'. Therefore, if a driver has raced at a circuit 10 times, but won their once, since they have succesfully won at that circuit, this would be 100% for this statistic. Since there are some drivers in the database who have raced at very few circuits, users can enter an argumet for a minimum amount of circuits raced at in their results.\n");
+                    "This command returns statistics about driver win rates in their career. Specifically, this statistic is explained by 'out of all the circuits a driver has raced at, how many have they won?'. Therefore, if a driver has raced at a circuit 10 times, but won their once, since they have successfully won at that circuit, this would be 100% for this statistic. Since there are some drivers in the database who have raced at very few circuits, users can enter an argument for a minimum amount of circuits raced at in their results.\n");
             System.out.println(
                     "[numberOfDrivers] - Use this argument to limit the amount of results that you would like to see outputted.");
             System.out.println(
                     "[numberOfCircuits] - Use this argument to impose a minimum amount of circuits that a driver has to have raced at in order to be included in results.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > ");
+            System.out.println();
+            System.out.println();
         } else if (help.equalsIgnoreCase("drivers")) {
             System.out.println("drivers [year]\n");
             System.out.println(
@@ -510,7 +564,15 @@ public class SQLServer {
             System.out.println(
                     "[year] - A user may input a year in order to see information about drivers who participated in the championship from that year\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > drivers 2000");
+            System.out.println("Driver ID | First Name          | Last Name           |   Driver Nationality\n" + //
+                                "----------------------------------------------------------------------------\n" + //
+                                "2         | Nick                | Heidfeld            |               German\n" + //
+                                "14        | David               | Coulthard           |              British\n" + //
+                                "15        | Jarno               | Trulli              |              Italian\n" + //
+                                "18        | Jenson              | Button              |              British\n" + //
+                                "21        | Giancarlo           | Fisichella          |              Italian");
+            System.out.println();
         } else if (help.equalsIgnoreCase("cons")) {
             System.out.println("cons [year]\n");
             System.out.println(
@@ -518,7 +580,15 @@ public class SQLServer {
             System.out.println(
                     "[year] - A user may input a year in order to see information about constructors who participated in the championship from that year\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > cons 1965");
+            System.out.println("Constructor ID | Constructor Name    | Constructor Nationality  \n" + //
+                                "--------------------------------------------------------------\n" + //
+                                "6              | Ferrari             | Italian                  \n" + //
+                                "11             | Honda               | Japanese                 \n" + //
+                                "51             | Alfa Romeo          | Swiss                    \n" + //
+                                "66             | BRM                 | British                  \n" + //
+                                "93             | RE                  | Rhodesian ");
+            System.out.println();
         } else if (help.equalsIgnoreCase("dChampAfter")) {
             System.out.println("dChampAfter [raceID]\n");
             System.out.println(
@@ -526,7 +596,9 @@ public class SQLServer {
             System.out.println(
                     "[raceID] - A user must input a raceID to see the championship standings after that particular race.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("db > ");
+            System.out.println();
+            System.out.println();
         } else if (help.equalsIgnoreCase("conChampAfter")) {
             System.out.println("conChampAfter [raceID]\n");
             System.out.println(
@@ -538,9 +610,9 @@ public class SQLServer {
         } else if (help.equalsIgnoreCase("quali")) {
             System.out.println("quali [raceID]\n");
             System.out.println(
-                    "This command returns the qualifying results from a particular race, based on a user entereed raceID. Be aware that qualification data may have not be tracked accurately, or at all for older races. Also be aware that many format changes have occured, so data may not be what you expect.\n");
+                    "This command returns the qualifying results from a particular race, based on a user entered raceID. Be aware that qualification data may have not be tracked accurately, or at all for older races. Also be aware that many format changes have occurred, so data may not be what you expect.\n");
             System.out.println(
-                    "[raceID] - A user must input a raceID to see the qualifcation standings for that particular race.\n");
+                    "[raceID] - A user must input a raceID to see the qualification standings for that particular race.\n");
             System.out.println("Example:");
             // TODO
         } else if (help.equalsIgnoreCase("gp")) {
@@ -628,7 +700,7 @@ public class SQLServer {
         System.out.println(RESET + "posToWin - Average win rate from each starting position on the grid" + RESET);
         System.out.println(RED + "currDrivers - See all current Drivers" + RESET);
         System.out.println(RESET + "currCons - See all current Constructors" + RESET);
-        System.out.println(RED + "dFrom [nationality] - See all drivers of a inputted nationality" + RESET);
+        System.out.println(RED + "dNationality [nationality] - See all drivers of a inputted nationality" + RESET);
         System.out.println(RESET + "mostGained [topNum] - See statistics for the most positions gained in a race. topNum indicates the number of results to output. Default is the top 10.");
         System.out.println(RED
                 + "driverCircuitWinRate [numberDrivers] [numberCircuits] - Out of all the circuits a driver has raced at, how many have they won at? number of drivers: num rows to output, numberCircuits: min number of circuits drivers output must hav raced at"
