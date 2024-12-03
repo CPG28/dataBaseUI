@@ -255,10 +255,10 @@ public class SQLServer {
                 } catch (Exception e) {
                     System.out.println("Argument must be positive integer");
                 }
-            } else if (parts[0].equals("races")) {
+            } else if (parts[0].equals("results")) {
                 try {
                     if (parts.length >= 3) {
-                        db.races(arg);
+                        db.results(arg);
                     } else {
                         System.out.println("This command requires arguments (raceID) (raceType, gp or sr)");
                     }
@@ -591,7 +591,7 @@ public class SQLServer {
                 "This program was created using data from: https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020");
         System.out.println("Created by: Fraser Newbury, Elizabeth Stoughton, David Xavier");
         System.out.println("Created for COMP3380, at the University of Manitoba in December 2024");
-        System.out.println("Thank You!");
+        System.out.println("Thank You!\n");
     }
 
     public static void clearScreen() {
@@ -602,15 +602,11 @@ public class SQLServer {
         System.out.println();
         System.out.println("FORMULA ONE DATABASE COMMANDS");
         System.out.println("-------------------------------------");
+        System.out.println(YELLOW + "Commands with [] may require an input argument.\nFor example, dChamp [year] could be db > dChamp 2020.\n" + RESET);
         System.out.println("Commands:");
         // more commands here
         System.out.println(RED
                 + "d [name] [numToOutput] - Search for a driver by name, and see stats about them. Inputting no name returns all drivers sorted by points. You may also enter a number to limit results\u001B[0m");
-        System.out.println(RESET
-                + "c [name] [numToOutput] - Search for a constructor by name, and see stats about them. Inputting no name returns all drivers sorted by points. You may also enter a number to limit results\u001B[0m");
-        System.out.println(RED
-                + "circuits [n/s] - See circuits in northern or southern hemispheres. Entering no hemisphere displays all circuits"
-                + RESET);
         System.out.println(RESET
                 + "dChamp [year] - See the drivers championship results from the entered year. Entering no year returns the latest season"
                 + RESET);
@@ -651,11 +647,15 @@ public class SQLServer {
         System.out.println(RED
                 + "driversCon [driverID] - See all constructors a driver has raced for (to find a driver's ID use the 'd' command)");
         System.out.println(RESET
-                + "consDrivers [constructorID] - See all drivers a constructor has had race for them (to find a constructor's ID use the 'c' command)");
-        System.out.println(RED + "clear - Clears the screen and resets the cursor" + RESET);
-        System.out.println(RESET + "deleteData - Deletes all the data from the database");
-        System.out.println(RED + "repopulate - Repopulates data into the database, this may take a while");
-        System.out.println(RESET + "quit - Quit the program" + RESET);
+                + "consDrivers [constructorID] - See all drivers a constructor has had race for them (to find a constructor's ID use the cons [year] command)");
+        System.out.println(RED
+                + "circuits [n/s] - See circuits in northern or southern hemispheres. Entering no hemisphere displays all circuits"
+                + RESET);
+        System.out.println(RESET + "clear - Clears the screen and resets the cursor" + RESET);
+        System.out.println(RED + "deleteData - Deletes all the data from the database");
+        System.out.println(RESET + "repopulate - Repopulates data into the database, this may take a while");
+        System.out.println(RED + "quit - Quit the program" + RESET);
         System.out.println();
+        System.out.println(YELLOW + "For additional information on a command use 'help [commandName]'.\nFor example, db > help consDrivers\n" + RESET);
     }
 }
