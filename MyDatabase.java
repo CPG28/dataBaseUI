@@ -902,10 +902,10 @@ public class MyDatabase {
             statement.setInt(1, Integer.parseInt(parts[0]));
             ResultSet resultSet = statement.executeQuery();
             System.out.println();
-            System.out.printf("%-10s| %-20s| %-20s| %-15s| %-20s| %-10s| %-10s| %-10s| %-10s| %-10s\n", "Driver ID",
-                    "First Name", "Last Name", "Constructor ID", "Constructor Name", "Final Pos", "Q1 Time", "Q2 Time",
+            System.out.printf("%-10s| %-17s| %-17s| %-15s| %-20s| %-5s| %-10s| %-10s| %-10s| %-10s\n", "Driver ID",
+                    "First Name", "Last Name", "Constructor ID", "Constructor Name", "Pos", "Q1 Time", "Q2 Time",
                     "Q3 Time", "Car Num");
-            System.out.println("-".repeat(150));
+            System.out.println("-".repeat(140));
 
             // To determine if an error message should be printed
             boolean returned = false;
@@ -920,8 +920,27 @@ public class MyDatabase {
                 Time q2 = resultSet.getTime("q2Time");
                 Time q3 = resultSet.getTime("q3Time");
                 int carNum = resultSet.getInt("carNum");
-                System.out.printf("%-10s| %-20s| %-20s| %-15s| %-20s| %-10s| %-10s| %-10s| %-10s| %-10d\n", driverID,
-                        driverFirst, driverLast, constructorID, constructorName, finalPos, q1, q2, q3, carNum);
+
+                String sq1;
+                String sq2;
+                String sq3;
+                if (q1 == null) {
+                    sq1 = "";
+                } else {
+                    sq1 = q1.toString();
+                }
+                if (q2 == null) {
+                    sq2 = "";
+                } else {
+                    sq2 = q2.toString();
+                }
+                if (q3 == null) {
+                    sq3 = "";
+                } else {
+                    sq3 = q3.toString();
+                }
+                System.out.printf("%-10s| %-17s| %-17s| %-15s| %-20s| %-5s| %-10s| %-10s| %-10s| %-10d\n", driverID,
+                        driverFirst, driverLast, constructorID, constructorName, finalPos, sq1, sq2, sq3, carNum);
                 returned = true;
             }
             if (!returned) {
@@ -936,7 +955,7 @@ public class MyDatabase {
     }
 
     // need to account for nulls?
-    public void races(String arg) {
+    public void results(String arg) {
         String[] parts = arg.trim().split(" ");
         String sql = "SELECT drivers.driverID, drivers.driverFirstName, drivers.driverLastName, constructors.constructorID, constructors.constructorName, results.finalPos, results.carNum, raceResults.startPos, raceResults.numPoints FROM raceResults INNER JOIN results ON raceResults.resultID = results.resultID INNER JOIN drivers ON results.driverID = drivers.driverID INNER JOIN constructors ON results.constructorID = constructors.constructorID WHERE results.raceID = ? AND CONVERT(VARCHAR, raceResults.raceType) = ?;";
         try {
@@ -958,11 +977,17 @@ public class MyDatabase {
                 String driverLast = resultSet.getString("driverLastName");
                 int constructorID = resultSet.getInt("constructorID");
                 String constructorName = resultSet.getString("constructorName");
-                int startPos = resultSet.getInt("startPos");
-                int finalPos = resultSet.getInt("finalPos");
-                int numPoints = resultSet.getInt("numPoints");
-                int carNum = resultSet.getInt("carNum");
-                System.out.printf("%-10d| %-20s| %-20s| %-15d| %-20s| %-10d| %-10d| %-11d| %-10d\n", driverID,
+                String startPos = resultSet.getString("startPos");
+                String finalPos = resultSet.getString("finalPos");
+                String numPoints = resultSet.getString("numPoints");
+                String carNum = resultSet.getString("carNum");
+                if (finalPos == null) {
+                    finalPos = "DNF";
+                }
+                if (carNum == null) {
+                    carNum = "";
+                }
+                System.out.printf("%-10d| %-20s| %-20s| %-15d| %-20s| %-10s| %-10s| %-11s| %-10s\n", driverID,
                         driverFirst, driverLast, constructorID, constructorName, startPos, finalPos, numPoints, carNum);
                 returned = true;
             }
@@ -973,6 +998,8 @@ public class MyDatabase {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        } catch (Exception e) {
             e.printStackTrace(System.out);
         }
     }
@@ -999,7 +1026,7 @@ public class MyDatabase {
                 returned = true;
             }
             if (!returned) {
-                System.out.println("No drivers match that name.");
+                System.out.println("No drivers match that ID.");
             }
 
             System.out.println();
@@ -1033,7 +1060,7 @@ public class MyDatabase {
                 returned = true;
             }
             if (!returned) {
-                System.out.println("No constructors match that name.");
+                System.out.println("No constructors match that s.");
             }
 
             System.out.println();
@@ -1330,7 +1357,7 @@ public class MyDatabase {
         }
     }
 
-    public void results(String arg) {
+    public void races(String arg) {
         if (isPosNumeric(arg)) {
             String sql = "SELECT races.raceID, races.raceName, races.raceDate,  \n" + //
                     "\n" + //

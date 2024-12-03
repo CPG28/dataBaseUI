@@ -542,15 +542,21 @@ public class SQLServer {
             System.out.println(
                     "[raceID] - A user must input a raceID to see the qualifcation standings for that particular race.\n");
             System.out.println("Example:");
-            // TODO
-        } else if (help.equalsIgnoreCase("gp")) {
-            System.out.println("gp [raceID]\n");
+            
+        } else if (help.equalsIgnoreCase("results")) {
+            System.out.println("results [raceID] [gp/sr]\n");
             System.out.println(
-                    "This command returns the race (or grand prix) results from a particular race, based on a user entered raceID. This may be used to see exact placements after a race has occurred, and is useful for information for other commands.\n");
+                    "This command returns the results, Grand Prix or Sprint Race, from a particular race, based on a user entered raceID and race type. This may be used to see exact placements after a race has occurred, and is useful for information for other commands.\n");
             System.out.println(
                     "[raceID] - A user must input a raceID to see the race results for that particular race.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("Driver ID | First Name          | Last Name           | Constructor ID | Constructor Name    | Start Pos | Final Pos | Num Points | Car Num\r\n" + //
+                                "-------------------------------------------------------------------------------------------------------------------------------------------\r\n" + //
+                                "8         | Kimi                | Räikkönen           | 1              | McLaren             | 7         | 1         | 10         | 9\r\n" + //
+                                "30        | Michael             | Schumacher          | 6              | Ferrari             | 2         | 2         | 8          | 1\r\n" + //
+                                "22        | Rubens              | Barrichello         | 6              | Ferrari             | 20        | 3         | 6          | 2\r\n" + //
+                                "13        | Felipe              | Massa               | 15             | Sauber              | 11        | 4         | 5          | 12\r\n" + //
+                                "17        | Mark                | Webber              | 3              | Williams            | 14        | 5         | 4          | 7");
         } else if (help.equalsIgnoreCase("driversCon")) {
             System.out.println("driversCon [driverID]\n");
             System.out.println(
@@ -558,7 +564,14 @@ public class SQLServer {
             System.out.println(
                     "[driverID] - A user must input a driverID to see the teams that a driver has raced for.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("Constructor ID | Constructor Name    \r\n" + //
+                                "--------------------------------\r\n" + //
+                                "17             | Jordan\r\n" + //
+                                "26             | Lola\r\n" + //
+                                "27             | Ligier\r\n" + //
+                                "29             | Footwork\r\n" + //
+                                "33             | Larrousse\r\n" + //
+                                "49             | Zakspeed");
         } else if (help.equalsIgnoreCase("consDrivers")) {
             System.out.println("consDrivers [constructorID]\n");
             System.out.println(
@@ -566,7 +579,17 @@ public class SQLServer {
             System.out.println(
                     "[constructorID] - A user must input a constructorID to see the drivers that a team has had race for them.\n");
             System.out.println("Example:");
-            // TODO
+            System.out.println("Driver ID | First Name          | Last Name\r\n" + //
+                                "------------------------------------------------------\r\n" + //
+                                "78        | Nicola              | Larini\r\n" + //
+                                "99        | Gabriele            | Tarquini\r\n" + //
+                                "129       | Olivier             | Grouillard\r\n" + //
+                                "133       | Alex                | Caffi               \r\n" + //
+                                "157       | Christian           | Danner");
+        } else if (help.equalsIgnoreCase("deleteData")) {
+            System.out.println("Deletes all the data from all the tables in the database.");
+        } else if (help.equalsIgnoreCase("repopulate")) {
+            System.out.println("Repopulates all data into the database, will likely take a while. Note that it does not re-create tables, only repopulates the data in them.");
         } else {
             System.out.println("That is not a valid command");
         }
