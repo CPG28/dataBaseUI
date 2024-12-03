@@ -933,7 +933,7 @@ public class MyDatabase {
     }
 
     // need to account for nulls?
-    public void results(String arg) {
+    public void races(String arg) {
         String[] parts = arg.trim().split(" ");
         String sql = "SELECT drivers.driverID, drivers.driverFirstName, drivers.driverLastName, constructors.constructorID, constructors.constructorName, results.finalPos, results.carNum, raceResults.startPos, raceResults.numPoints FROM raceResults INNER JOIN results ON raceResults.resultID = results.resultID INNER JOIN drivers ON results.driverID = drivers.driverID INNER JOIN constructors ON results.constructorID = constructors.constructorID WHERE results.raceID = ? AND CONVERT(VARCHAR, raceResults.raceType) = ?;";
         try {
@@ -976,11 +976,12 @@ public class MyDatabase {
 
     public void driversCon(String arg) {
         String[] parts = arg.trim().split(" ");
-        String sql = "SELECT constructors.constructorName, constructors.constructorID FROM constructors INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID INNER JOIN drivers ON drivers.driverID = raceFor.driverID WHERE CONVERT(VARCHAR, drivers.driverFirstName) = ? AND CONVERT(VARCHAR, drivers.driverLastName) = ?; ";
+        // String sql = "SELECT constructors.constructorName, constructors.constructorID FROM constructors INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID INNER JOIN drivers ON drivers.driverID = raceFor.driverID WHERE CONVERT(VARCHAR, drivers.driverFirstName) = ? AND CONVERT(VARCHAR, drivers.driverLastName) = ?; ";
+        String sql = "SELECT constructors.constructorName, constructors.constructorID FROM constructors INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID INNER JOIN drivers ON drivers.driverID = raceFor.driverID WHERE drivers.driverID = ?; ";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, parts[0]);
-            statement.setString(2, parts[1]);
+            statement.setInt(1, Integer.parseInt(parts[0]));
+            // statement.setString(2, parts[1]);
             ResultSet resultSet = statement.executeQuery();
             System.out.println();
             System.out.printf("%-15s| %-20s\n", "Constructor ID", "Constructor Name");
@@ -991,7 +992,7 @@ public class MyDatabase {
             while (resultSet.next()) {
                 int id = resultSet.getInt("constructorID");
                 String name = resultSet.getString("constructorName");
-                System.out.printf("%-10d| %-20s\n", id, name);
+                System.out.printf("%-15d| %-20s\n", id, name);
                 returned = true;
             }
             if (!returned) {
@@ -1008,10 +1009,12 @@ public class MyDatabase {
 
     public void consDrivers(String arg) {
         String[] parts = arg.trim().split(" ");
-        String sql = "SELECT drivers.driverFirstName, drivers.driverLastName, drivers.driverID FROM constructors INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID INNER JOIN drivers ON drivers.driverID = raceFor.driverID WHERE CONVERT(VARCHAR, constructors.constructorName) = ?;";
+        // String sql = "SELECT drivers.driverFirstName, drivers.driverLastName, drivers.driverID FROM constructors INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID INNER JOIN drivers ON drivers.driverID = raceFor.driverID WHERE CONVERT(VARCHAR, constructors.constructorName) = ?;";
+        String sql = "SELECT drivers.driverFirstName, drivers.driverLastName, drivers.driverID FROM constructors INNER JOIN raceFor ON constructors.constructorID = raceFor.constructorID INNER JOIN drivers ON drivers.driverID = raceFor.driverID WHERE constructors.constructorID = ?;";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, parts[0]);
+            statement.setInt(1, Integer.parseInt(parts[0]));
+            // statement.setString(1, parts[0]);
             ResultSet resultSet = statement.executeQuery();
             System.out.println();
             System.out.printf("%-10s| %-20s| %-20s\n", "Driver ID", "First Name", "Last Name");
@@ -1324,7 +1327,7 @@ public class MyDatabase {
         }
     }
 
-    public void races(String arg) {
+    public void results(String arg) {
         if (isPosNumeric(arg)) {
             String sql = "SELECT races.raceID, races.raceName, races.raceDate,  \n" + //
                     "\n" + //

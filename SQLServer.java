@@ -260,7 +260,7 @@ public class SQLServer {
                     if (parts.length >= 3) {
                         db.results(arg);
                     } else {
-                        System.out.println("This command requires an argument (raceID) (raceType, gp or sr)");
+                        System.out.println("This command requires arguments (raceID) (raceType, gp or sr)");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer");
@@ -270,20 +270,20 @@ public class SQLServer {
                     if (parts.length >= 2) {
                         db.driversCon(arg);
                     } else {
-                        System.out.println("This command requires arguments (driverFirstName) (driverLastName)");
+                        System.out.println("This command requires arguments (driverID)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be names");
+                    System.out.println("Argument must be a positive integer");
                 }
             } else if (parts[0].equals("consDrivers")) {
                 try {
                     if (parts.length >= 2) {
                         db.consDrivers(arg);
                     } else {
-                        System.out.println("This command requires an argument (constructorName)");
+                        System.out.println("This command requires an argument (constructorID)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be a name");
+                    System.out.println("Argument must be a positive integer");
                 }
             } else {
                 System.out.println("'" + line + "'is an invalid command. Type 'help' to view all available commands.");
@@ -570,19 +570,19 @@ public class SQLServer {
 
     public static void quitProgram() {
         System.out.println();
-        System.out.println("+--+--+--+--+\r\n" + //
-                "|  |##|  |##|\r\n" + //
-                "|  |##|  |##|\r\n" + //
-                "+--+--+--+--+\r\n" + //
-                "|##|  |##|  |\r\n" + //
-                "|##|  |##|  |\r\n" + //
-                "+--+--+--+--+\r\n" + //
-                "|  |##|  |##|\r\n" + //
-                "|  |##|  |##|\r\n" + //
-                "+--+--+--+--+\r\n" + //
-                "|##|  |##|  |\r\n" + //
-                "|##|  |##|  |\r\n" + //
-                "+--+--+--+--+\n");
+        // System.out.println("+--+--+--+--+\r\n" + //
+        //         "|  |##|  |##|\r\n" + //
+        //         "|  |##|  |##|\r\n" + //
+        //         "+--+--+--+--+\r\n" + //
+        //         "|##|  |##|  |\r\n" + //
+        //         "|##|  |##|  |\r\n" + //
+        //         "+--+--+--+--+\r\n" + //
+        //         "|  |##|  |##|\r\n" + //
+        //         "|  |##|  |##|\r\n" + //
+        //         "+--+--+--+--+\r\n" + //
+        //         "|##|  |##|  |\r\n" + //
+        //         "|##|  |##|  |\r\n" + //
+        //         "+--+--+--+--+\n");
         System.out.println(
                 "This program was created using data from: https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020");
         System.out.println("Created by: Fraser Newbury, Elizabeth Stoughton, David Xavier");
@@ -602,56 +602,54 @@ public class SQLServer {
         // more commands here
         System.out.println(RED
                 + "d [name] [numToOutput] - Search for a driver by name, and see stats about them. Inputting no name returns all drivers sorted by points. You may also enter a number to limit results\u001B[0m");
-        // System.out.println(RED
-        // + "c [name] [numToOutput] - Search for a constructor by name, and see stats
-        // about them. Inputting no name returns all drivers sorted by points. You may
-        // also enter a number to limit results\u001B[0m");
-        System.out.println(ORANGE
+        System.out.println(RESET
+                + "c [name] [numToOutput] - Search for a constructor by name, and see stats about them. Inputting no name returns all drivers sorted by points. You may also enter a number to limit results\u001B[0m");
+        System.out.println(RED
                 + "circuits [n/s] - See circuits in northern or southern hemispheres. Entering no hemisphere displays all circuits"
                 + RESET);
-        System.out.println(YELLOW
+        System.out.println(RESET
                 + "dChamp [year] - See the drivers championship results from the entered year. Entering no year returns the latest season"
                 + RESET);
-        System.out.println(GREEN
+        System.out.println(RED
                 + "cChamp [year] - See the constructors championship results from a entered year. Entering no year returns the latest season"
                 + RESET);
-        System.out.println(BLUE
+        System.out.println(RESET
                 + "youngestWin [number] - See the youngest race winners. Enter a number to limit the amount of results"
                 + RESET);
-        System.out.println(INDIGO
+        System.out.println(RED
                 + "wins [driverID] [year] - List all wins that a driver has had over their entire career. Input a driver ID to see results (to find a driver's ID use the 'd' command). Enter a year to only see wins from that season"
                 + RESET);
-        System.out.println(VIOLET
+        System.out.println(RESET
                 + "circuitDriverWins [circuitID] - See all drivers who have won a race at th given circuit (to find circuit IDs type 'circuits')"
                 + RESET);
         System.out.println(RED
                 + "circuitConsWins [circuitID] - See all constructors who have won a race at th given circuit (to find circuit IDs type 'circuits')"
                 + RESET);
-        System.out.println(ORANGE + "posToWin - Average win rate from each starting position on the grid" + RESET);
-        System.out.println(YELLOW + "currDrivers - See all current Drivers" + RESET);
-        System.out.println(GREEN + "currCons - See all current Constructors" + RESET);
-        System.out.println(BLUE + "dFrom [nationality] - See all drivers of a inputted nationality" + RESET);
-        System.out.println(INDIGO + "mostGained [topNum] - See statistics for the most positions gained in a race. topNum indicates the number of results to output. Default is the top 10.");
-        System.out.println(VIOLET
+        System.out.println(RESET + "posToWin - Average win rate from each starting position on the grid" + RESET);
+        System.out.println(RED + "currDrivers - See all current Drivers" + RESET);
+        System.out.println(RESET + "currCons - See all current Constructors" + RESET);
+        System.out.println(RED + "dFrom [nationality] - See all drivers of a inputted nationality" + RESET);
+        System.out.println(RESET + "mostGained [topNum] - See statistics for the most positions gained in a race. topNum indicates the number of results to output. Default is the top 10.");
+        System.out.println(RED
                 + "driverCircuitWinRate [numberDrivers] [numberCircuits] - Out of all the circuits a driver has raced at, how many have they won at? number of drivers: num rows to output, numberCircuits: min number of circuits drivers output must hav raced at"
                 + RESET);
-        System.out.println(RED + "drivers [year] - See all drivers from a particular year");
-        System.out.println(ORANGE + "cons [year] - See all constructors from a particular year");
-        System.out.println(YELLOW + "races [year] - See all races from a particular year");
-        System.out.println(GREEN
+        System.out.println(RESET + "drivers [year] - See all drivers from a particular year");
+        System.out.println(RED + "cons [year] - See all constructors from a particular year");
+        System.out.println(RESET + "races [year] - See all races from a particular year");
+        System.out.println(RED
                 + "dChampAfter [raceID] - See the drivers championship after a particular race (to find race IDs use the races [year] command)");
-        System.out.println(BLUE
+        System.out.println(RESET
                 + "conChampAfter [raceID] - See the constructors championship after a particular race (to find race IDs use the races [year] command)");
-        System.out.println(INDIGO
+        System.out.println(RED
                 + "quali [raceID] - See the qualifying results for a particular race (to find race IDs use the races [year] command)");
-        System.out.println(VIOLET
-                + "gp [raceID] - See the race results for a particular race (To find race IDs use the races [year] command)");
+        System.out.println(RESET
+                + "results [raceID] [gp/sr] - See the results from a Grand Prix race or a Sprint Race given (To find race IDs use the races [year] command)");
         System.out.println(RED
                 + "driversCon [driverID] - See all constructors a driver has raced for (to find a driver's ID use the 'd' command)");
-        System.out.println(ORANGE
+        System.out.println(RESET
                 + "consDrivers [constructorID] - See all drivers a constructor has had race for them (to find a constructor's ID use the 'c' command)");
-        System.out.println(YELLOW + "clear - Clears the screen and resets the cursor" + RESET);
-        System.out.println(INDIGO + "quit - Quit the program" + RESET);
-        System.out.println("");
+        System.out.println(RED + "clear - Clears the screen and resets the cursor" + RESET);
+        System.out.println(RESET + "quit - Quit the program" + RESET);
+        System.out.println();
     }
 }
