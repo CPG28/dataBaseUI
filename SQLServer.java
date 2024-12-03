@@ -560,7 +560,7 @@ public class SQLServer {
             System.out.println(
                     "This command can be used to see a list of every driver that a constructor has had drive for them over their entire entire history. This is useful to see to gather data for other commands, and to get a sense for what teams have been in the sport the longest.\n");
             System.out.println(
-                    "[constructorID] - A user must input a constructorID to see the drvers that a team has had race for them.\n");
+                    "[constructorID] - A user must input a constructorID to see the drivers that a team has had race for them.\n");
             System.out.println("Example:");
             // TODO
         } else {
@@ -631,7 +631,8 @@ public class SQLServer {
         System.out.println(YELLOW + "currDrivers - See all current Drivers" + RESET);
         System.out.println(GREEN + "currCons - See all current Constructors" + RESET);
         System.out.println(BLUE + "dFrom [nationality] - See all drivers of a inputted nationality" + RESET);
-        System.out.println(INDIGO + "mostGained [topNum] - See statistics for the most positions gained in a race. topNum indicates the number of results to output. Default is the top 10.");
+        System.out.println(INDIGO
+                + "mostGained [topNum] - See statistics for the most positions gained in a race. topNum indicates the number of results to output. Default is the top 10.");
         System.out.println(VIOLET
                 + "driverCircuitWinRate [numberDrivers] [numberCircuits] - Out of all the circuits a driver has raced at, how many have they won at? number of drivers: num rows to output, numberCircuits: min number of circuits drivers output must hav raced at"
                 + RESET);
@@ -649,7 +650,7 @@ public class SQLServer {
         System.out.println(RED
                 + "driversCon [driverID] - See all constructors a driver has raced for (to find a driver's ID use the 'd' command)");
         System.out.println(ORANGE
-                + "consDrivers [constructorID] - See all drivers a constructor has had race for them (to find a constructor's ID use the 'c' command)");
+                + "consDrivers [constructorID] - See all drivers a constructor has had race for them (to find a constructor's ID use the cons [year] command)");
         System.out.println(YELLOW + "clear - Clears the screen and resets the cursor" + RESET);
         System.out.println(INDIGO + "quit - Quit the program" + RESET);
         System.out.println("");
