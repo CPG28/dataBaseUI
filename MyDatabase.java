@@ -504,7 +504,7 @@ public class MyDatabase {
             }
             ResultSet resultSet = statement.executeQuery();
             System.out.println("");
-            System.out.printf("%-10s| %-20s| %-20s| %-15s| %-10s| %-10s| %-10s%n", "driverID", "First Name",
+            System.out.printf("%-10s| %-20s| %-23s| %-13s| %-10s| %-10s| %-10s%n", "driverID", "First Name",
                     "Last Name", "Point Total", "Race Count", "Win Count", "Pole Count");
             System.out.println("-".repeat(110));
             while (resultSet.next()) {
@@ -515,7 +515,7 @@ public class MyDatabase {
                 int raceCount = resultSet.getInt("raceCount");
                 int winCount = resultSet.getInt("winCount");
                 int poleCount = resultSet.getInt("poleCount");
-                System.out.printf("%-10d| %-20s| %-20s| %-15s| %-10s| %-10s| %-10s %n", id, first, last, pointCount,
+                System.out.printf("%-10d| %-20s| %-23s| %-13s| %-10s| %-10s| %-10s %n", id, first, last, pointCount,
                         raceCount, winCount, poleCount);
             }
             System.out.println("");
@@ -539,7 +539,7 @@ public class MyDatabase {
                     sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits where circuitLatitude < 0 order by circuitLatitude; ";
                 }
             } else {
-                sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits order by circuitName; ";
+                sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits order by CAST(circuitName AS NVARCHAR(MAX)); ";
             }
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
