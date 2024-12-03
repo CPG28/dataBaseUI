@@ -255,10 +255,10 @@ public class SQLServer {
                 } catch (Exception e) {
                     System.out.println("Argument must be positive integer");
                 }
-            } else if (parts[0].equals("results")) {
+            } else if (parts[0].equals("races")) {
                 try {
                     if (parts.length >= 3) {
-                        db.results(arg);
+                        db.races(arg);
                     } else {
                         System.out.println("This command requires arguments (raceID) (raceType, gp or sr)");
                     }
@@ -285,6 +285,10 @@ public class SQLServer {
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer");
                 }
+            } else if (parts[0].equals("delteData")) {
+                db.deleteData(arg);
+            } else if (parts[0].equals("repopulate")) {
+                db.repopulate(arg);
             } else {
                 System.out.println("'" + line + "'is an invalid command. Type 'help' to view all available commands.");
             }
@@ -649,6 +653,8 @@ public class SQLServer {
         System.out.println(RESET
                 + "consDrivers [constructorID] - See all drivers a constructor has had race for them (to find a constructor's ID use the 'c' command)");
         System.out.println(RED + "clear - Clears the screen and resets the cursor" + RESET);
+        System.out.println(RESET + "deleteData - Deletes all the data from the database");
+        System.out.println(RED + "repopulate - Repopulates data into the database, this may take a while");
         System.out.println(RESET + "quit - Quit the program" + RESET);
         System.out.println();
     }

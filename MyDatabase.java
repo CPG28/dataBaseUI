@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class MyDatabase {
     private Connection connection;
@@ -1572,7 +1575,40 @@ public class MyDatabase {
         }
     }
 
-    
+    public void deleteData(String args) {
+        try {
+            String[] tableNames = {"raceResults", "qualifyingResults", "results", "constructorStandings", "driverStandings", "partakeIn", "raceIn", "races", "raceFor", "constructors", "drivers", "circuits"};
+
+            for(int i = 0; i < tableNames.length; i++) {
+                String sql = "delete from ?";
+                PreparedStatement deleteStatement = connection.prepareStatement(sql);
+                deleteStatement.setString(1, tableNames[i]);
+                deleteStatement.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    public void repopulate(String args) {
+        try {
+            Scanner insertFile = new Scanner(new File("AllInserts.sql"));
+
+            while(insertFile.hasNextLine()) {
+                String line = insertFile.nextLine();
+                if(!line.equals("")) {
+                    PreparedStatement insert = connection.prepareStatement(line);
+                    insert.execute();
+                }
+            }
+
+            insertFile.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace(System.out);
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
 
     // helper function
     private static boolean isPosNumeric(String str) {
