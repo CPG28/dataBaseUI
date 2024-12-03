@@ -596,8 +596,14 @@ public class SQLServer {
             System.out.println(
                     "[raceID] - A user must input a raceID to see the championship standings after that particular race.\n");
             System.out.println("Example:");
-            System.out.println("db > ");
-            System.out.println();
+            System.out.println("db > dChampAfter 1041");
+            System.out.println("Driver ID | First Name          | Last Name           | Total Points   | Num Wins  \n" + //
+                                "---------------------------------------------------------------------------------\n" + //
+                                "1         | Lewis               | Hamilton            | 230            | 7         \n" + //
+                                "822       | Valtteri            | Bottas              | 161            | 2         \n" + //
+                                "830       | Max                 | Verstappen          | 147            | 1         \n" + //
+                                "817       | Daniel              | Ricciardo           | 78             | 0         \n" + //
+                                "815       | Sergio              | Pérez               | 68             | 0 ");
             System.out.println();
         } else if (help.equalsIgnoreCase("conChampAfter")) {
             System.out.println("conChampAfter [raceID]\n");
