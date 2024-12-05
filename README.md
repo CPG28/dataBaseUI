@@ -1,11 +1,11 @@
-# dataBaseUI
-dataBaseUI
+# Formula One Database - COMP 3380
+Welcome to the formula one database. This project was created for COMP 3380 under the guidance of Prof. Matheson.
 
-## info
-this is the ui for the database, and runs on a computer
+## Info
+This is a command line interface. User may enter "help" to see a list of available commands and their arguments. Users may also enter "help [command]" to see help for a specific command. 
 
-## How to do the run
-using bash shell, run "make" and then "make run"
+## How run the project
+While connected to the university wifi, the project can be run in the CS aviary system using the "make run" command.
 
-## Other Info
-our code is really good, I stole it from robs example
+## Contributions
+This project was created by Fraser Newbury, Elizabeth Stoughton, and David Xavier in December 2024 at the University of Manitoba
