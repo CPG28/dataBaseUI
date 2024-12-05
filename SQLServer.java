@@ -118,7 +118,7 @@ public class SQLServer {
                 if (parts.length == 1 || parts.length == 2) {
                     db.youngestWin(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [numToOutput]\n");
+                    System.out.println("Incorrect number of arguments. Optional argument: [numToOutput]\n");
                 }
             }
             else if (parts[0].equals("wins")) {
@@ -132,7 +132,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.circuitDriverWins(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Argument: [circuitID]\n");
+                    System.out.println("One argument required: [circuitID]\n");
                 }
             }
 
@@ -140,7 +140,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.circuitConsWins(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Argument: [circuitID]\n");
+                    System.out.println("One argument required: [circuitID]\n");
                 }
             }
 
@@ -172,7 +172,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.dFrom(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Argument: [nationality]\n");
+                    System.out.println("One argument required: [nationality]\n");
                 }
             }
 
@@ -180,7 +180,7 @@ public class SQLServer {
                 if (parts.length == 1 || parts.length == 2) {
                     db.mostGained(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Argument: [top]\n");
+                    System.out.println("One argument required: [top]\n");
                 }
             }
 
@@ -195,38 +195,34 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.drivers(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Argument: [year]\n");
+                    System.out.println("One argument required: [year]\n");
                 }
 
             } else if (parts[0].equals("cons")) {
                 if (parts.length == 2) {
                     db.cons(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Argument: [year]\n");
+                    System.out.println("One argument required: [year]\n");
                 }
 
             } else if (parts[0].equals("races")) {
                 if (parts.length == 2) {
                     db.races(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [year]\n");
+                    System.out.println("One argument required: [year]\n");
                 }
             } else if (parts[0].equals("dChampAfter")) {
-                try {
-                    if (parts.length == 2) {
-                        db.dChampAfter(arg);
-                    } else {
-                        System.out.println("This command requires an argument (raceID)\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                if (parts.length == 2) {
+                    db.dChampAfter(arg);
+                } else {
+                    System.out.println("One argument required: [year]\n");
                 }
             } else if (parts[0].equals("conChampAfter")) {
                 try {
                     if (parts.length == 2) {
                         db.conChampAfter(arg);
                     } else {
-                        System.out.println("This command requires an argument (raceID)\n");
+                        System.out.println("One argument required: [raceID]\n");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer");
@@ -236,7 +232,7 @@ public class SQLServer {
                     if (parts.length == 2) {
                         db.quali(arg);
                     } else {
-                        System.out.println("This command requires an argument (raceID)\n");
+                        System.out.println("One argument required: [raceID]\n");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be positive integer");
@@ -246,7 +242,7 @@ public class SQLServer {
                     if (parts.length == 3) {
                         db.results(arg);
                     } else {
-                        System.out.println("This command requires arguments (raceID) (raceType, gp or sr)\n");
+                        System.out.println("Incorrect number of arguments. Arguments: [raceID] [raceType, gp or sr]\n");
                     }
                 } catch (Exception e) {
                     System.out.println("First argument must be an integer\n");
@@ -256,7 +252,7 @@ public class SQLServer {
                     if (parts.length == 2) {
                         db.driversCon(arg);
                     } else {
-                        System.out.println("This command requires arguments (driverID)\n");
+                        System.out.println("One argument required: [driverID]\n");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer\n");
@@ -266,7 +262,7 @@ public class SQLServer {
                     if (parts.length == 2) {
                         db.consDrivers(arg);
                     } else {
-                        System.out.println("This command requires an argument (constructorID)\n");
+                        System.out.println("One argument required: [constructorID]\n");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer\n");
@@ -391,7 +387,7 @@ public class SQLServer {
             System.out.println(
                     "This command returns the youngest driver wins in the sports history, in order of age. The user may enter a number to limit results. Users may find this interesting as it may provide them information about the youngest drivers, and the seasons they raced in.\n");
             System.out.println(
-                    "[number] - Use this argument to limit the amount of results you would like to see. Beware, omitting this will return every race win in the sports history, in ascending order of age at win.\n");
+                    "[number] - Use this argument to limit the amount of results you would like to see. The default number of wins output is 10.\n");
             System.out.println("Example:");
             System.out.println("db > youngestWin 5");
             System.out.println(
@@ -721,7 +717,7 @@ public class SQLServer {
                 + "cChamp [year] - See the constructors championship results from a entered year. Entering no year returns the latest season"
                 + RESET);
         System.out.println(RESET
-                + "youngestWin [numToOutput] - See the youngest race winners. Enter a number to limit the amount of results"
+                + "youngestWin [numToOutput] - See the youngest race winners. Enter a number to limit the amount of results, default is 10."
                 + RESET);
         System.out.println(RED
                 + "wins [driverID] [year] - List all wins that a driver has had over their entire career. Input a driver ID to see results (to find a driver's ID use the 'd' command). Enter a year to only see wins from that season"

@@ -731,8 +731,16 @@ public class MyDatabase {
     public void youngestWin(String arg) {
         try {
             String[] parts = arg.trim().split(" ");
-            if (isPosNumeric(parts[0])) {
-                String sql = "SELECT TOP " + Integer.parseInt(parts[0])
+            int limit = 0;
+            if (arg.equals("")) {
+                limit = 10;
+            } else {
+                if (isPosNumeric(arg)) {
+                    limit = Integer.parseInt(arg);
+                }
+            }
+            if (limit != 0) {
+                String sql = "SELECT TOP " + limit 
                         + "d.driverID, d.driverFirstName, d.driverLastName, r.raceName, \r\n" + //
                         "\r\n" + //
                         "r.raceDate, DATEDIFF(YEAR, d.dob, r.raceDate) AS ageAtWin FROM drivers d \r\n" + //
@@ -812,7 +820,7 @@ public class MyDatabase {
                     statement.setInt(1, Integer.parseInt(parts[0]));
                     statement.setInt(2, Integer.parseInt(parts[1]));
                 } else {
-                    System.out.println("Arguments driverID and year must be a positive integers\n");
+                    System.out.println("Arguments driverID and year must be a positive integer\n");
                 }
             }
             if (sql != null) {
@@ -868,7 +876,7 @@ public class MyDatabase {
                 resultSet.close();
                 statement.close();
             } else {
-                System.out.println("Argument year must be a positive integers\n");
+                System.out.println("Argument year must be a positive integer\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
@@ -904,7 +912,7 @@ public class MyDatabase {
                 resultSet.close();
                 statement.close();
             } else {
-                System.out.println("Argument year must be a positive integers\n");
+                System.out.println("Argument year must be a positive integer\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
@@ -915,31 +923,34 @@ public class MyDatabase {
         String[] parts = arg.trim().split(" ");
         String sql = "SELECT driverStandings.driverID, drivers.driverFirstName, drivers.driverLastName, driverStandings.totalPoints, driverStandings.wins FROM driverStandings INNER JOIN drivers on driverStandings.driverID = drivers.driverID WHERE driverStandings.raceID = ? ORDER BY driverStandings.totalPoints DESC;";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(parts[0]));
-            ResultSet resultSet = statement.executeQuery();
-            System.out.println();
-            System.out.printf("%-10s| %-20s| %-20s| %-15s| %-10s\n", "Driver ID", "First Name", "Last Name",
-                    "Total Points", "Num Wins");
-            System.out.println("-".repeat(81));
+            if (isPosNumeric(parts[0])) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(parts[0]));
+                ResultSet resultSet = statement.executeQuery();
 
-            // To determine if an error message should be printed
-            boolean returned = false;
-            while (resultSet.next()) {
-                int driverID = resultSet.getInt("driverID");
-                String first = resultSet.getString("driverFirstName");
-                String last = resultSet.getString("driverLastName");
-                int totalPoints = resultSet.getInt("totalPoints");
-                int numWins = resultSet.getInt("wins");
-                System.out.printf("%-10d| %-20s| %-20s| %-15d| %-10d\n", driverID, first, last, totalPoints, numWins);
-                returned = true;
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-10s| %-20s| %-20s| %-15s| %-10s\n", "Driver ID", "First Name", "Last Name",
+                            "Total Points", "Num Wins");
+                    System.out.println("-".repeat(81));
+                    do {
+                        int driverID = resultSet.getInt("driverID");
+                        String first = resultSet.getString("driverFirstName");
+                        String last = resultSet.getString("driverLastName");
+                        int totalPoints = resultSet.getInt("totalPoints");
+                        int numWins = resultSet.getInt("wins");
+                        System.out.printf("%-10d| %-20s| %-20s| %-15d| %-10d\n", driverID, first, last, totalPoints,
+                                numWins);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
+                }
+                System.out.println();
+                resultSet.close();
+                statement.close();
+            } else {
+                System.out.println("Argument raceID must be a positive integer\n");
             }
-            if (!returned) {
-                System.out.println("No standings for that race ID or invalid race ID.");
-            }
-            System.out.println();
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
