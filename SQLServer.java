@@ -128,12 +128,11 @@ public class SQLServer {
                     System.out.println("Incorrect number of arguments. Arguments: [driverID], optional argument: [year]\n");
                 }
             }
-
             else if (parts[0].equals("circuitDriverWins")) {
                 if (parts.length == 2) {
                     db.circuitDriverWins(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [circuitID]\n");
+                    System.out.println("Incorrect number of arguments. Argument: [circuitID]\n");
                 }
             }
 
@@ -141,7 +140,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.circuitConsWins(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [circuitID]\n");
+                    System.out.println("Incorrect number of arguments. Argument: [circuitID]\n");
                 }
             }
 
@@ -173,18 +172,18 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.dFrom(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [nationality]\n");
+                    System.out.println("Incorrect number of arguments. Argument: [nationality]\n");
                 }
             }
 
             else if (parts[0].equals("mostGained")) {
-                if (parts.length == 1 | parts.length == 2) {
+                if (parts.length == 1 || parts.length == 2) {
                     db.mostGained(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [top]\n");
+                    System.out.println("Incorrect number of arguments. Argument: [top]\n");
                 }
             }
-            // TODO
+
             else if (parts[0].equals("driverCircuitWinRate")) {
                 if (parts.length == 3) {
                     db.driverCircuitWinRate(arg);
@@ -193,15 +192,12 @@ public class SQLServer {
                 }
 
             } else if (parts[0].equals("drivers")) {
-                try {
-                    if (parts.length == 2) {
-                        db.drivers(arg);
-                    } else {
-                        System.out.println("This command requires an argument (year)\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be an integer\n");
+                if (parts.length == 2) {
+                    db.drivers(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Argument: [year]\n");
                 }
+                
             } else if (parts[0].equals("cons")) {
                 try {
                     if (parts.length == 2) {

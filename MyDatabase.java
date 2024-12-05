@@ -843,30 +843,33 @@ public class MyDatabase {
         String[] parts = arg.trim().split(" ");
         String sql = "SELECT DISTINCT drivers.driverID, CAST(drivers.driverFirstName AS NVARCHAR(MAX)) as firstName, CAST(drivers.driverLastName AS NVARCHAR(MAX)) AS lastName, CAST(drivers.driverNationality AS NVARCHAR(MAX)) AS nationality FROM drivers INNER JOIN raceIn ON drivers.driverID = raceIn.driverID INNER JOIN races ON raceIn.raceID = races.raceID WHERE races.season = ?;";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(parts[0]));
-            ResultSet resultSet = statement.executeQuery();
-            System.out.println();
-            System.out.printf("%-10s| %-20s| %-20s| %20s\n", "Driver ID", "First Name", "Last Name",
-                    "Driver Nationality");
-            System.out.println("-".repeat(76));
+            if (isPosNumeric(parts[0])) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(parts[0]));
+                ResultSet resultSet = statement.executeQuery();
+                
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-10s| %-20s| %-20s| %20s\n", "Driver ID", "First Name", "Last Name",
+                            "Driver Nationality");
+                    System.out.println("-".repeat(76));
+                    do {
+                        int driverID = resultSet.getInt("driverID");
+                        String first = resultSet.getString("firstName");
+                        String last = resultSet.getString("lastName");
+                        String nationality = resultSet.getString("nationality");
+                        System.out.printf("%-10d| %-20s| %-20s| %20s\n", driverID, first, last, nationality);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
+                }
 
-            // To determine if an error message should be printed
-            boolean returned = false;
-            while (resultSet.next()) {
-                int driverID = resultSet.getInt("driverID");
-                String first = resultSet.getString("firstName");
-                String last = resultSet.getString("lastName");
-                String nationality = resultSet.getString("nationality");
-                System.out.printf("%-10d| %-20s| %-20s| %20s\n", driverID, first, last, nationality);
-                returned = true;
+                System.out.println();
+                resultSet.close();
+                statement.close();
+            } else {
+                System.out.println("Argument year must be a positive integers\n");
             }
-            if (!returned) {
-                System.out.println("Please enter a valid year.");
-            }
-            System.out.println();
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
