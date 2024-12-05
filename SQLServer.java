@@ -121,16 +121,11 @@ public class SQLServer {
                     System.out.println("Incorrect number of arguments. Arguments: [numToOutput]\n");
                 }
             }
-            // TODO
             else if (parts[0].equals("wins")) {
-                try {
-                    if (parts.length >= 1) {
-                        db.wins(arg);
-                    } else {
-                        System.out.println("This command requires at least one argument (driverID)\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                if (parts.length == 2 || parts.length == 3) {
+                    db.wins(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Arguments: [driverID], optional argument: [year]\n");
                 }
             }
 

@@ -763,14 +763,14 @@ public class MyDatabase {
                     } while (resultSet.next()); // Iterate through all rows
                 } else {
                     // No rows in the ResultSet
-                    System.out.println("No rows to output");
+                    System.out.println("No results to output");
                 }
 
                 System.out.println();
                 resultSet.close();
                 statement.close();
             } else {
-                System.out.println("Argument numToOutput must be a positive integer");
+                System.out.println("Argument numToOutput must be a positive integer\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
@@ -780,47 +780,60 @@ public class MyDatabase {
     public void wins(String args) {
         try {
             String[] parts = args.trim().split(" ");
-            String sql = "";
+            String sql = null;
             PreparedStatement statement = null;
             if (parts.length == 1) {
-                sql = "select races.raceName, races.raceDate, raceResults.raceType from results  \r\n" + //
-                        "\r\n" + //
-                        "join raceResults on results.resultID = raceResults.resultID  \r\n" + //
-                        "\r\n" + //
-                        "join races on results.raceID = races.raceID \r\n" + //
-                        "\r\n" + //
-                        "where driverID = ? and finalPos = 1 \r\n" + //
-                        "\r\n" + //
-                        "ORDER BY raceDate;";
-                statement = connection.prepareStatement(sql);
-                statement.setInt(1, Integer.parseInt(parts[0]));
+                if (isPosNumeric(parts[0])) {
+                    sql = "select races.raceName, races.raceDate, raceResults.raceType from results  \r\n" + //
+                            "\r\n" + //
+                            "join raceResults on results.resultID = raceResults.resultID  \r\n" + //
+                            "\r\n" + //
+                            "join races on results.raceID = races.raceID \r\n" + //
+                            "\r\n" + //
+                            "where driverID = ? and finalPos = 1 \r\n" + //
+                            "\r\n" + //
+                            "ORDER BY raceDate;";
+                    statement = connection.prepareStatement(sql);
+                    statement.setInt(1, Integer.parseInt(parts[0]));
+                } else {
+                    System.out.println("Argument driverID must be a positive integer\n");
+                }
             } else {
-                sql = "select races.raceName, races.raceDate, raceResults.raceType from results join raceResults on results.resultID = raceResults.resultID  \r\n"
-                        + //
-                        "\r\n" + //
-                        "join races on results.raceID = races.raceID \r\n" + //
-                        "\r\n" + //
-                        "where driverID = ? and finalPos = 1 and season = ? \r\n" + //
-                        "\r\n" + //
-                        "ORDER BY raceDate; ";
-                statement = connection.prepareStatement(sql);
-                statement.setInt(1, Integer.parseInt(parts[0]));
-                statement.setInt(2, Integer.parseInt(parts[1]));
+                if (isPosNumeric(parts[0]) && isPosNumeric(parts[1])) {
+                    sql = "select races.raceName, races.raceDate, raceResults.raceType from results join raceResults on results.resultID = raceResults.resultID  \r\n"
+                            + //
+                            "\r\n" + //
+                            "join races on results.raceID = races.raceID \r\n" + //
+                            "\r\n" + //
+                            "where driverID = ? and finalPos = 1 and season = ? \r\n" + //
+                            "\r\n" + //
+                            "ORDER BY raceDate; ";
+                    statement = connection.prepareStatement(sql);
+                    statement.setInt(1, Integer.parseInt(parts[0]));
+                    statement.setInt(2, Integer.parseInt(parts[1]));
+                } else {
+                    System.out.println("Arguments driverID and year must be a positive integers\n");
+                }
             }
-            ResultSet resultSet = statement.executeQuery();
-            System.out.println();
-            System.out.printf("%-30s| %-15s| %-10s%n", "Race Name", "Race Date", "RaceType");
-            System.out.println("-".repeat(80));
-
-            while (resultSet.next()) {
-                String raceName = resultSet.getString("raceName");
-                String raceDate = resultSet.getString("raceDate");
-                String raceType = resultSet.getString("raceType");
-                System.out.printf("%-30s| %-15s| %-10s%n", raceName, raceDate, raceType);
+            if (sql != null) {
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-30s| %-15s| %-10s%n", "Race Name", "Race Date", "RaceType");
+                    System.out.println("-".repeat(80));
+                    do {
+                        String raceName = resultSet.getString("raceName");
+                        String raceDate = resultSet.getString("raceDate");
+                        String raceType = resultSet.getString("raceType");
+                        System.out.printf("%-30s| %-15s| %-10s%n", raceName, raceDate, raceType);
+                    } while (resultSet.next()); 
+                } else {
+                    System.out.println("No results to output");
+                }
+                System.out.println("");
+                resultSet.close();
+                statement.close();
             }
-            System.out.println("");
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
