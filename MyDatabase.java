@@ -651,7 +651,7 @@ public class MyDatabase {
     }
 
     // helper function
-    public void cChampSearch(String args) {
+    public void cChampSearch(String args) throws Exception{
         try {
             String[] parts = args.trim().split(" ");
             String sql = "SELECT \r\n" + //
@@ -676,20 +676,29 @@ public class MyDatabase {
                     "\r\n" + //
                     " ";
             PreparedStatement statement = connection.prepareStatement(sql);
-            if (parts.length == 1 && !parts[0].equals("")) {
+            if (parts.length >= 1 && !parts[0].equals("")) {
                 statement.setInt(1, Integer.parseInt(parts[0]));
+                if(Integer.parseInt(parts[0]) <0){
+                    throw new Exception();
+                }
             } else {
                 statement.setInt(1, 2024);
             }
+
             ResultSet resultSet = statement.executeQuery();
-            System.out.println();
-            System.out.printf("%-5s| %-20s| %-10s%n", "Place", "Team Name", "Points");
-            System.out.println("-".repeat(100));
-            int place = 0;
-            while (resultSet.next()) {
-                String team = resultSet.getString("teamName");
-                int points = resultSet.getInt("totalPoints");
-                System.out.printf("%-5d| %-20s| %-10d%n", ++place, team, points);
+            if(resultSet.next()){
+                System.out.println();
+                System.out.printf("%-5s| %-20s| %-10s%n", "Place", "Team Name", "Points");
+                System.out.println("-".repeat(100));
+                int place = 0;
+                do{
+                    String team = resultSet.getString("teamName");
+                    int points = resultSet.getInt("totalPoints");
+                    System.out.printf("%-5d| %-20s| %-10d%n", ++place, team, points);
+                } while(resultSet.next());
+            }
+            else{
+                System.out.println("\n No Rows Found");
             }
             System.out.println("");
             resultSet.close();
