@@ -11,12 +11,7 @@ import java.util.Scanner;
 
 public class SQLServer {
     public static final String RED = "\u001B[31m";
-    public static final String ORANGE = "\u001B[33m"; // Closest match (ANSI lacks true orange)
     public static final String YELLOW = "\u001B[33m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String BLUE = "\u001B[34m";
-    public static final String INDIGO = "\u001B[34m"; // Closest match (ANSI lacks indigo)
-    public static final String VIOLET = "\u001B[35m";
     public static final String RESET = "\u001B[0m";
 
     // Connect to your database.
@@ -93,11 +88,14 @@ public class SQLServer {
             }
 
             else if (parts[0].equals("d")) {
-                db.driverSearch(arg);
+                if (parts.length >= 1 && parts.length <= 4) {
+                    db.driverSearch(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Optional arguments: [name] [numToOutput]");
+                }
             } else if (parts[0].equals("circuits")) {
                 db.circuitsSearch(arg);
             }
-
             else if (parts[0].equals("dChamp")) {
                 try {
                     db.dChampSearch(arg);
@@ -752,7 +750,7 @@ public class SQLServer {
         System.out.println(RED + "dNationality [nationality] - See all drivers of a inputted nationality" + RESET);
         System.out.println(RESET + "mostGained [topNum] - See statistics for the most positions gained in a race. topNum indicates the number of results to output. Default is the top 10.");
         System.out.println(RED
-                + "driverCircuitWinRate [numberDrivers] [numberCircuits] - Out of all the circuits a driver has raced at, how many have they won at? number of drivers: num rows to output, numberCircuits: min number of circuits drivers output must hav raced at"
+                + "driverCircuitWinRate [numberDrivers] [numberCircuits] - Out of all the circuits a driver has raced at, how many have they won at? number of drivers: num rows to output, numberCircuits: min number of circuits drivers output must have raced at"
                 + RESET);
         System.out.println(RESET + "drivers [year] - See all drivers from a particular year");
         System.out.println(RED + "cons [year] - See all constructors from a particular year");

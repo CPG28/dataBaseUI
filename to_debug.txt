@@ -1,0 +1,473 @@
+d fr fr fr
+
+
+HUH? Why outputting with negative number?
+db > d fre -22
+driverID  | First Name          | Last Name              | Point Total  | Race Count| Win Count | Pole Count
+--------------------------------------------------------------------------------------------------------------
+670       | Onofre              | Marimón                | 8            | 12        | 0         | 0          
+181       | Manfred             | Winkelhock             | 2            | 55        | 0         | 0          
+615       | Fred                | Agabashian             | 1            | 8         | 0         | 0          
+545       | Fred                | Gamble                 | 0            | 1         | 0         | 0          
+693       | Fred                | Wacker                 | 0            | 3         | 0         | 0          
+792       | Alfredo             | Pián                   | 0            | 1         | 0         | 0          
+
+SHOULD BE INVALID NOT RUN!
+db > d " "^[[C
+driverID  | First Name          | Last Name              | Point Total  | Race Count| Win Count | Pole Count
+--------------------------------------------------------------------------------------------------------------
+
+huh?
+db > dChamp djeiwo jfieof
+Place| First Name          | Last Name           | Team Name           | Points    
+----------------------------------------------------------------------------------------------------
+1    | Max                 | Verstappen          | Red Bull            | 255       
+2    | Lando               | Norris              | McLaren             | 171       
+3    | Charles             | Leclerc             | Ferrari             | 150       
+4    | Carlos              | Sainz               | Ferrari             | 146       
+5    | Oscar               | Piastri             | McLaren             | 124       
+6    | Sergio              | Pérez               | Red Bull            | 118       
+7    | George              | Russell             | Mercedes            | 111       
+8    | Lewis               | Hamilton            | Mercedes            | 110       
+9    | Fernando            | Alonso              | Aston Martin        | 45        
+10   | Lance               | Stroll              | Aston Martin        | 23        
+11   | Nico                | Hülkenberg          | Haas F1 Team        | 22        
+12   | Yuki                | Tsunoda             | RB F1 Team          | 20        
+13   | Daniel              | Ricciardo           | RB F1 Team          | 11        
+14   | Oliver              | Bearman             | Ferrari             | 6         
+15   | Pierre              | Gasly               | Alpine F1 Team      | 6         
+16   | Kevin               | Magnussen           | Haas F1 Team        | 5         
+17   | Alexander           | Albon               | Williams            | 4         
+18   | Esteban             | Ocon                | Alpine F1 Team      | 3         
+19   | Guanyu              | Zhou                | Sauber              | 0         
+20   | Valtteri            | Bottas              | Sauber              | 0         
+21   | Logan               | Sargeant            | Williams            | 0  
+
+
+db > dChamp 3 fierfi cfreu fewhg hew
+Place| First Name          | Last Name           | Team Name           | Points    
+----------------------------------------------------------------------------------------------------
+1    | Max                 | Verstappen          | Red Bull            | 255       
+2    | Lando               | Norris              | McLaren             | 171       
+3    | Charles             | Leclerc             | Ferrari             | 150       
+4    | Carlos              | Sainz               | Ferrari             | 146       
+5    | Oscar               | Piastri             | McLaren             | 124       
+6    | Sergio              | Pérez               | Red Bull            | 118       
+7    | George              | Russell             | Mercedes            | 111       
+8    | Lewis               | Hamilton            | Mercedes            | 110       
+9    | Fernando            | Alonso              | Aston Martin        | 45        
+10   | Lance               | Stroll              | Aston Martin        | 23        
+11   | Nico                | Hülkenberg          | Haas F1 Team        | 22        
+12   | Yuki                | Tsunoda             | RB F1 Team          | 20        
+13   | Daniel              | Ricciardo           | RB F1 Team          | 11        
+14   | Oliver              | Bearman             | Ferrari             | 6         
+15   | Pierre              | Gasly               | Alpine F1 Team      | 6         
+16   | Kevin               | Magnussen           | Haas F1 Team        | 5         
+17   | Alexander           | Albon               | Williams            | 4         
+18   | Esteban             | Ocon                | Alpine F1 Team      | 3         
+19   | Guanyu              | Zhou                | Sauber              | 0         
+20   | Valtteri            | Bottas              | Sauber              | 0         
+21   | Logan               | Sargeant            | Williams            | 0   
+
+
+NO OUTPUT MESSAGE FOR NO RECORDS
+db > dChamp 1
+Place| First Name          | Last Name           | Team Name           | Points    
+----------------------------------------------------------------------------------------------------
+
+^^^ assuming cChamp has all the same problems
+
+INVALID COMMAND
+db > youngestWin 2 2 
+driverID  | First Name          | Last Name           | Race Name                | Age at Win          
+----------------------------------------------------------------------------------------------------
+830       | Max                 | Verstappen          | Spanish Grand Prix       | 19                  
+830       | Max                 | Verstappen          | Malaysian Grand Prix     | 20                  
+
+db > youngestWin -3
+com.microsoft.sqlserver.jdbc.SQLServerException: Incorrect syntax near '-'.
+        at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:265)
+        at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1673)
+        at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:620)
+        at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:540)
+        at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7627)
+        at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:3912)
+        at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:268)
+        at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:242)
+        at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeQuery(SQLServerPreparedStatement.java:459)
+        at MyDatabase.youngestWin(MyDatabase.java:695)
+        at SQLServer.runConsole(SQLServer.java:112)
+        at SQLServer.main(SQLServer.java:50)
+
+maybe have message that says max records printed or something
+db > driverCircuitWinRate 2132 3      
+driverID  | First Name          | Last Name           | Circuits Won At (%) 
+-----------------------------------------------------------------------------
+579       | Juan                | Fangio              | 84.62               
+1         | Lewis               | Hamilton            | 81.58               
+830       | Max                 | Verstappen          | 81.25               
+30        | Michael             | Schumacher          | 67.65               
+647       | Alberto             | Ascari              | 66.67               
+71        | Damon               | Hill                | 65.22               
+373       | Jim                 | Clark               | 65.0                
+117       | Alain               | Prost               | 64.71               
+95        | Nigel               | Mansell             | 59.38               
+475       | Stirling            | Moss                | 57.89               
+20        | Sebastian           | Vettel              | 56.76               
+3         | Nico                | Rosberg             | 56.67               
+102       | Ayrton              | Senna               | 56.67               
+57        | Mika                | Häkkinen            | 56.0                
+328       | Jackie              | Stewart             | 56.0                
+4         | Fernando            | Alonso              | 51.35               
+182       | Niki                | Lauda               | 46.88               
+642       | Nino                | Farina              | 45.45               
+207       | Mario               | Andretti            | 44.0                
+8         | Kimi                | Räikkönen           | 42.86               
+137       | Nelson              | Piquet              | 42.42               
+224       | Emerson             | Fittipaldi          | 40.74               
+18        | Jenson              | Button              | 40.0                
+356       | Jack                | Brabham             | 38.71               
+479       | Tony                | Brooks              | 37.5                
+199       | Carlos              | Reutemann           | 37.04               
+14        | David               | Coulthard           | 35.71               
+35        | Jacques             | Villeneuve          | 34.78               
+231       | James               | Hunt                | 33.33               
+222       | Jody                | Scheckter           | 32.0                
+178       | Alan                | Jones               | 31.25               
+304       | Denny               | Hulme               | 29.63               
+22        | Rubens              | Barrichello         | 27.27               
+358       | Jochen              | Rindt               | 27.27               
+238       | Ronnie              | Peterson            | 26.92               
+203       | Gilles              | Villeneuve          | 26.09               
+23        | Ralf                | Schumacher          | 26.09               
+235       | Jacky               | Ickx                | 25.93               
+31        | Juan                | Pablo Montoya       | 25.0                
+581       | Peter               | Collins             | 25.0                
+77        | Gerhard             | Berger              | 24.14               
+822       | Valtteri            | Bottas              | 23.53               
+13        | Felipe              | Massa               | 23.33               
+289       | Graham              | Hill                | 22.86               
+817       | Daniel              | Ricciardo           | 22.86               
+163       | René                | Arnoux              | 22.58               
+17        | Mark                | Webber              | 22.22               
+172       | Jacques             | Laffite             | 20.0                
+844       | Charles             | Leclerc             | 19.35               
+56        | Eddie               | Irvine              | 18.18               
+187       | John                | Watson              | 17.86               
+177       | Keke                | Rosberg             | 16.67               
+786       | Luigi               | Fagioli             | 16.67               
+476       | Wolfgang            | von Trips           | 16.67               
+119       | Riccardo            | Patrese             | 16.22               
+341       | John                | Surtees             | 16.0                
+223       | Clay                | Regazzoni           | 15.38               
+105       | Michele             | Alboreto            | 15.15               
+360       | Bruce               | McLaren             | 14.29               
+815       | Sergio              | Pérez               | 14.29               
+578       | Mike                | Hawthorn            | 14.29               
+49        | Heinz-Harald        | Frentzen            | 13.64               
+202       | Didier              | Pironi              | 13.64               
+364       | Dan                 | Gurney              | 13.04               
+21        | Giancarlo           | Fisichella          | 11.54               
+65        | Johnny              | Herbert             | 11.11               
+309       | Peter               | Revson              | 11.11               
+375       | Ludovico            | Scarfiotti          | 11.11               
+641       | Piero               | Taruffi             | 11.11               
+123       | Thierry             | Boutsen             | 10.34               
+219       | Jean-Pierre         | Jabouille           | 10.0                
+498       | José Froilán        | González            | 10.0                
+403       | Phil                | Hill                | 10.0                
+345       | Pedro               | Rodríguez           | 9.52                
+832       | Carlos              | Sainz               | 9.38                
+577       | Luigi               | Musso               | 9.09                
+394       | Giancarlo           | Baghetti            | 8.33                
+346       | Jo                  | Siffert             | 8.33                
+221       | Patrick             | Depailler           | 8.0                 
+173       | Elio                | de Angelis          | 7.41                
+385       | Lorenzo             | Bandini             | 6.67                
+386       | Richie              | Ginther             | 6.67                
+847       | George              | Russell             | 6.45                
+175       | Patrick             | Tambay              | 6.25                
+320       | Peter               | Gethin              | 5.56                
+255       | Gunnar              | Nilsson             | 5.0                 
+145       | Alessandro          | Nannini             | 5.0                 
+427       | Maurice             | Trintignant         | 5.0                 
+404       | Innes               | Ireland             | 4.76                
+250       | Carlos              | Pace                | 4.55                
+327       | François            | Cevert              | 4.55                
+44        | Olivier             | Panis               | 4.17                
+5         | Heikki              | Kovalainen          | 4.0                 
+306       | Jean-Pierre         | Beltoise            | 4.0                 
+230       | Vittorio            | Brambilla           | 4.0                 
+200       | Jochen              | Mass                | 4.0                 
+813       | Pastor              | Maldonado           | 4.0                 
+347       | Jo                  | Bonnier             | 3.85                
+15        | Jarno               | Trulli              | 3.7                 
+55        | Jean                | Alesi               | 3.7                 
+9         | Robert              | Kubica              | 3.45                
+846       | Lando               | Norris              | 3.23                
+839       | Esteban             | Ocon                | 3.13                
+842       | Pierre              | Gasly               | 3.13                
+
+2 below contradict each other
+db > drivers 2
+Driver ID | First Name          | Last Name           |   Driver Nationality
+----------------------------------------------------------------------------
+Please enter a valid year.
+
+db > drivers freg
+Argument must be a positive integer
+db > drivers -2
+Driver ID | First Name          | Last Name           |   Driver Nationality
+----------------------------------------------------------------------------
+Please enter a valid year.
+
+SHOULD BE INVALID.. WRONG ARGUMENTS
+db > drivers 2020 fieor 3030
+Driver ID | First Name          | Last Name           |   Driver Nationality
+----------------------------------------------------------------------------
+1         | Lewis               | Hamilton            |              British
+8         | Kimi                | Räikkönen           |              Finnish
+20        | Sebastian           | Vettel              |               German
+154       | Romain              | Grosjean            |               French
+807       | Nico                | Hülkenberg          |               German
+815       | Sergio              | Pérez               |              Mexican
+817       | Daniel              | Ricciardo           |           Australian
+822       | Valtteri            | Bottas              |              Finnish
+825       | Kevin               | Magnussen           |               Danish
+826       | Daniil              | Kvyat               |              Russian
+830       | Max                 | Verstappen          |                Dutch
+832       | Carlos              | Sainz               |              Spanish
+839       | Esteban             | Ocon                |               French
+840       | Lance               | Stroll              |             Canadian
+841       | Antonio             | Giovinazzi          |              Italian
+842       | Pierre              | Gasly               |               French
+844       | Charles             | Leclerc             |           Monegasque
+846       | Lando               | Norris              |              British
+847       | George              | Russell             |              British
+848       | Alexander           | Albon               |                 Thai
+849       | Nicholas            | Latifi              |             Canadian
+850       | Pietro              | Fittipaldi          |            Brazilian
+851       | Jack                | Aitken              |              British
+
+
+wrong number of arguments!
+db > dChampAfter 3 3 3 3
+Driver ID | First Name          | Last Name           | Total Points   | Num Wins  
+---------------------------------------------------------------------------------
+18        | Jenson              | Button              | 21             | 2         
+22        | Rubens              | Barrichello         | 15             | 0         
+10        | Timo                | Glock               | 10             | 0         
+20        | Sebastian           | Vettel              | 10             | 1         
+17        | Mark                | Webber              | 9              | 0         
+15        | Jarno               | Trulli              | 8              | 0         
+2         | Nick                | Heidfeld            | 4              | 0         
+4         | Fernando            | Alonso              | 4              | 0         
+5         | Heikki              | Kovalainen          | 4              | 0         
+1         | Lewis               | Hamilton            | 4              | 0         
+3         | Nico                | Rosberg             | 3              | 0         
+67        | Sébastien           | Buemi               | 3              | 0         
+7         | Sébastien           | Bourdais            | 1              | 0         
+16        | Adrian              | Sutil               | 0              | 0         
+21        | Giancarlo           | Fisichella          | 0              | 0         
+9         | Robert              | Kubica              | 0              | 0         
+8         | Kimi                | Räikkönen           | 0              | 0         
+13        | Felipe              | Massa               | 0              | 0         
+12        | Nelson              | Piquet Jr.          | 0              | 0         
+6         | Kazuki              | Nakajima            | 0              | 0 
+
+^^ assuming conChampAfter has same issues
+
+for d command have warning before printing all drivers: are you sure you want to output all 200?? drivers? Y/N
+easy to accidentally just do d and get bombarded with a ton of records
+do this for circuits as well
+
+invalid. shouldn't be able to input int for command that requires gp or sr
+db > results 2 2 
+Driver ID | First Name          | Last Name           | Constructor ID | Constructor Name    | Start Pos | Final Pos | Num Points | Car Num   
+-------------------------------------------------------------------------------------------------------------------------------------------
+No results for that race ID and race type.
+
+invalid, shouldnt allow negatives
+db > results -101010 gp
+Driver ID | First Name          | Last Name           | Constructor ID | Constructor Name    | Start Pos | Final Pos | Num Points | Car Num   
+-------------------------------------------------------------------------------------------------------------------------------------------
+No results for that race ID and race type.
+
+db > results fe fre
+java.lang.NumberFormatException: For input string: "fe"
+        at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+        at java.base/java.lang.Integer.parseInt(Integer.java:668)
+        at java.base/java.lang.Integer.parseInt(Integer.java:786)
+        at MyDatabase.results(MyDatabase.java:963)
+        at SQLServer.runConsole(SQLServer.java:255)
+        at SQLServer.main(SQLServer.java:50)
+
+shouldn't output, too many arguments
+db > results 3 gp jfewio fiewjfi23 142
+Driver ID | First Name          | Last Name           | Constructor ID | Constructor Name    | Start Pos | Final Pos | Num Points | Car Num   
+-------------------------------------------------------------------------------------------------------------------------------------------
+20        | Sebastian           | Vettel              | 9              | Red Bull            | 1         | 1         | 10         | 15        
+17        | Mark                | Webber              | 9              | Red Bull            | 3         | 2         | 8          | 14        
+18        | Jenson              | Button              | 23             | Brawn               | 5         | 3         | 6          | 22        
+22        | Rubens              | Barrichello         | 23             | Brawn               | 4         | 4         | 5          | 23        
+5         | Heikki              | Kovalainen          | 1              | McLaren             | 12        | 5         | 4          | 2         
+1         | Lewis               | Hamilton            | 1              | McLaren             | 9         | 6         | 3          | 1         
+10        | Timo                | Glock               | 7              | Toyota              | 19        | 7         | 2          | 10        
+67        | Sébastien           | Buemi               | 5              | Toro Rosso          | 10        | 8         | 1          | 12        
+4         | Fernando            | Alonso              | 4              | Renault             | 2         | 9         | 0          | 7         
+8         | Kimi                | Räikkönen           | 6              | Ferrari             | 8         | 10        | 0          | 4         
+7         | Sébastien           | Bourdais            | 5              | Toro Rosso          | 15        | 11        | 0          | 11        
+2         | Nick                | Heidfeld            | 2              | BMW Sauber          | 11        | 12        | 0          | 6         
+9         | Robert              | Kubica              | 2              | BMW Sauber          | 17        | 13        | 0          | 5         
+21        | Giancarlo           | Fisichella          | 10             | Force India         | 20        | 14        | 0          | 21        
+3         | Nico                | Rosberg             | 3              | Williams            | 7         | 15        | 0          | 16        
+12        | Nelson              | Piquet Jr.          | 4              | Renault             | 16        | 16        | 0          | 8         
+16        | Adrian              | Sutil               | 10             | Force India         | 18        | 17        | 0          | 20        
+6         | Kazuki              | Nakajima            | 3              | Williams            | 14        | DNF       | 0          | 17        
+13        | Felipe              | Massa               | 6              | Ferrari             | 13        | DNF       | 0          | 3         
+15        | Jarno               | Trulli              | 7              | Toyota              | 6         | DNF       | 0          | 9         
+
+
+db > results 4444444444 sr
+java.lang.NumberFormatException: For input string: "4444444444"
+        at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+        at java.base/java.lang.Integer.parseInt(Integer.java:668)
+        at java.base/java.lang.Integer.parseInt(Integer.java:786)
+        at MyDatabase.results(MyDatabase.java:963)
+        at SQLServer.runConsole(SQLServer.java:255)
+        at SQLServer.main(SQLServer.java:50)
+
+why does above give error and below doesnt?
+db > results 33 sr
+Driver ID | First Name          | Last Name           | Constructor ID | Constructor Name    | Start Pos | Final Pos | Num Points | Car Num   
+-------------------------------------------------------------------------------------------------------------------------------------------
+No results for that race ID and race type.
+
+Weird, not sure how to fix this, might just be db (same as above command)
+db > circuitConsWins 33223
+constructorID  | Constructor         | Num Wins  
+-------------------------------------------------
+No circuitID's match the input ID.
+
+db > circuitConsWins 3232323232
+Argument must be a circuitID
+
+shouldn't be allowed to input negative number
+db > driversCon -101
+Constructor ID | Constructor Name    
+--------------------------------
+No drivers match that ID.
+
+should be invalid num arguments
+db > driversCon 8282 fhei 28901
+Constructor ID | Constructor Name    
+--------------------------------
+No drivers match that ID.
+
+^^ assume same issues for consDrivers
+
+shouldnt output anything, invalid arguments
+db > circuits fhiehf
+circuitID | Circuit Name                            | Circuit Country     | Latitude            | Longitude           
+------------------------------------------------------------------------------------------------------------------------
+29        | Adelaide Street Circuit                 | Australia           | 139                 | -35                 
+64        | Ain Diab                                | Morocco             | -8                  | 34                  
+58        | Aintree                                 | UK                  | -3                  | 53                  
+1         | Albert Park Grand Prix Circuit          | Australia           | 145                 | -38                 
+27        | Autódromo do Estoril                    | Portugal            | -9                  | 39                  
+21        | Autodromo Enzo e Dino Ferrari           | Italy               | 12                  | 44                  
+32        | Autódromo Hermanos Rodríguez            | Mexico              | -99                 | 19                  
+75        | Autódromo Internacional do Algarve      | Portugal            | -9                  | 37                  
+36        | Autódromo Internacional Nelson Piquet   | Brazil              | -43                 | -23                 
+76        | Autodromo Internazionale del Mugello    | Italy               | 11                  | 44                  
+18        | Autódromo José Carlos Pace              | Brazil              | -47                 | -24                 
+25        | Autódromo Juan y Oscar Gálvez           | Argentina           | -58                 | -35                 
+14        | Autodromo Nazionale di Monza            | Italy               | 9                   | 46                  
+61        | AVUS                                    | Germany             | 13                  | 52                  
+3         | Bahrain International Circuit           | Bahrain             | 51                  | 26                  
+73        | Baku City Circuit                       | Azerbaijan          | 50                  | 40                  
+38        | Brands Hatch                            | UK                  | 0                   | 51                  
+68        | Buddh International Circuit             | India               | 78                  | 28                  
+51        | Charade Circuit                         | France              | 3                   | 46                  
+66        | Circuit Bremgarten                      | Switzerland         | 7                   | 47                  
+4         | Circuit de Barcelona-Catalunya          | Spain               | 2                   | 42                  
+6         | Circuit de Monaco                       | Monaco              | 7                   | 44                  
+8         | Circuit de Nevers Magny-Cours           | France              | 3                   | 47                  
+67        | Circuit de Pedralbes                    | Spain               | 2                   | 41                  
+13        | Circuit de Spa-Francorchamps            | Belgium             | 6                   | 50                  
+7         | Circuit Gilles Villeneuve               | Canada              | -74                 | 46                  
+52        | Circuit Mont-Tremblant                  | Canada              | -75                 | 46                  
+69        | Circuit of the Americas                 | USA                 | -98                 | 30                  
+39        | Circuit Park Zandvoort                  | Netherlands         | 5                   | 52                  
+34        | Circuit Paul Ricard                     | France              | 6                   | 43                  
+59        | Circuito da Boavista                    | Portugal            | -9                  | 41                  
+26        | Circuito de Jerez                       | Spain               | -6                  | 37                  
+37        | Detroit Street Circuit                  | USA                 | -83                 | 42                  
+41        | Dijon-Prenois                           | France              | 5                   | 47                  
+31        | Donington Park                          | UK                  | -1                  | 53                  
+42        | Fair Park                               | USA                 | -97                 | 33                  
+16        | Fuji Speedway                           | Japan               | 139                 | 35                  
+10        | Hockenheimring                          | Germany             | 9                   | 49                  
+11        | Hungaroring                             | Hungary             | 19                  | 48                  
+19        | Indianapolis Motor Speedway             | USA                 | -86                 | 40                  
+5         | Istanbul Park                           | Turkey              | 29                  | 41                  
+45        | Jarama                                  | Spain               | -4                  | 41                  
+77        | Jeddah Corniche Circuit                 | Saudi Arabia        | 39                  | 22                  
+35        | Korean International Circuit            | Korea               | 126                 | 35                  
+30        | Kyalami                                 | South Africa        | 28                  | -26                 
+44        | Las Vegas Street Circuit                | USA                 | -115                | 36                  
+80        | Las Vegas Strip Street Circuit          | United States       | -115                | 36                  
+54        | Le Mans                                 | France              | 0                   | 48                  
+43        | Long Beach                              | USA                 | -118                | 34                  
+78        | Losail International Circuit            | Qatar               | 51                  | 25                  
+15        | Marina Bay Street Circuit               | Singapore           | 104                 | 1                   
+79        | Miami International Autodrome           | USA                 | -80                 | 26                  
+62        | Monsanto Park Circuit                   | Portugal            | -9                  | 39                  
+49        | Montjuïc                                | Spain               | 2                   | 41                  
+48        | Mosport International Raceway           | Canada              | -79                 | 44                  
+50        | Nivelles-Baulers                        | Belgium             | 4                   | 51                  
+20        | Nürburgring                             | Germany             | 7                   | 50                  
+28        | Okayama International Circuit           | Japan               | 134                 | 35                  
+65        | Pescara Circuit                         | Italy               | 14                  | 42                  
+33        | Phoenix street circuit                  | USA                 | -112                | 33                  
+56        | Prince George Circuit                   | South Africa        | 28                  | -33                 
+70        | Red Bull Ring                           | Austria             | 15                  | 47                  
+55        | Reims-Gueux                             | France              | 4                   | 49                  
+60        | Riverside International Raceway         | USA                 | -117                | 34                  
+53        | Rouen-Les-Essarts                       | France              | 1                   | 49                  
+47        | Scandinavian Raceway                    | Sweden              | 14                  | 57                  
+63        | Sebring International Raceway           | USA                 | -81                 | 27                  
+2         | Sepang International Circuit            | Malaysia            | 102                 | 3                   
+17        | Shanghai International Circuit          | China               | 121                 | 31                  
+9         | Silverstone Circuit                     | UK                  | -1                  | 52                  
+71        | Sochi Autodrom                          | Russia              | 40                  | 43                  
+22        | Suzuka Circuit                          | Japan               | 137                 | 35                  
+12        | Valencia Street Circuit                 | Spain               | 0                   | 39                  
+46        | Watkins Glen                            | USA                 | -77                 | 42                  
+24        | Yas Marina Circuit                      | UAE                 | 55                  | 24                  
+57        | Zeltweg                                 | Austria             | 15                  | 47                  
+40        | Zolder                                  | Belgium             | 5                   | 51  
+
+
+db > circuits 2
+db > circuits -222
+^ same happens as above
+
+db > circuits n jdeow fhewiofhf'r he: outputs all records for no reason
+
+weird choice of output
+db > help 33
+HELP MENU FOR COMMAND 33
+That is not a valid command
+
+
+
+
+
+OUTPUT MESSAGES!!
+db > drivers 2
+Driver ID | First Name          | Last Name           |   Driver Nationality
+----------------------------------------------------------------------------
+Please enter a valid year.
+
+
