@@ -111,15 +111,20 @@ public class SQLServer {
                     System.out.println("Argument must be a positive integer");
                 }
             } else if (parts[0].equals("youngestWin")) {
-                try {
-                    if (parts.length >= 1) {
-                        db.youngestWin(arg);
-                    } else {
-                        System.out.println("This command requires an argument (number of results)");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                if (parts.length == 1 || parts.length == 2) {
+                    db.youngestWin(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Arguments: [numToOutput]");
                 }
+                // try {
+                //     if (parts.length >= 1) {
+                        
+                //     } else {
+                //         System.out.println("This command requires an argument (number of results)");
+                //     }
+                // } catch (Exception e) {
+                //     System.out.println("Argument must be a positive integer");
+                // }
             }
             // TODO
             else if (parts[0].equals("wins")) {
@@ -127,7 +132,7 @@ public class SQLServer {
                     if (parts.length >= 1) {
                         db.wins(arg);
                     } else {
-                        System.out.println("This command requires atleast one argument (driverID)");
+                        System.out.println("This command requires at least one argument (driverID)");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer");
@@ -261,7 +266,7 @@ public class SQLServer {
                         System.out.println("This command requires arguments (raceID) (raceType, gp or sr)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                    System.out.println("First argument must be an integer");
                 }
             } else if (parts[0].equals("driversCon")) {
                 try {
@@ -399,9 +404,9 @@ public class SQLServer {
                     "5    | Sauber              | 11");
             System.out.println();
         } else if (help.equalsIgnoreCase("youngestWin")) {
-            System.out.println("youngestWin [number]\n");
+            System.out.println("youngestWin [numToOutput]\n");
             System.out.println(
-                    "This command returns the youngest driver wins in the sports history, in order of age. The user may enter a number to limit results.Users may find this interesting as it may provide them information about the youngest drivers, and the seasons they raced in.\n");
+                    "This command returns the youngest driver wins in the sports history, in order of age. The user may enter a number to limit results. Users may find this interesting as it may provide them information about the youngest drivers, and the seasons they raced in.\n");
             System.out.println(
                     "[number] - Use this argument to limit the amount of results you would like to see. Beware, omitting this will return every race win in the sports history, in ascending order of age at win.\n");
             System.out.println("Example:");
@@ -733,7 +738,7 @@ public class SQLServer {
                 + "cChamp [year] - See the constructors championship results from a entered year. Entering no year returns the latest season"
                 + RESET);
         System.out.println(RESET
-                + "youngestWin [number] - See the youngest race winners. Enter a number to limit the amount of results"
+                + "youngestWin [numToOutput] - See the youngest race winners. Enter a number to limit the amount of results"
                 + RESET);
         System.out.println(RED
                 + "wins [driverID] [year] - List all wins that a driver has had over their entire career. Input a driver ID to see results (to find a driver's ID use the 'd' command). Enter a year to only see wins from that season"
