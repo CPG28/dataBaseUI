@@ -261,7 +261,7 @@ public class SQLServer {
                         System.out.println("This command requires arguments (raceID) (raceType, gp or sr)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                    System.out.println("First argument must be an integer");
                 }
             } else if (parts[0].equals("driversCon")) {
                 try {
