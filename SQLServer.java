@@ -94,7 +94,11 @@ public class SQLServer {
                     System.out.println("Incorrect number of arguments. Optional arguments: [name] [numToOutput]");
                 }
             } else if (parts[0].equals("circuits")) {
-                db.circuitsSearch(arg);
+                if (parts.length == 1 || parts.length == 2) {
+                    db.circuitsSearch(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Optional argument: [n/s]");
+                }
             }
             else if (parts[0].equals("dChamp")) {
                 try {
@@ -116,15 +120,6 @@ public class SQLServer {
                 } else {
                     System.out.println("Incorrect number of arguments. Arguments: [numToOutput]");
                 }
-                // try {
-                //     if (parts.length >= 1) {
-                        
-                //     } else {
-                //         System.out.println("This command requires an argument (number of results)");
-                //     }
-                // } catch (Exception e) {
-                //     System.out.println("Argument must be a positive integer");
-                // }
             }
             // TODO
             else if (parts[0].equals("wins")) {
@@ -293,7 +288,7 @@ public class SQLServer {
             } else if (parts[0].equals("repopulate")) {
                 db.repopulate(arg);
             } else {
-                System.out.println("'" + line + "'is an invalid command. Type 'help' to view all available commands.");
+                System.out.println("'" + line + "' is an invalid command. Type 'help' to view all available commands.");
             }
             System.out.print("db > ");
             line = console.nextLine();

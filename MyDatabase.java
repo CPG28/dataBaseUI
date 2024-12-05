@@ -544,31 +544,46 @@ public class MyDatabase {
         try {// todo
             String[] parts = args.trim().split(" ");
             String sql = null;
-            if (parts.length == 1 && (parts[0].equalsIgnoreCase("n") || parts[0].equalsIgnoreCase("s"))) {
-                if (parts[0].equalsIgnoreCase("n")) {
-                    sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits where circuitLatitude > 0 order by circuitLatitude;";
-                } else if (parts[0].equalsIgnoreCase("s")) {
-                    sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits where circuitLatitude < 0 order by circuitLatitude; ";
+            if (parts[0] != "") {
+                if (parts[0].equalsIgnoreCase("n") || parts[0].equalsIgnoreCase("s")) {
+                    if (parts[0].equalsIgnoreCase("n")) {
+                        sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits where circuitLatitude > 0 order by circuitLatitude;";
+                    } else if (parts[0].equalsIgnoreCase("s")) {
+                        sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits where circuitLatitude < 0 order by circuitLatitude; ";
+                    }
+                } else {
+                    System.out.println("Incorrect argument: " + parts[0] + ". Must be n or s.");
                 }
             } else {
                 sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits order by CAST(circuitName AS NVARCHAR(MAX)); ";
             }
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-            System.out.printf("%-10s| %-40s| %-20s| %-20s| %-20s%n", "circuitID", "Circuit Name", "Circuit Country",
-                    "Latitude", "Longitude");
-            System.out.println("-".repeat(120));
-            while (resultSet.next()) {
-                int id = resultSet.getInt("circuitID");
-                String name = resultSet.getString("circuitName");
-                int longy = resultSet.getInt("circuitLongitude");
-                int latty = resultSet.getInt("circuitLatitude");
-                String country = resultSet.getString("circuitCountry");
-                System.out.printf("%-10d| %-40s| %-20s| %-20d| %-20d%n", id, name, country, longy, latty);
+            if (sql != null) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-10s| %-40s| %-20s| %-20s| %-20s%n", "circuitID", "Circuit Name",
+                            "Circuit Country",
+                            "Latitude", "Longitude");
+                    System.out.println("-".repeat(120));
+                    do {
+                        int id = resultSet.getInt("circuitID");
+                        String name = resultSet.getString("circuitName");
+                        int longy = resultSet.getInt("circuitLongitude");
+                        int latty = resultSet.getInt("circuitLatitude");
+                        String country = resultSet.getString("circuitCountry");
+                        System.out.printf("%-10d| %-40s| %-20s| %-20d| %-20d%n", id, name, country, longy, latty);
+                    } while (resultSet.next()); // Iterate through all rows
+                } else {
+                    // No rows in the ResultSet
+                    System.out.println("No rows to output");
+                }
+
+                System.out.println();
+                resultSet.close();
+                statement.close();
             }
-            System.out.println("");
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
