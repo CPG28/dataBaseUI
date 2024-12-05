@@ -1,22 +1,3 @@
-d fr fr fr
-
-
-HUH? Why outputting with negative number?
-db > d fre -22
-driverID  | First Name          | Last Name              | Point Total  | Race Count| Win Count | Pole Count
---------------------------------------------------------------------------------------------------------------
-670       | Onofre              | Marimón                | 8            | 12        | 0         | 0          
-181       | Manfred             | Winkelhock             | 2            | 55        | 0         | 0          
-615       | Fred                | Agabashian             | 1            | 8         | 0         | 0          
-545       | Fred                | Gamble                 | 0            | 1         | 0         | 0          
-693       | Fred                | Wacker                 | 0            | 3         | 0         | 0          
-792       | Alfredo             | Pián                   | 0            | 1         | 0         | 0          
-
-SHOULD BE INVALID NOT RUN!
-db > d " "^[[C
-driverID  | First Name          | Last Name              | Point Total  | Race Count| Win Count | Pole Count
---------------------------------------------------------------------------------------------------------------
-
 huh?
 db > dChamp djeiwo jfieof
 Place| First Name          | Last Name           | Team Name           | Points    
