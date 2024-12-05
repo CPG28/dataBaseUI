@@ -525,7 +525,7 @@ public class MyDatabase {
                     } while (resultSet.next()); // Iterate through all rows
                 } else {
                     // No rows in the ResultSet
-                    System.out.println("No rows to output");
+                    System.out.println("No results to output");
                 }
                 System.out.println();
                 resultSet.close();
@@ -544,7 +544,7 @@ public class MyDatabase {
         try {// todo
             String[] parts = args.trim().split(" ");
             String sql = null;
-            if (parts[0] != "") {
+            if (!parts[0].equals("")) {
                 if (parts[0].equalsIgnoreCase("n") || parts[0].equalsIgnoreCase("s")) {
                     if (parts[0].equalsIgnoreCase("n")) {
                         sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits where circuitLatitude > 0 order by circuitLatitude;";
@@ -577,7 +577,7 @@ public class MyDatabase {
                     } while (resultSet.next()); // Iterate through all rows
                 } else {
                     // No rows in the ResultSet
-                    System.out.println("No rows to output");
+                    System.out.println("No results to output");
                 }
 
                 System.out.println();
@@ -591,7 +591,7 @@ public class MyDatabase {
 
     // drivers championship query. takes a year or none. If no year it returns the
     // current season.
-    public void dChampSearch(String args) throws Exception{
+    public void dChampSearch(String args) {
         try {
             String[] parts = args.trim().split(" ");
             String sql = "SELECT \r\n" + //
@@ -628,38 +628,40 @@ public class MyDatabase {
                     "\r\n" + //
                     "totalPoints DESC; ";
             PreparedStatement statement = connection.prepareStatement(sql);
-            if (parts.length >= 1 && !parts[0].equals("")) {
-                statement.setInt(1, Integer.parseInt(parts[0]));
-                if(Integer.parseInt(parts[0])<0){
-                    throw new Exception("");
+            if (!parts[0].equals("")) {
+                if (isPosNumeric(parts[0])) {
+                    statement.setInt(1, Integer.parseInt(parts[0]));
+                } else {
+                    System.out.println("Argument [year] must be a positive integer");
+                    sql = null;
                 }
             } else {
                 statement.setInt(1, 2024);
             }
-            ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
-                System.out.println();
-                System.out.printf("%-5s| %-20s| %-20s| %-20s| %-10s%n", "Place", "First Name", "Last Name", "Team Name",
-                        "Points");
-                System.out.println("-".repeat(100));
-                int place = 0;
-                    do{
+            if (sql != null) {
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-5s| %-20s| %-20s| %-20s| %-10s%n", "Place", "First Name", "Last Name",
+                            "Team Name",
+                            "Points");
+                    System.out.println("-".repeat(100));
+                    int place = 0;
+                    do {
                         String first = resultSet.getString("driverFirstName");
                         String last = resultSet.getString("driverLastName");
                         String team = resultSet.getString("teamName");
                         int points = resultSet.getInt("totalPoints");
                         System.out.printf("%-5d| %-20s| %-20s| %-20s| %-10d%n", ++place, first, last, team, points);
-                    }
-                    while(resultSet.next());
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
                 }
-            else{
-                System.out.println();
-                System.out.println("No Rows Found");
-            }
 
-            System.out.println("");
-            resultSet.close();
-            statement.close();
+                System.out.println("");
+                resultSet.close();
+                statement.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }

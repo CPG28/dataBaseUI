@@ -101,10 +101,10 @@ public class SQLServer {
                 }
             }
             else if (parts[0].equals("dChamp")) {
-                try {
+                if (parts.length == 1 || parts.length == 2) {
                     db.dChampSearch(arg);
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                } else {
+                    System.out.println("Incorrect number of arguments. Optional argument: [year]");
                 }
             }
 
