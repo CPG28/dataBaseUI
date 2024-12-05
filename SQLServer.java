@@ -554,8 +554,12 @@ public class SQLServer {
             System.out.println(
                     "[numberOfCircuits] - Use this argument to impose a minimum amount of circuits that a driver has to have raced at in order to be included in results.\n");
             System.out.println("Example:");
-            System.out.println("db > ");
-            System.out.println();
+            System.out.println("db > driverCircuitWinRate 3 1");
+            System.out.println("driverID  | First Name          | Last Name           | Circuits Won At (%) \n" + //
+                                "-----------------------------------------------------------------------------\n" + //
+                                "579       | Juan                | Fangio              | 84.62               \n" + //
+                                "1         | Lewis               | Hamilton            | 81.58               \n" + //
+                                "830       | Max                 | Verstappen          | 81.25      ");
             System.out.println();
         } else if (help.equalsIgnoreCase("drivers")) {
             System.out.println("drivers [year]\n");
