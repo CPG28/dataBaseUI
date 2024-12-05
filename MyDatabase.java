@@ -576,7 +576,7 @@ public class MyDatabase {
 
     // drivers championship query. takes a year or none. If no year it returns the
     // current season.
-    public void dChampSearch(String args) {
+    public void dChampSearch(String args) throws Exception{
         try {
             String[] parts = args.trim().split(" ");
             String sql = "SELECT \r\n" + //
@@ -613,24 +613,35 @@ public class MyDatabase {
                     "\r\n" + //
                     "totalPoints DESC; ";
             PreparedStatement statement = connection.prepareStatement(sql);
-            if (parts.length == 1 && !parts[0].equals("")) {
+            if (parts.length >= 1 && !parts[0].equals("")) {
                 statement.setInt(1, Integer.parseInt(parts[0]));
+                if(Integer.parseInt(parts[0])<0){
+                    throw new Exception("");
+                }
             } else {
                 statement.setInt(1, 2024);
             }
             ResultSet resultSet = statement.executeQuery();
-            System.out.println();
-            System.out.printf("%-5s| %-20s| %-20s| %-20s| %-10s%n", "Place", "First Name", "Last Name", "Team Name",
-                    "Points");
-            System.out.println("-".repeat(100));
-            int place = 0;
-            while (resultSet.next()) {
-                String first = resultSet.getString("driverFirstName");
-                String last = resultSet.getString("driverLastName");
-                String team = resultSet.getString("teamName");
-                int points = resultSet.getInt("totalPoints");
-                System.out.printf("%-5d| %-20s| %-20s| %-20s| %-10d%n", ++place, first, last, team, points);
+            if(resultSet.next()){
+                System.out.println();
+                System.out.printf("%-5s| %-20s| %-20s| %-20s| %-10s%n", "Place", "First Name", "Last Name", "Team Name",
+                        "Points");
+                System.out.println("-".repeat(100));
+                int place = 0;
+                    do{
+                        String first = resultSet.getString("driverFirstName");
+                        String last = resultSet.getString("driverLastName");
+                        String team = resultSet.getString("teamName");
+                        int points = resultSet.getInt("totalPoints");
+                        System.out.printf("%-5d| %-20s| %-20s| %-20s| %-10d%n", ++place, first, last, team, points);
+                    }
+                    while(resultSet.next());
+                }
+            else{
+                System.out.println();
+                System.out.println("No Rows Found");
             }
+
             System.out.println("");
             resultSet.close();
             statement.close();

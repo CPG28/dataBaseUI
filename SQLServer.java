@@ -204,17 +204,17 @@ public class SQLServer {
 
             } else if (parts[0].equals("drivers")) {
                 try {
-                    if (parts.length >= 2) {
+                    if (parts.length == 2) {
                         db.drivers(arg);
                     } else {
                         System.out.println("This command requires an argument (year)");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                    System.out.println("Argument must be an integer");
                 }
             } else if (parts[0].equals("cons")) {
                 try {
-                    if (parts.length >= 2) {
+                    if (parts.length == 2) {
                         db.cons(arg);
                     } else {
                         System.out.println("This command requires an argument (year)");
@@ -230,7 +230,7 @@ public class SQLServer {
                 }
             } else if (parts[0].equals("dChampAfter")) {
                 try {
-                    if (parts.length >= 2) {
+                    if (parts.length == 2) {
                         db.dChampAfter(arg);
                     } else {
                         System.out.println("This command requires an argument (raceID)");
@@ -240,7 +240,7 @@ public class SQLServer {
                 }
             } else if (parts[0].equals("conChampAfter")) {
                 try {
-                    if (parts.length >= 2) {
+                    if (parts.length == 2) {
                         db.conChampAfter(arg);
                     } else {
                         System.out.println("This command requires an argument (raceID)");
@@ -250,7 +250,7 @@ public class SQLServer {
                 }
             } else if (parts[0].equals("quali")) {
                 try {
-                    if (parts.length >= 2) {
+                    if (parts.length == 2) {
                         db.quali(arg);
                     } else {
                         System.out.println("This command requires an argument (raceID)");
@@ -260,7 +260,7 @@ public class SQLServer {
                 }
             } else if (parts[0].equals("results")) {
                 try {
-                    if (parts.length >= 3) {
+                    if (parts.length == 3) {
                         db.results(arg);
                     } else {
                         System.out.println("This command requires arguments (raceID) (raceType, gp or sr)");
@@ -270,7 +270,7 @@ public class SQLServer {
                 }
             } else if (parts[0].equals("driversCon")) {
                 try {
-                    if (parts.length >= 2) {
+                    if (parts.length == 2) {
                         db.driversCon(arg);
                     } else {
                         System.out.println("This command requires arguments (driverID)");
@@ -280,7 +280,7 @@ public class SQLServer {
                 }
             } else if (parts[0].equals("consDrivers")) {
                 try {
-                    if (parts.length >= 2) {
+                    if (parts.length == 2) {
                         db.consDrivers(arg);
                     } else {
                         System.out.println("This command requires an argument (constructorID)");
