@@ -58,28 +58,6 @@ Place| First Name          | Last Name           | Team Name           | Points
 
 ^^^ assuming cChamp has all the same problems
 
-INVALID COMMAND
-db > youngestWin 2 2 
-driverID  | First Name          | Last Name           | Race Name                | Age at Win          
-----------------------------------------------------------------------------------------------------
-830       | Max                 | Verstappen          | Spanish Grand Prix       | 19                  
-830       | Max                 | Verstappen          | Malaysian Grand Prix     | 20                  
-
-db > youngestWin -3
-com.microsoft.sqlserver.jdbc.SQLServerException: Incorrect syntax near '-'.
-        at com.microsoft.sqlserver.jdbc.SQLServerException.makeFromDatabaseError(SQLServerException.java:265)
-        at com.microsoft.sqlserver.jdbc.SQLServerStatement.getNextResult(SQLServerStatement.java:1673)
-        at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement(SQLServerPreparedStatement.java:620)
-        at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement$PrepStmtExecCmd.doExecute(SQLServerPreparedStatement.java:540)
-        at com.microsoft.sqlserver.jdbc.TDSCommand.execute(IOBuffer.java:7627)
-        at com.microsoft.sqlserver.jdbc.SQLServerConnection.executeCommand(SQLServerConnection.java:3912)
-        at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeCommand(SQLServerStatement.java:268)
-        at com.microsoft.sqlserver.jdbc.SQLServerStatement.executeStatement(SQLServerStatement.java:242)
-        at com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeQuery(SQLServerPreparedStatement.java:459)
-        at MyDatabase.youngestWin(MyDatabase.java:695)
-        at SQLServer.runConsole(SQLServer.java:112)
-        at SQLServer.main(SQLServer.java:50)
-
 maybe have message that says max records printed or something
 db > driverCircuitWinRate 2132 3      
 driverID  | First Name          | Last Name           | Circuits Won At (%) 
