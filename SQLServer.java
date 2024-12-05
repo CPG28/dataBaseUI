@@ -91,34 +91,34 @@ public class SQLServer {
                 if (parts.length >= 1 && parts.length <= 4) {
                     db.driverSearch(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Optional arguments: [name] [numToOutput]");
+                    System.out.println("Incorrect number of arguments. Optional arguments: [name] [numToOutput]\n");
                 }
             } else if (parts[0].equals("circuits")) {
                 if (parts.length == 1 || parts.length == 2) {
                     db.circuitsSearch(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Optional argument: [n/s]");
+                    System.out.println("Incorrect number of arguments. Optional argument: [n/s]\n");
                 }
             }
             else if (parts[0].equals("dChamp")) {
                 if (parts.length == 1 || parts.length == 2) {
                     db.dChampSearch(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Optional argument: [year]");
+                    System.out.println("Incorrect number of arguments. Optional argument: [year]\n");
                 }
             }
 
             else if (parts[0].equals("cChamp")) {
-                try {
+                if (parts.length == 1 || parts.length == 2) {
                     db.cChampSearch(arg);
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                } else {
+                    System.out.println("Incorrect number of arguments. Optional argument: [year]\n");
                 }
             } else if (parts[0].equals("youngestWin")) {
                 if (parts.length == 1 || parts.length == 2) {
                     db.youngestWin(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [numToOutput]");
+                    System.out.println("Incorrect number of arguments. Arguments: [numToOutput]\n");
                 }
             }
             // TODO
@@ -127,7 +127,7 @@ public class SQLServer {
                     if (parts.length >= 1) {
                         db.wins(arg);
                     } else {
-                        System.out.println("This command requires at least one argument (driverID)");
+                        System.out.println("This command requires at least one argument (driverID)\n");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer");
@@ -138,7 +138,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.circuitDriverWins(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [circuitID]");
+                    System.out.println("Incorrect number of arguments. Arguments: [circuitID]\n");
                 }
             }
 
@@ -146,7 +146,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.circuitConsWins(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [circuitID]");
+                    System.out.println("Incorrect number of arguments. Arguments: [circuitID]\n");
                 }
             }
 
@@ -154,7 +154,7 @@ public class SQLServer {
                 if (parts.length == 1) {
                     db.posToWin();
                 } else {
-                    System.out.println("This command requires no arguments");
+                    System.out.println("This command requires no argument\n");
                 }
             }
 
@@ -162,7 +162,7 @@ public class SQLServer {
                 if (parts.length == 1) {
                     db.currDrivers();
                 } else {
-                    System.out.println("This command requires no arguments");
+                    System.out.println("This command requires no arguments\n");
                 }
             }
 
@@ -170,7 +170,7 @@ public class SQLServer {
                 if (parts.length == 1) {
                     db.currCons();
                 } else {
-                    System.out.println("This command requires no arguments");
+                    System.out.println("This command requires no arguments\n");
                 }
             }
 
@@ -178,7 +178,7 @@ public class SQLServer {
                 if (parts.length == 2) {
                     db.dFrom(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [nationality]");
+                    System.out.println("Incorrect number of arguments. Arguments: [nationality]\n");
                 }
             }
 
@@ -186,7 +186,7 @@ public class SQLServer {
                 if (parts.length == 1 | parts.length == 2) {
                     db.mostGained(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [top]");
+                    System.out.println("Incorrect number of arguments. Arguments: [top]\n");
                 }
             }
             // TODO
@@ -194,7 +194,7 @@ public class SQLServer {
                 if (parts.length == 3) {
                     db.driverCircuitWinRate(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [numberDrivers] [numberCircuits]");
+                    System.out.println("Incorrect number of arguments. Arguments: [numberDrivers] [numberCircuits]\n");
                 }
 
             } else if (parts[0].equals("drivers")) {
@@ -202,33 +202,33 @@ public class SQLServer {
                     if (parts.length == 2) {
                         db.drivers(arg);
                     } else {
-                        System.out.println("This command requires an argument (year)");
+                        System.out.println("This command requires an argument (year)\n");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be an integer");
+                    System.out.println("Argument must be an integer\n");
                 }
             } else if (parts[0].equals("cons")) {
                 try {
                     if (parts.length == 2) {
                         db.cons(arg);
                     } else {
-                        System.out.println("This command requires an argument (year)");
+                        System.out.println("This command requires an argument (year)\n");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                    System.out.println("Argument must be a positive integer\n");
                 }
             } else if (parts[0].equals("races")) {
                 if (parts.length == 2) {
                     db.races(arg);
                 } else {
-                    System.out.println("Incorrect number of arguments. Arguments: [year]");
+                    System.out.println("Incorrect number of arguments. Arguments: [year]\n");
                 }
             } else if (parts[0].equals("dChampAfter")) {
                 try {
                     if (parts.length == 2) {
                         db.dChampAfter(arg);
                     } else {
-                        System.out.println("This command requires an argument (raceID)");
+                        System.out.println("This command requires an argument (raceID)\n");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer");
@@ -238,7 +238,7 @@ public class SQLServer {
                     if (parts.length == 2) {
                         db.conChampAfter(arg);
                     } else {
-                        System.out.println("This command requires an argument (raceID)");
+                        System.out.println("This command requires an argument (raceID)\n");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be a positive integer");
@@ -248,7 +248,7 @@ public class SQLServer {
                     if (parts.length == 2) {
                         db.quali(arg);
                     } else {
-                        System.out.println("This command requires an argument (raceID)");
+                        System.out.println("This command requires an argument (raceID)\n");
                     }
                 } catch (Exception e) {
                     System.out.println("Argument must be positive integer");
@@ -258,37 +258,37 @@ public class SQLServer {
                     if (parts.length == 3) {
                         db.results(arg);
                     } else {
-                        System.out.println("This command requires arguments (raceID) (raceType, gp or sr)");
+                        System.out.println("This command requires arguments (raceID) (raceType, gp or sr)\n");
                     }
                 } catch (Exception e) {
-                    System.out.println("First argument must be an integer");
+                    System.out.println("First argument must be an integer\n");
                 }
             } else if (parts[0].equals("driversCon")) {
                 try {
                     if (parts.length == 2) {
                         db.driversCon(arg);
                     } else {
-                        System.out.println("This command requires arguments (driverID)");
+                        System.out.println("This command requires arguments (driverID)\n");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                    System.out.println("Argument must be a positive integer\n");
                 }
             } else if (parts[0].equals("consDrivers")) {
                 try {
                     if (parts.length == 2) {
                         db.consDrivers(arg);
                     } else {
-                        System.out.println("This command requires an argument (constructorID)");
+                        System.out.println("This command requires an argument (constructorID)\n");
                     }
                 } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                    System.out.println("Argument must be a positive integer\n");
                 }
             } else if (parts[0].equals("deleteData")) {
                 db.deleteData(arg);
             } else if (parts[0].equals("repopulate")) {
                 db.repopulate(arg);
             } else {
-                System.out.println("'" + line + "' is an invalid command. Type 'help' to view all available commands.");
+                System.out.println("'" + line + "' is an invalid command. Type 'help' to view all available commands.\n");
             }
             System.out.print("db > ");
             line = console.nextLine();
