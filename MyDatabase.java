@@ -879,28 +879,33 @@ public class MyDatabase {
         String[] parts = arg.trim().split(" ");
         String sql = "SELECT DISTINCT constructors.constructorID, CAST(constructors.constructorName AS NVARCHAR(MAX)) AS name, CAST(constructors.constructorNationality AS NVARCHAR(MAX)) AS nationality FROM constructors INNER JOIN partakeIn ON constructors.constructorID = partakeIn.constructorID INNER JOIN races ON partakeIn.raceID = races.raceID WHERE races.season = ?; ";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(parts[0]));
-            ResultSet resultSet = statement.executeQuery();
-            System.out.println();
-            System.out.printf("%-15s| %-20s| %-25s\n", "Constructor ID", "Constructor Name", "Constructor Nationality");
-            System.out.println("-".repeat(62));
+            if (isPosNumeric(parts[0])) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(parts[0]));
+                ResultSet resultSet = statement.executeQuery();
 
-            // To determine if an error message should be printed
-            boolean returned = false;
-            while (resultSet.next()) {
-                int constructorID = resultSet.getInt("constructorID");
-                String constructorName = resultSet.getString("name");
-                String constructorNationality = resultSet.getString("nationality");
-                System.out.printf("%-15d| %-20s| %-25s\n", constructorID, constructorName, constructorNationality);
-                returned = true;
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-15s| %-20s| %-25s\n", "Constructor ID", "Constructor Name",
+                            "Constructor Nationality");
+                    System.out.println("-".repeat(62));
+                    do {
+                        int constructorID = resultSet.getInt("constructorID");
+                        String constructorName = resultSet.getString("name");
+                        String constructorNationality = resultSet.getString("nationality");
+                        System.out.printf("%-15d| %-20s| %-25s\n", constructorID, constructorName,
+                                constructorNationality);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
+                }
+
+                System.out.println();
+                resultSet.close();
+                statement.close();
+            } else {
+                System.out.println("Argument year must be a positive integers\n");
             }
-            if (!returned) {
-                System.out.println("Please enter a valid year.");
-            }
-            System.out.println();
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }

@@ -197,17 +197,14 @@ public class SQLServer {
                 } else {
                     System.out.println("Incorrect number of arguments. Argument: [year]\n");
                 }
-                
+
             } else if (parts[0].equals("cons")) {
-                try {
-                    if (parts.length == 2) {
-                        db.cons(arg);
-                    } else {
-                        System.out.println("This command requires an argument (year)\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer\n");
+                if (parts.length == 2) {
+                    db.cons(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Argument: [year]\n");
                 }
+
             } else if (parts[0].equals("races")) {
                 if (parts.length == 2) {
                     db.races(arg);
