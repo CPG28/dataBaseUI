@@ -1467,21 +1467,18 @@ public class MyDatabase {
                 statement.setString(1, arg);
                 ResultSet resultSet = statement.executeQuery();
 
-                System.out.println();
-                System.out.printf("%-7s| %-30s| %-11s\n", "raceID", "Race Name", "Race Date");
-                System.out.println("-".repeat(53));
-
-                // // To determine if an error message should be printed
-                boolean returned = false;
-                while (resultSet.next()) {
-                    String id = resultSet.getString("raceID");
-                    String name = resultSet.getString("raceName");
-                    String date = resultSet.getString("raceDate");
-                    System.out.printf("%-7s| %-30s| %-11s\n", id, name, date);
-                    returned = true;
-                }
-                if (!returned) {
-                    System.out.println("No raceID's match the input year.");
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-7s| %-30s| %-11s\n", "raceID", "Race Name", "Race Date");
+                    System.out.println("-".repeat(53));
+                    do {
+                        String id = resultSet.getString("raceID");
+                        String name = resultSet.getString("raceName");
+                        String date = resultSet.getString("raceDate");
+                        System.out.printf("%-7s| %-30s| %-11s\n", id, name, date);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
                 }
 
                 System.out.println();
@@ -1491,7 +1488,7 @@ public class MyDatabase {
                 e.printStackTrace(System.out);
             }
         } else {
-            System.out.println("Argument must be a year");
+            System.out.println("Argument year must be a positive integer\n");
         }
     }
 
