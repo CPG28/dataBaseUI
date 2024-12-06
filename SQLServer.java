@@ -236,24 +236,16 @@ public class SQLServer {
                     System.out.println("Incorrect number of arguments. Arguments: [raceID] [raceType, gp or sr]\n");
                 }
             } else if (parts[0].equals("driversCon")) {
-                try {
-                    if (parts.length == 2) {
-                        db.driversCon(arg);
-                    } else {
-                        System.out.println("One argument required: [driverID]\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer\n");
+                if (parts.length == 2) {
+                    db.driversCon(arg);
+                } else {
+                    System.out.println("One argument required: [driverID]\n");
                 }
             } else if (parts[0].equals("consDrivers")) {
-                try {
-                    if (parts.length == 2) {
-                        db.consDrivers(arg);
-                    } else {
-                        System.out.println("One argument required: [constructorID]\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer\n");
+                if (parts.length == 2) {
+                    db.consDrivers(arg);
+                } else {
+                    System.out.println("One argument required: [constructorID]\n");
                 }
             } else if (parts[0].equals("deleteData")) {
                 db.deleteData(arg);
