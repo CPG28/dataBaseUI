@@ -218,34 +218,22 @@ public class SQLServer {
                     System.out.println("One argument required: [year]\n");
                 }
             } else if (parts[0].equals("conChampAfter")) {
-                try {
-                    if (parts.length == 2) {
-                        db.conChampAfter(arg);
-                    } else {
-                        System.out.println("One argument required: [raceID]\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be a positive integer");
+                if (parts.length == 2) {
+                    db.conChampAfter(arg);
+                } else {
+                    System.out.println("One argument required: [raceID]\n");
                 }
             } else if (parts[0].equals("quali")) {
-                try {
-                    if (parts.length == 2) {
-                        db.quali(arg);
-                    } else {
-                        System.out.println("One argument required: [raceID]\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Argument must be positive integer");
+                if (parts.length == 2) {
+                    db.quali(arg);
+                } else {
+                    System.out.println("One argument required: [raceID]\n");
                 }
             } else if (parts[0].equals("results")) {
-                try {
-                    if (parts.length == 3) {
-                        db.results(arg);
-                    } else {
-                        System.out.println("Incorrect number of arguments. Arguments: [raceID] [raceType, gp or sr]\n");
-                    }
-                } catch (Exception e) {
-                    System.out.println("First argument must be an integer\n");
+                if (parts.length == 3) {
+                    db.results(arg);
+                } else {
+                    System.out.println("Incorrect number of arguments. Arguments: [raceID] [raceType, gp or sr]\n");
                 }
             } else if (parts[0].equals("driversCon")) {
                 try {

@@ -552,7 +552,7 @@ public class MyDatabase {
                         sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits where circuitLatitude < 0 order by circuitLatitude; ";
                     }
                 } else {
-                    System.out.println("Incorrect argument: " + parts[0] + ". Must be n or s.");
+                    System.out.println("Incorrect argument: " + parts[0] + ". Must be n or s.\n");
                 }
             } else {
                 sql = "select circuitCountry, circuitLongitude, circuitLatitude, circuitName, circuitID from circuits order by CAST(circuitName AS NVARCHAR(MAX)); ";
@@ -778,7 +778,7 @@ public class MyDatabase {
                 resultSet.close();
                 statement.close();
             } else {
-                System.out.println("Argument numToOutput must be a positive integer\n");
+                System.out.println("Argument [numToOutput] must be a positive integer\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
@@ -804,7 +804,7 @@ public class MyDatabase {
                     statement = connection.prepareStatement(sql);
                     statement.setInt(1, Integer.parseInt(parts[0]));
                 } else {
-                    System.out.println("Argument driverID must be a positive integer\n");
+                    System.out.println("Argument [driverID] must be a positive integer\n");
                 }
             } else {
                 if (isPosNumeric(parts[0]) && isPosNumeric(parts[1])) {
@@ -820,7 +820,7 @@ public class MyDatabase {
                     statement.setInt(1, Integer.parseInt(parts[0]));
                     statement.setInt(2, Integer.parseInt(parts[1]));
                 } else {
-                    System.out.println("Arguments driverID and year must be a positive integer\n");
+                    System.out.println("Arguments [driverID] and year must be a positive integer\n");
                 }
             }
             if (sql != null) {
@@ -876,7 +876,7 @@ public class MyDatabase {
                 resultSet.close();
                 statement.close();
             } else {
-                System.out.println("Argument year must be a positive integer\n");
+                System.out.println("Argument [year] must be a positive integer\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
@@ -912,7 +912,7 @@ public class MyDatabase {
                 resultSet.close();
                 statement.close();
             } else {
-                System.out.println("Argument year must be a positive integer\n");
+                System.out.println("Argument [year] must be a positive integer\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
@@ -949,7 +949,7 @@ public class MyDatabase {
                 resultSet.close();
                 statement.close();
             } else {
-                System.out.println("Argument raceID must be a positive integer\n");
+                System.out.println("Argument [raceID] must be a positive integer\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
@@ -960,30 +960,35 @@ public class MyDatabase {
         String[] parts = arg.trim().split(" ");
         String sql = "SELECT constructorStandings.constructorID, constructors.constructorName, constructorStandings.totalPoints, constructorStandings.wins FROM constructorStandings INNER JOIN constructors ON constructorStandings.constructorID = constructors.constructorID WHERE constructorStandings.raceID = ? ORDER BY constructorStandings.totalPoints DESC;";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(parts[0]));
-            ResultSet resultSet = statement.executeQuery();
-            System.out.println();
-            System.out.printf("%-15s| %-20s| %-15s| %-10s\n", "Constructor ID", "Constructor Name", "Total Points",
-                    "Num Wins");
-            System.out.println("-".repeat(64));
+            if (isPosNumeric(parts[0])) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(parts[0]));
+                ResultSet resultSet = statement.executeQuery();
 
-            // To determine if an error message should be printed
-            boolean returned = false;
-            while (resultSet.next()) {
-                int constructorID = resultSet.getInt("constructorID");
-                String constructorName = resultSet.getString("constructorName");
-                int totalPoints = resultSet.getInt("totalPoints");
-                int numWins = resultSet.getInt("wins");
-                System.out.printf("%-15d| %-20s| %-15d| %-10d\n", constructorID, constructorName, totalPoints, numWins);
-                returned = true;
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-15s| %-20s| %-15s| %-10s\n", "Constructor ID", "Constructor Name",
+                            "Total Points",
+                            "Num Wins");
+                    System.out.println("-".repeat(64));
+                    do {
+                        int constructorID = resultSet.getInt("constructorID");
+                        String constructorName = resultSet.getString("constructorName");
+                        int totalPoints = resultSet.getInt("totalPoints");
+                        int numWins = resultSet.getInt("wins");
+                        System.out.printf("%-15d| %-20s| %-15d| %-10d\n", constructorID, constructorName, totalPoints,
+                                numWins);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
+                }
+
+                System.out.println();
+                resultSet.close();
+                statement.close();
+            } else {
+                System.out.println("Argument [raceID] must be a positive integer\n");
             }
-            if (!returned) {
-                System.out.println("No standings for that race ID or invalid race ID.");
-            }
-            System.out.println();
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
@@ -994,57 +999,63 @@ public class MyDatabase {
         String[] parts = arg.trim().split(" ");
         String sql = "SELECT drivers.driverID, drivers.driverFirstName, drivers.driverLastName, constructors.constructorID, constructors.constructorName, results.finalPos, results.carNum, qualifyingResults.q1Time, qualifyingResults.q2Time, qualifyingResults.q3Time FROM qualifyingResults INNER JOIN results ON qualifyingResults.resultID = results.resultID INNER JOIN drivers ON results.driverID = drivers.driverID INNER JOIN constructors ON results.constructorID = constructors.constructorID WHERE results.raceID = ?;";
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(parts[0]));
-            ResultSet resultSet = statement.executeQuery();
-            System.out.println();
-            System.out.printf("%-10s| %-17s| %-17s| %-15s| %-20s| %-5s| %-10s| %-10s| %-10s| %-10s\n", "Driver ID",
-                    "First Name", "Last Name", "Constructor ID", "Constructor Name", "Pos", "Q1 Time", "Q2 Time",
-                    "Q3 Time", "Car Num");
-            System.out.println("-".repeat(140));
+            if (isPosNumeric(parts[0])) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, Integer.parseInt(parts[0]));
+                ResultSet resultSet = statement.executeQuery();
 
-            // To determine if an error message should be printed
-            boolean returned = false;
-            while (resultSet.next()) {
-                int driverID = resultSet.getInt("driverID");
-                String driverFirst = resultSet.getString("driverFirstName");
-                String driverLast = resultSet.getString("driverLastName");
-                int constructorID = resultSet.getInt("constructorID");
-                String constructorName = resultSet.getString("constructorName");
-                int finalPos = resultSet.getInt("finalPos");
-                Time q1 = resultSet.getTime("q1Time");
-                Time q2 = resultSet.getTime("q2Time");
-                Time q3 = resultSet.getTime("q3Time");
-                int carNum = resultSet.getInt("carNum");
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-10s| %-17s| %-17s| %-15s| %-20s| %-5s| %-10s| %-10s| %-10s| %-10s\n",
+                            "Driver ID",
+                            "First Name", "Last Name", "Constructor ID", "Constructor Name", "Pos", "Q1 Time",
+                            "Q2 Time",
+                            "Q3 Time", "Car Num");
+                    System.out.println("-".repeat(140));
+                    do {
+                        int driverID = resultSet.getInt("driverID");
+                        String driverFirst = resultSet.getString("driverFirstName");
+                        String driverLast = resultSet.getString("driverLastName");
+                        int constructorID = resultSet.getInt("constructorID");
+                        String constructorName = resultSet.getString("constructorName");
+                        int finalPos = resultSet.getInt("finalPos");
+                        Time q1 = resultSet.getTime("q1Time");
+                        Time q2 = resultSet.getTime("q2Time");
+                        Time q3 = resultSet.getTime("q3Time");
+                        int carNum = resultSet.getInt("carNum");
 
-                String sq1;
-                String sq2;
-                String sq3;
-                if (q1 == null) {
-                    sq1 = "";
+                        String sq1;
+                        String sq2;
+                        String sq3;
+                        if (q1 == null) {
+                            sq1 = "";
+                        } else {
+                            sq1 = q1.toString();
+                        }
+                        if (q2 == null) {
+                            sq2 = "";
+                        } else {
+                            sq2 = q2.toString();
+                        }
+                        if (q3 == null) {
+                            sq3 = "";
+                        } else {
+                            sq3 = q3.toString();
+                        }
+                        System.out.printf("%-10s| %-17s| %-17s| %-15s| %-20s| %-5s| %-10s| %-10s| %-10s| %-10d\n",
+                                driverID,
+                                driverFirst, driverLast, constructorID, constructorName, finalPos, sq1, sq2, sq3,
+                                carNum);
+                    } while (resultSet.next());
                 } else {
-                    sq1 = q1.toString();
+                    System.out.println("No results to output");
                 }
-                if (q2 == null) {
-                    sq2 = "";
-                } else {
-                    sq2 = q2.toString();
-                }
-                if (q3 == null) {
-                    sq3 = "";
-                } else {
-                    sq3 = q3.toString();
-                }
-                System.out.printf("%-10s| %-17s| %-17s| %-15s| %-20s| %-5s| %-10s| %-10s| %-10s| %-10d\n", driverID,
-                        driverFirst, driverLast, constructorID, constructorName, finalPos, sq1, sq2, sq3, carNum);
-                returned = true;
+                System.out.println();
+                resultSet.close();
+                statement.close();
+            } else {
+                System.out.println("Argument [raceID] must be a positive integer\n");
             }
-            if (!returned) {
-                System.out.println("No qualifying results for that race ID and race type.");
-            }
-            System.out.println();
-            resultSet.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
@@ -1054,48 +1065,55 @@ public class MyDatabase {
     public void results(String arg) {
         String[] parts = arg.trim().split(" ");
         if (!parts[1].equals("gp") && !parts[1].equals("sr")) {
-            System.out.println("This command requires arguments (raceID) (raceType, gp or sr)");
+            System.out.println("Argument [gp/sr] requires input of either 'gp' for grand prix or 'sr' sprint race\n");
         } else {
             String sql = "SELECT drivers.driverID, drivers.driverFirstName, drivers.driverLastName, constructors.constructorID, constructors.constructorName, results.finalPos, results.carNum, raceResults.startPos, raceResults.numPoints FROM raceResults INNER JOIN results ON raceResults.resultID = results.resultID INNER JOIN drivers ON results.driverID = drivers.driverID INNER JOIN constructors ON results.constructorID = constructors.constructorID WHERE results.raceID = ? AND CONVERT(VARCHAR, raceResults.raceType) = ?;";
             try {
-                PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setInt(1, Integer.parseInt(parts[0]));
-                statement.setString(2, parts[1]);
-                ResultSet resultSet = statement.executeQuery();
-                System.out.println();
-                System.out.printf("%-10s| %-20s| %-20s| %-15s| %-20s| %-10s| %-10s| %-11s| %-10s\n", "Driver ID",
-                        "First Name", "Last Name", "Constructor ID", "Constructor Name", "Start Pos", "Final Pos",
-                        "Num Points", "Car Num");
-                System.out.println("-".repeat(139));
-    
-                // To determine if an error message should be printed
-                boolean returned = false;
-                while (resultSet.next()) {
-                    int driverID = resultSet.getInt("driverID");
-                    String driverFirst = resultSet.getString("driverFirstName");
-                    String driverLast = resultSet.getString("driverLastName");
-                    int constructorID = resultSet.getInt("constructorID");
-                    String constructorName = resultSet.getString("constructorName");
-                    String startPos = resultSet.getString("startPos");
-                    String finalPos = resultSet.getString("finalPos");
-                    String numPoints = resultSet.getString("numPoints");
-                    String carNum = resultSet.getString("carNum");
-                    if (finalPos == null) {
-                        finalPos = "DNF";
+                if (isPosNumeric(parts[0])) {
+                    PreparedStatement statement = connection.prepareStatement(sql);
+                    statement.setInt(1, Integer.parseInt(parts[0]));
+                    statement.setString(2, parts[1]);
+                    ResultSet resultSet = statement.executeQuery();
+
+                    if (resultSet.next()) {
+                        System.out.println();
+                        System.out.printf("%-10s| %-20s| %-20s| %-15s| %-20s| %-10s| %-10s| %-11s| %-10s\n",
+                                "Driver ID",
+                                "First Name", "Last Name", "Constructor ID", "Constructor Name", "Start Pos",
+                                "Final Pos",
+                                "Num Points", "Car Num");
+                        System.out.println("-".repeat(139));
+                        do {
+                            int driverID = resultSet.getInt("driverID");
+                            String driverFirst = resultSet.getString("driverFirstName");
+                            String driverLast = resultSet.getString("driverLastName");
+                            int constructorID = resultSet.getInt("constructorID");
+                            String constructorName = resultSet.getString("constructorName");
+                            String startPos = resultSet.getString("startPos");
+                            String finalPos = resultSet.getString("finalPos");
+                            String numPoints = resultSet.getString("numPoints");
+                            String carNum = resultSet.getString("carNum");
+                            if (finalPos == null) {
+                                finalPos = "DNF";
+                            }
+                            if (carNum == null) {
+                                carNum = "";
+                            }
+                            System.out.printf("%-10d| %-20s| %-20s| %-15d| %-20s| %-10s| %-10s| %-11s| %-10s\n",
+                                    driverID,
+                                    driverFirst, driverLast, constructorID, constructorName, startPos, finalPos,
+                                    numPoints,
+                                    carNum);
+                        } while (resultSet.next());
+                    } else {
+                        System.out.println("No results to output");
                     }
-                    if (carNum == null) {
-                        carNum = "";
-                    }
-                    System.out.printf("%-10d| %-20s| %-20s| %-15d| %-20s| %-10s| %-10s| %-11s| %-10s\n", driverID,
-                            driverFirst, driverLast, constructorID, constructorName, startPos, finalPos, numPoints, carNum);
-                    returned = true;
+                    System.out.println();
+                    resultSet.close();
+                    statement.close();
+                } else {
+                    System.out.println("Argument [raceID] must be a positive integer\n");
                 }
-                if (!returned) {
-                    System.out.println("No results for that race ID and race type.");
-                }
-                System.out.println();
-                resultSet.close();
-                statement.close();
             } catch (SQLException e) {
                 e.printStackTrace(System.out);
             }
