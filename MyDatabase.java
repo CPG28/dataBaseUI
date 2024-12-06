@@ -1231,24 +1231,21 @@ public class MyDatabase {
                 statement.setString(1, arg);
                 ResultSet resultSet = statement.executeQuery();
 
-                System.out.println();
-                System.out.printf("%-10s| %-20s| %-20s| %-10s\n", "driverID", "First Name", "Last Name", "Num Wins");
-                System.out.println("-".repeat(65));
-
-                // // To determine if an error message should be printed
-                boolean returned = false;
-                while (resultSet.next()) {
-                    String id = resultSet.getString("driverID");
-                    String first = resultSet.getString("driverFirstName");
-                    String last = resultSet.getString("driverLastName");
-                    String wins = resultSet.getString("numWins");
-                    System.out.printf("%-10s| %-20s| %-20s| %-10s\n", id, first, last, wins);
-                    returned = true;
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-10s| %-20s| %-20s| %-10s\n", "driverID", "First Name", "Last Name",
+                            "Num Wins");
+                    System.out.println("-".repeat(65));
+                    do {
+                        String id = resultSet.getString("driverID");
+                        String first = resultSet.getString("driverFirstName");
+                        String last = resultSet.getString("driverLastName");
+                        String wins = resultSet.getString("numWins");
+                        System.out.printf("%-10s| %-20s| %-20s| %-10s\n", id, first, last, wins);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
                 }
-                if (!returned) {
-                    System.out.println("No circuitID's match the input ID.");
-                }
-
                 System.out.println();
                 resultSet.close();
                 statement.close();
@@ -1256,7 +1253,7 @@ public class MyDatabase {
                 e.printStackTrace(System.out);
             }
         } else {
-            System.out.println("Argument must be a circuitID");
+            System.out.println("Argument [circuitID] must be a positive integer\n");
         }
     }
 
@@ -1309,23 +1306,19 @@ public class MyDatabase {
                 statement.setString(1, arg);
                 ResultSet resultSet = statement.executeQuery();
 
-                System.out.println();
-                System.out.printf("%-15s| %-20s| %-10s\n", "constructorID", "Constructor", "Num Wins");
-                System.out.println("-".repeat(49));
-
-                // // To determine if an error message should be printed
-                boolean returned = false;
-                while (resultSet.next()) {
-                    String id = resultSet.getString("constructorID");
-                    String name = resultSet.getString("constructorName");
-                    String wins = resultSet.getString("numWins");
-                    System.out.printf("%-15s| %-20s| %-10s\n", id, name, wins);
-                    returned = true;
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-15s| %-20s| %-10s\n", "constructorID", "Constructor", "Num Wins");
+                    System.out.println("-".repeat(49));
+                    do {
+                        String id = resultSet.getString("constructorID");
+                        String name = resultSet.getString("constructorName");
+                        String wins = resultSet.getString("numWins");
+                        System.out.printf("%-15s| %-20s| %-10s\n", id, name, wins);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
                 }
-                if (!returned) {
-                    System.out.println("No circuitID's match the input ID.");
-                }
-
                 System.out.println();
                 resultSet.close();
                 statement.close();
@@ -1333,7 +1326,7 @@ public class MyDatabase {
                 e.printStackTrace(System.out);
             }
         } else {
-            System.out.println("Argument must be a circuitID");
+            System.out.println("Argument [circuitID] must be a positive integer\n");
         }
     }
 
@@ -1506,7 +1499,8 @@ public class MyDatabase {
                 e.printStackTrace(System.out);
             }
         } else {
-            System.out.println("Argument year must be a positive integer\n");
+            System.out.println("Argument [year] must be a positive integer\n");
+
         }
     }
 
@@ -1524,23 +1518,19 @@ public class MyDatabase {
             statement.setString(1, arg);
             ResultSet resultSet = statement.executeQuery();
 
-            System.out.println();
-            System.out.printf("%-10s| %-20s| %-20s\n", "driverID", "First Name", "Last Name");
-            System.out.println("-".repeat(53));
-
-            // // To determine if an error message should be printed
-            boolean returned = false;
-            while (resultSet.next()) {
-                String id = resultSet.getString("driverID");
-                String first = resultSet.getString("driverFirstName");
-                String last = resultSet.getString("driverLastName");
-                System.out.printf("%-10s| %-20s| %-20s\n", id, first, last);
-                returned = true;
+            if (resultSet.next()) {
+                System.out.println();
+                System.out.printf("%-10s| %-20s| %-20s\n", "driverID", "First Name", "Last Name");
+                System.out.println("-".repeat(53));
+                do {
+                    String id = resultSet.getString("driverID");
+                    String first = resultSet.getString("driverFirstName");
+                    String last = resultSet.getString("driverLastName");
+                    System.out.printf("%-10s| %-20s| %-20s\n", id, first, last);
+                } while (resultSet.next());
+            } else {
+                System.out.println("No results to output");
             }
-            if (!returned) {
-                System.out.println("No driver's exist for the given nationality");
-            }
-
             System.out.println();
             resultSet.close();
             statement.close();
@@ -1590,29 +1580,24 @@ public class MyDatabase {
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(sql);
 
-                System.out.println();
-                System.out.printf("%-11s| %-9s| %-19s| %-19s| %-30s| %-10s\n", "Pos Gained", "driverID",
-                        "First Name", "Last Name", "Race", "Season");
-                System.out.println("-".repeat(106));
-
-                // // To determine if an error message should be printed
-                boolean returned = false;
-                while (resultSet.next()) {
-                    String posG = resultSet.getString("positionsGained");
-                    String id = resultSet.getString("driverID");
-                    String first = resultSet.getString("driverFirstName");
-                    String last = resultSet.getString("driverLastName");
-                    String race = resultSet.getString("raceName");
-                    String season = resultSet.getString("season");
-                    System.out.printf("%-11s| %-9s| %-19s| %-19s| %-30s| %-10s\n", posG, id, first, last, race,
-                            season);
-
-                    returned = true;
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-11s| %-9s| %-19s| %-19s| %-30s| %-10s\n", "Pos Gained", "driverID",
+                            "First Name", "Last Name", "Race", "Season");
+                    System.out.println("-".repeat(106));
+                    do {
+                        String posG = resultSet.getString("positionsGained");
+                        String id = resultSet.getString("driverID");
+                        String first = resultSet.getString("driverFirstName");
+                        String last = resultSet.getString("driverLastName");
+                        String race = resultSet.getString("raceName");
+                        String season = resultSet.getString("season");
+                        System.out.printf("%-11s| %-9s| %-19s| %-19s| %-30s| %-10s\n", posG, id, first, last, race,
+                                season);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
                 }
-                if (!returned) {
-                    System.out.println("0 entered so no results output");
-                }
-
                 System.out.println();
                 resultSet.close();
                 statement.close();
@@ -1620,7 +1605,7 @@ public class MyDatabase {
                 e.printStackTrace(System.out);
             }
         } else {
-            System.out.println("Argument must be a positive integer");
+            System.out.println("Argument [topNum] must be a positive integer\n");
         }
 
     }
@@ -1684,25 +1669,21 @@ public class MyDatabase {
                 statement.setString(1, parts[1]);
                 ResultSet resultSet = statement.executeQuery();
 
-                System.out.println();
-                System.out.printf("%-10s| %-20s| %-20s| %-20s\n", "driverID", "First Name", "Last Name",
-                        "Circuits Won At (%)");
-                System.out.println("-".repeat(77));
-
-                // // To determine if an error message should be printed
-                boolean returned = false;
-                while (resultSet.next()) {
-                    String id = resultSet.getString("driverID");
-                    String first = resultSet.getString("driverFirstName");
-                    String last = resultSet.getString("driverLastName");
-                    String wins = resultSet.getString("percentageOfCircuitsWonAt");
-                    System.out.printf("%-10s| %-20s| %-20s| %-20s\n", id, first, last, wins);
-                    returned = true;
+                if (resultSet.next()) {
+                    System.out.println();
+                    System.out.printf("%-10s| %-20s| %-20s| %-20s\n", "driverID", "First Name", "Last Name",
+                            "Circuits Won At (%)");
+                    System.out.println("-".repeat(77));
+                    do {
+                        String id = resultSet.getString("driverID");
+                        String first = resultSet.getString("driverFirstName");
+                        String last = resultSet.getString("driverLastName");
+                        String wins = resultSet.getString("percentageOfCircuitsWonAt");
+                        System.out.printf("%-10s| %-20s| %-20s| %-20s\n", id, first, last, wins);
+                    } while (resultSet.next());
+                } else {
+                    System.out.println("No results to output");
                 }
-                if (!returned) {
-                    System.out.println("No driver's exist for the given nationality");
-                }
-
                 System.out.println();
                 resultSet.close();
                 statement.close();
@@ -1710,7 +1691,7 @@ public class MyDatabase {
                 e.printStackTrace(System.out);
             }
         } else {
-            System.out.println("Arguments must be positive integers");
+            System.out.println("Arguments [numberDrivers] and [numberCircuits] must be a positive integers\n");
         }
     }
 
